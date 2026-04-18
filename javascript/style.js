@@ -38,3 +38,62 @@ function raja(){
     function logout() {
       window.location.href = "index.html";
     }
+    function showPage(pageId) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(pageId).classList.add("active");
+}
+
+
+let selectedSeats = [];
+let bookedSeats = ["3", "7"]; 
+
+const bus = document.getElementById("bus");
+
+for (let i = 1; i <= 12; i++) {
+  let seat = document.createElement("div");
+  seat.classList.add("seat");
+  seat.innerText = i;
+
+  if (bookedSeats.includes(i.toString())) {
+    seat.classList.add("booked");
+  } else {
+    seat.onclick = function () {
+      seat.classList.toggle("selected");
+
+      let num = seat.innerText;
+
+      if (selectedSeats.includes(num)) {
+        selectedSeats = selectedSeats.filter(s => s !== num);
+      } else {
+        selectedSeats.push(num);
+      }
+    };
+  }
+  bus.appendChild(seat);
+}
+function goToPassenger() {
+  if (selectedSeats.length === 0) {
+    alert("Select at least one seat!");
+    return;
+  }
+  showPage("passenger");
+}
+function generateTicket() {
+  let name = document.getElementById("name").value;
+  let age = document.getElementById("age").value;
+
+  if (!name || !age) {
+    alert("Fill all details!");
+    return;
+  }
+  document.getElementById("ticketDetails").innerHTML = `
+    <b>Name:</b> ${name} <br>
+    <b>Age:</b> ${age} <br>
+    <b>Seats:</b> ${selectedSeats.join(", ")}
+  `;
+
+  showPage("ticket");
+}
+function resetApp() {
+  location.reload();
+}
