@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
+   <link rel="stylesheet" href="/css/index.css">
     <title>Bus Ticket Booking System</title>
 </head>
 <body>
+     <script>
+        let visibledisp=false;
+        document.addEventListener("mousemove", function () {
+            if(!visibledisp){
+                document.getElementById("disp").style.display = "block";
+                visibledisp=true;
+                
+                setTimeout(()=>{
+                    document.getElementById("disp").style.display="none";
+                    visibledisp=false;
+                },8000);
+            }
+        });
+        </script>
     <style>
         * {
             margin: 0;
@@ -38,7 +52,6 @@
             z-index: -1;
         } 
         
-        /* Add styles for message divs */
         [id^="msg"] {
             font-size: 12px;
             margin-top: 5px;
@@ -73,9 +86,9 @@
         <!-- Welcome Screen -->
         <div class="welcome-screen" id="welcome">
             <h1 class="welcome-title icon-cart">
-                BUYMART
+                Bus Ticket
             </h1>
-            <p class="welcome-subtitle">Management System</p>
+            <p class="welcome-subtitle">Booking System</p>
             <p class="welcome-instruction icon-mouse">
                 Move your mouse to get started
             </p>
@@ -230,6 +243,6 @@
             </form>
         </div>
       
-    <script defer src="style.js"></script>
+    <script defer src="/javascript/index.js"></script>
 </body>
 </html>
