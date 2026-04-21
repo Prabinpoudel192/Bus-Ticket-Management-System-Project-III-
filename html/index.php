@@ -1,3 +1,13 @@
+<?php
+include 'db.php';
+$c1=new dbcon();
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,7 +89,6 @@
     <div class="text-danger bg-info" style="display:none;" id="disp">
         <input type="button" class="btn btn-danger newbtnstyle" value="Login" onclick="login()">
         <input type="button" class="btn btn-primary newbtnstyle" value="Signup" onclick="signup()">
-        <input type="button" class="btn btn-light newbtnstyle" value="Admin" onclick="admin()">
     </div>
 
     <div class="main-container">
@@ -89,9 +98,19 @@
                 Bus Ticket
             </h1>
             <p class="welcome-subtitle">Booking System</p>
-            <p class="welcome-instruction icon-mouse">
-                Move your mouse to get started
-            </p>
+             <section class="hero">
+    <div class="search-card">
+      <h1>Find Your Bus Ticket</h1>
+
+      <div class="inputs">
+        <input type="text" placeholder="From (City)">
+        <input type="text" placeholder="To (City)">
+        <input type="date">
+      </div>
+
+      <button onclick="searchBuses()">Search Buses</button>
+    </div>
+  </section>
         </div>
 
         <!-- Login Form -->
