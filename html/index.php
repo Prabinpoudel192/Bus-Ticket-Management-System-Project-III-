@@ -1,19 +1,33 @@
 <?php
 include 'db.php';
-$c1=new dbcon();
-
-
+include 'login.php';
+if(isset($_POST['post2'])){
+    $fname=$_POST['sfname'];
+    $mname=$_POST['smname'];
+    $lname=$_POST['slname'];
+    $address=$_POST['saddress'];
+    $email=$_POST['semail'];
+    $mobile=$_POST['smobile'];
+    $gender=$_POST['sgender'];
+    $uname=$_POST['suname'];
+    $pwd=$_POST['spwd1'];
+    if($c1=new dbcon()){
+        $c2=new login($fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$pwd);
+        $r=$c2->insert($c1->conn);
+         if($r){
+            echo "<script>alert('User registered successfully')</script>";
+         }else{
+            echo "<script>alert('Erorr in data insertion')</script>";
+         }}}
 ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="../bootstrap-5.3.4-dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="../css/index.css">
+   <link rel="stylesheet" href="../css/style.css">
     <title>Bus Ticket Booking System</title>
 </head>
 <body>
@@ -41,6 +55,7 @@ $c1=new dbcon();
         html, body {
             height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color:black;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             overflow: hidden;
             position: relative;
@@ -189,8 +204,7 @@ $c1=new dbcon();
                     <div id="msg9"></div>
                 </div>
                 <div class="checkbox-group">
-                    <input type="checkbox" name="sterms" id="terms" required>
-                    <label for="terms">I agree to the terms and conditions</label>
+                    <label for="terms"><input type="checkbox" name="sterms" id="terms" required>I agree to the terms and conditions</label>
                 </div>
                 <input type="submit" value="Create Account" name="post2" class="submit-btn">
             </form>
@@ -262,6 +276,6 @@ $c1=new dbcon();
             </form>
         </div>
       
-    <script defer src="/javascript/index.js"></script>
+    <script defer src="../javascript/index.js"></script>
 </body>
 </html>
