@@ -1,8 +1,8 @@
 <?php
 
 class login{
-    public $fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$password;
-    function __construct($fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$password){
+    public $fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$password,$acc,$status;
+    function __construct($fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$password,$acc,$status){
        $this->fname=$fname;
        $this->mname=$mname;
        $this->lname=$lname;
@@ -12,22 +12,27 @@ class login{
        $this->gender=$gender;
        $this->uname=$uname;
        $this->password=$password;
+       $this->acc=$acc;
+       $this->status=$status;
 
     }
     function insert($conn){    
-        
-        $sql="insert into login(fname,mname,lname,address,email,mobile,gender,uname,pwd) values('$this->fname','$this->mname','$this->lname','$this->address','$this->email','$this->mobile','$this->gender','$this->uname','$this->password')";
-        $r=$conn->query($sql) or die("Query Error: " . $conn->error);
-          
-        if($r){
-            echo "<script>alert('inserted successfully')</script>";
-        }
-        else{
-            echo "<script>alert('Error in data insertion')</script>";
-        }
-    }
-    }
+        try{
+        $sql="insert into login(fname,mname,lname,address,email,mobile,gender,uname,pwd,acc,status) values('$this->fname','$this->mname','$this->lname','$this->address','$this->email','$this->mobile','$this->gender','$this->uname','$this->password','$this->acc','$this->status')";
+        $r=$conn->query($sql); 
+        return "done";
+        }catch(mysqli_sql_exception $e){
 
+        
+        if($e->getCode()==1062){
+            return "duplicate";
+        }
+        return "error";
+        
+        
+    }
+    }
+}
 
 
 ?>

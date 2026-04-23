@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL); 
+ini_set('display_errors', 1);
 include 'db.php';
 include 'login.php';
 if(isset($_POST['post2'])){
@@ -10,16 +12,25 @@ if(isset($_POST['post2'])){
     $mobile=$_POST['smobile'];
     $gender=$_POST['sgender'];
     $uname=$_POST['suname'];
-    $pwd=$_POST['spwd1'];
-    if($c1=new dbcon()){
-        $c2=new login($fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$pwd);
+    $pwd=$_POST['spwd'];
+    $acc=2;
+    $status="inactive";
+        $c1=new dbcon();
+        $c2=new login($fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$pwd,$acc,$status);
         $r=$c2->insert($c1->conn);
-         if($r){
-            echo "<script>alert('User registered successfully')</script>";
-         }else{
-            echo "<script>alert('Erorr in data insertion')</script>";
-         }}}
-if(isset($_POST['post1'])){
+         if($r=="duplicate"){
+           echo "<script>alert('Email and Mobile must be unique')</script>";
+           die();
+          }
+         if($r=="error"){
+            echo "<script>alert('Error in registration.')</script>";
+            die();
+            }
+         if($r=="done"){
+            echo "<script>alert('Registration successful! Admin approval required for login.')</script>";
+         }
+         }
+else if(isset($_POST['post2'])){
     $uname=$_POST['uname'];
     $pwd=$_POST['pwd'];
     
