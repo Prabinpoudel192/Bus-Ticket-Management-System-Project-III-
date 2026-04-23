@@ -1,3 +1,6 @@
+<?php
+echo "<script>alert('i am here')</script>"
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

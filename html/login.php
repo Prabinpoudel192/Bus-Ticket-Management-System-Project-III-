@@ -1,6 +1,5 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 class login{
     public $fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$password;
     function __construct($fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$password){

@@ -19,6 +19,11 @@ if(isset($_POST['post2'])){
          }else{
             echo "<script>alert('Erorr in data insertion')</script>";
          }}}
+if(isset($_POST['post1'])){
+    $uname=$_POST['uname'];
+    $pwd=$_POST['pwd'];
+    
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,10 +43,7 @@ if(isset($_POST['post2'])){
                 document.getElementById("disp").style.display = "block";
                 visibledisp=true;
                 
-                setTimeout(()=>{
-                    document.getElementById("disp").style.display="none";
-                    visibledisp=false;
-                },8000);
+               
             }
         });
         </script>
@@ -78,8 +80,8 @@ if(isset($_POST['post2'])){
         } 
         
         [id^="msg"] {
-            font-size: 12px;
-            margin-top: 5px;
+            font-size: 8px;
+            margin-top: 2px;
             display: none;
         }
 
@@ -90,6 +92,15 @@ if(isset($_POST['post2'])){
         .welcome-screen {
             display: block;
         }
+        .checkbox-group  {
+          display: inline-flex;   
+          align-items: center;
+          gap: 4px;  
+          margin:0;             
+              }
+
+        
+       
     </style>
 
     <!-- Animated Background -->
@@ -204,7 +215,7 @@ if(isset($_POST['post2'])){
                     <div id="msg9"></div>
                 </div>
                 <div class="checkbox-group">
-                    <label for="terms"><input type="checkbox" name="sterms" id="terms" required>I agree to the terms and conditions</label>
+                   <input type="checkbox" name="sterms" id="terms" required>I agree to the terms and conditions
                 </div>
                 <input type="submit" value="Create Account" name="post2" class="submit-btn">
             </form>
