@@ -1,3 +1,7 @@
+<?php
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,6 +54,6 @@ body {
   <button onclick="window.print()">🖨️ Print</button>
   <button onclick="resetApp()">🔄 New Booking</button>
 </div>
-<script defer src="/javascript/style.js"></script>
+<script defer src="../javascript/style.js"></script>
 </body>
 </html>

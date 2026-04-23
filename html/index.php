@@ -30,9 +30,10 @@ if(isset($_POST['post2'])){
             echo "<script>alert('Registration successful! Admin approval required for login.')</script>";
          }
          }
-else if(isset($_POST['post2'])){
+else if(isset($_POST['post1'])){
     $uname=$_POST['uname'];
     $pwd=$_POST['pwd'];
+    header("Location:ticketbook.php");
     
 }
 ?>

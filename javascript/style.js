@@ -28,9 +28,7 @@ function selectBus(name) {
   alert("Selected Bus: " + name + " (Seat module will come next)");
 }
 
-function raja(){
-  alert("You have been pawned.")
-}
+
    function goToBooking() {
       window.location.href = "booking.html";
     }
@@ -49,7 +47,7 @@ let bookedSeats = ["3", "7"];
 
 const bus = document.getElementById("bus");
 
-for (let i = 1; i <= 12; i++) {
+for (let i = 1; i <= 30; i++) {
   let seat = document.createElement("div");
   seat.classList.add("seat");
   seat.innerText = i;
