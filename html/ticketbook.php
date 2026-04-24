@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Bus Ticket System</title>
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -21,6 +21,26 @@ body {
 
 .active {
   display: block;
+}
+.selected{
+  background-color:yellow;
+  color:red;
+}
+.booked{
+  background-color:red;
+  color:black;
+  font-weight:900;
+}
+table {
+  border: 2px solid black;
+  height:50px;
+  width: 100px;
+  border-collapse: collapse;
+}
+td, th {
+  border: 2px solid black;
+  padding: 10px;
+  text-align: center;
 }
 
 </style>

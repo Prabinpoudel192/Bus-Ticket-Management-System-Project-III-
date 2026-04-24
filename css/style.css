@@ -276,6 +276,9 @@ h1 {
 /* Button */
 button {
   margin-top: 30px;
+  height:100%;
+  width:100%;
+  border-radius:15px;
   padding: 10px 20px;
   background: #222;
   color: white;

@@ -44,31 +44,63 @@ function selectBus(name) {
 
 let selectedSeats = [];
 let bookedSeats = ["3", "7"]; 
+let total=30;
 
 const bus = document.getElementById("bus");
 
-for (let i = 1; i <= 30; i++) {
-  let seat = document.createElement("div");
-  seat.classList.add("seat");
-  seat.innerText = i;
+let table = document.createElement("table");
 
-  if (bookedSeats.includes(i.toString())) {
-    seat.classList.add("booked");
-  } else {
-    seat.onclick = function () {
-      seat.classList.toggle("selected");
+// Header
+table.innerHTML = `
+  <thead>
+    <tr>
+      <th>Side A</th>
+      <th>Side B</th>
+    </tr>
+  </thead>
+`;
 
-      let num = seat.innerText;
+let tbody = document.createElement("tbody");
 
-      if (selectedSeats.includes(num)) {
-        selectedSeats = selectedSeats.filter(s => s !== num);
-      } else {
-        selectedSeats.push(num);
-      }
-    };
+for (let i = 1; i <= total; i += 2) {
+  let row = document.createElement("tr");
+
+  for (let j = 0; j < 2; j++) {
+    let seatNum = i + j;
+    if (seatNum > total) break;
+
+    let td = document.createElement("td");
+    let button = document.createElement("button");
+
+    button.id = "btn" + seatNum;
+    button.innerText = seatNum;
+
+    if (bookedSeats.includes(seatNum.toString())) {
+      button.classList.add("booked");
+      button.disabled = true;
+    } else {
+      button.onclick = function () {
+        button.classList.toggle("selected");
+
+        let num = seatNum.toString();
+
+        if (selectedSeats.includes(num)) {
+          selectedSeats = selectedSeats.filter(s => s !== num);
+        } else {
+          selectedSeats.push(num);
+        }
+      };
+    }
+
+    td.appendChild(button);
+    row.appendChild(td);
   }
-  bus.appendChild(seat);
+
+  tbody.appendChild(row);
 }
+
+table.appendChild(tbody);
+bus.appendChild(table);
 function goToPassenger() {
   if (selectedSeats.length === 0) {
     alert("Select at least one seat!");

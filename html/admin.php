@@ -31,7 +31,7 @@ body {
     <h2>🚍 Admin Panel</h2>
     <div class="nav-buttons">
         <button class="btn1">Dashboard</button>
-        <button class="btn2">Users</button>
+        <button class="btn2">Active Users</button>
         <button class="btn3">Buses</button>
         <button class="btn4">Logout</button>
     </div>
@@ -39,11 +39,11 @@ body {
 
 <!-- SIDEBAR -->
 <div class="sidebar1">
-    <button>Home</button>
-    <button>Add Bus</button>
-    <button>Bookings</button>
-    <button>Payments</button>
-    <button>Reports</button>
+    <button class="btn5">Home</button>
+    <button class="btn6">Add Bus</button>
+    <button class="btn7">Bookings</button>
+    <button class="btn8">Payments</button>
+    <button class="btn9">User Registration</button>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -77,9 +77,9 @@ body {
     <!-- TABLE -->
     <div class="table-box">
         <div class="option-dashboard">
-        <h3 style="margin-bottom:10px;">Recent Bookings</h3>
+        <h3 style="margin-bottom:10px;" id="tableTitle"></h3>
 
-        <table>
+        <table id="tableHead">
             <tr>
                 <th>User</th>
                 <th>Bus</th>
@@ -105,11 +105,22 @@ body {
             </tr>
         </table>
 </div>
- <div class="option-users" style="display:none;">
-        <h3 style="margin-bottom:10px;">Users Details</h3>
-
+               <script>
+    <div class="option-users" style="display:none;">
+    $(document).ready(function(){
+    $(".btn2").click(function(){
+        alert("i am here");
+    $(".option-dashboard").css("display","none");
+    $(".option-users").css("display","block");
+    $.ajax({
+        url:"users-active.php",
+        type:"POST",
+        
+        success:function(data){
+        $("#tableTitle").text("Active Users Details");
+        $("#tableHead").html(
         <table>
-            <tr>
+            <tr id="tableHead">
                 <th>First Name</th>
                 <th>Middle Name</th>
                 <th>Last Name</th>
@@ -119,17 +130,24 @@ body {
                 <th>Gender</th>
                 <th>Username</th>
                 <th>Password</th>
-            </tr><tbody id="tbbody">
+                <th>Status</th>
+                
 
-               <script>
-    $(document).ready(function(){
-    $(".btn2").click(function(){
+        );
+        $("#tbbody").html(data);
+
+        }
+    });
+
+});
+});
+$(document).ready(function(){
+    $(".btn9").click(function(){
     $(".option-dashboard").css("display","none");
     $(".option-users").css("display","block");
     $.ajax({
-        url:"test1.php",
+        url:"users-inactive.php",
         type:"POST",
-        
         success:function(data){
         $("#tbbody").html(data);
 
@@ -139,7 +157,7 @@ body {
 });
 });
    </script>
-        
+    </table>    
     </div>
 
 </div>

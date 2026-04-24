@@ -1,9 +1,10 @@
 <?php
-$conn=new mysqli("localhost","bus","2232","projectiii") or die("Error in the database connection.");
-
-$sql="select *from login";
-$r=$conn->query($sql);
-$data="";
+include 'db.php';
+class fetchUsers extends dbcon{
+function give(){
+  $sql="select *from login where status='inactive'";
+$r=$this->conn->query($sql);
+$data="<th>Action</th></tr><tbody id='tbody'>";
    while($row=$r->fetch_assoc()){
     $data.="<tr>
                 <td>{$row['fname']}</td>
@@ -15,12 +16,15 @@ $data="";
                 <td>{$row['gender']}</td>
                 <td>{$row['uname']}</td>
                 <td>{$row['pwd']}</td>
-              </tr></tbody></table>";
+                <td>{$row['status']}</td>
+                <td><button>Activate</button><button>Delete</button></td>
+              </tr></tbody>";
     
    }
-
+   $data.="</table>";
     echo $data;
-
-
-
-
+}
+}
+$c2=new fetchUsers();
+$c2->give();
+?>
