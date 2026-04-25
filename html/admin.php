@@ -75,41 +75,18 @@ body {
     </div>
 
     <!-- TABLE -->
-    <div class="table-box">
-        <div class="option-dashboard">
-        <h3 style="margin-bottom:10px;" id="tableTitle"></h3>
-
-        <table id="tableHead">
-            <tr>
-                <th>User</th>
-                <th>Bus</th>
-                <th>Route</th>
-                <th>Seats</th>
-                <th>Status</th>
-            </tr>
-
-            <tr>
-                <td>Prabin</td>
-                <td>Express</td>
-                <td>KTM → BRT</td>
-                <td>3</td>
-                <td>Confirmed</td>
-            </tr>
-
-            <tr>
-                <td>Ram</td>
-                <td>Super Fast</td>
-                <td>PKR → KTM</td>
-                <td>2</td>
-                <td>Pending</td>
-            </tr>
-        </table>
-</div>
+    
+        <div class="option-users" style="display:none;">
+            <table>
+                <thead>
+                    <tr id="tableHeadUsers"></tr> 
+                </thead>
+                <tbody id="tbbody"></tbody> 
+            </table>
+        </div>
                <script>
-    <div class="option-users" style="display:none;">
     $(document).ready(function(){
     $(".btn2").click(function(){
-        alert("i am here");
     $(".option-dashboard").css("display","none");
     $(".option-users").css("display","block");
     $.ajax({
@@ -118,19 +95,17 @@ body {
         
         success:function(data){
         $("#tableTitle").text("Active Users Details");
-        $("#tableHead").html(
-        <table>
-            <tr id="tableHead">
-                <th>First Name</th>
-                <th>Middle Name</th>
-                <th>Last Name</th>
-                <th>Address</th>
-                <th>Email</th>
-                <th>Mobile</th>
-                <th>Gender</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Status</th>
+                $("#tableHeadUsers").html(` 
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Gender</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Status</th>`
                 
 
         );
@@ -141,14 +116,31 @@ body {
 
 });
 });
-$(document).ready(function(){
+ $(document).ready(function(){
     $(".btn9").click(function(){
     $(".option-dashboard").css("display","none");
     $(".option-users").css("display","block");
     $.ajax({
         url:"users-inactive.php",
         type:"POST",
+        
         success:function(data){
+        $("#tableTitle").text("Registration Applicant Details");
+                $("#tableHeadUsers").html(` 
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Gender</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Status</th>
+                    <th>Action</th>`
+                
+
+        );
         $("#tbbody").html(data);
 
         }
@@ -156,6 +148,29 @@ $(document).ready(function(){
 
 });
 });
+ $(document).ready(function(){
+    $(".btn1").click(function(){
+    $(".option-dashboard").css("display","none");
+    $(".option-users").css("display","block");
+    $.ajax({
+        url:"dashboard.php",
+        type:"POST",
+        
+        success:function(data){
+            alert(data);
+        $("#tableTitle").text("Registration Applicant Details");
+                $("#tableHeadUsers").html(data);
+                
+
+        
+        
+
+        }
+    });
+    });
+});
+
+
    </script>
     </table>    
     </div>

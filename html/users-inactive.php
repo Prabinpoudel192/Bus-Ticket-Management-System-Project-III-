@@ -4,7 +4,7 @@ class fetchUsers extends dbcon{
 function give(){
   $sql="select *from login where status='inactive'";
 $r=$this->conn->query($sql);
-$data="<th>Action</th></tr><tbody id='tbody'>";
+$data="";
    while($row=$r->fetch_assoc()){
     $data.="<tr>
                 <td>{$row['fname']}</td>
@@ -17,7 +17,7 @@ $data="<th>Action</th></tr><tbody id='tbody'>";
                 <td>{$row['uname']}</td>
                 <td>{$row['pwd']}</td>
                 <td>{$row['status']}</td>
-                <td><button>Activate</button><button>Delete</button></td>
+                <td><button class='button' id='approve'>Approve</button><br><br><button class='button' id='delete'>Delete</button></td>
               </tr></tbody>";
     
    }
