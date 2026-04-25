@@ -30,8 +30,8 @@ body {
 <div class="navbar1">
     <h2>🚍 Admin Panel</h2>
     <div class="nav-buttons">
-        <button class="btn1">Dashboard</button>
-        <button class="btn2">Active Users</button>
+        <button class="btn1" onClick="tabledisplay()">Dashboard</button>
+        <button class="btn2" onClick="tabledisplay()">Active Users</button>
         <button class="btn3">Buses</button>
         <button class="btn4">Logout</button>
     </div>
@@ -43,7 +43,7 @@ body {
     <button class="btn6">Add Bus</button>
     <button class="btn7">Bookings</button>
     <button class="btn8">Payments</button>
-    <button class="btn9">User Registration</button>
+    <button class="btn9" onClick="tabledisplay()">User Registration</button>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -75,107 +75,14 @@ body {
     </div>
 
     <!-- TABLE -->
-    
-        <div class="option-users" style="display:none;">
-            <table>
-                <thead>
-                    <tr id="tableHeadUsers"></tr> 
-                </thead>
-                <tbody id="tbbody"></tbody> 
-            </table>
-        </div>
-               <script>
-    $(document).ready(function(){
-    $(".btn2").click(function(){
-    $(".option-dashboard").css("display","none");
-    $(".option-users").css("display","block");
-    $.ajax({
-        url:"users-active.php",
-        type:"POST",
-        
-        success:function(data){
-        $("#tableTitle").text("Active Users Details");
-                $("#tableHeadUsers").html(` 
-                    <th>First Name</th>
-                    <th>Middle Name</th>
-                    <th>Last Name</th>
-                    <th>Address</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th>Gender</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Status</th>`
-                
-
-        );
-        $("#tbbody").html(data);
-
-        }
-    });
-
-});
-});
- $(document).ready(function(){
-    $(".btn9").click(function(){
-    $(".option-dashboard").css("display","none");
-    $(".option-users").css("display","block");
-    $.ajax({
-        url:"users-inactive.php",
-        type:"POST",
-        
-        success:function(data){
-        $("#tableTitle").text("Registration Applicant Details");
-                $("#tableHeadUsers").html(` 
-                    <th>First Name</th>
-                    <th>Middle Name</th>
-                    <th>Last Name</th>
-                    <th>Address</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th>Gender</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Status</th>
-                    <th>Action</th>`
-                
-
-        );
-        $("#tbbody").html(data);
-
-        }
-    });
-
-});
-});
- $(document).ready(function(){
-    $(".btn1").click(function(){
-    $(".option-dashboard").css("display","none");
-    $(".option-users").css("display","block");
-    $.ajax({
-        url:"dashboard.php",
-        type:"POST",
-        
-        success:function(data){
-            alert(data);
-        $("#tableTitle").text("Registration Applicant Details");
-                $("#tableHeadUsers").html(data);
-                
-
-        
-        
-
-        }
-    });
-    });
-});
+     <div class="booked" style="display:none;">
 
 
-   </script>
+     </div>    
     </table>    
     </div>
 
 </div>
-
+<script src=../javascript/style.js"> </script>
 </body>
 </html>

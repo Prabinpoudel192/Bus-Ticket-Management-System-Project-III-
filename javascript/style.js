@@ -127,3 +127,52 @@ function generateTicket() {
 function resetApp() {
   location.reload();
 }
+//Admin.php page javascript
+function tabledisplay{
+  $(document).ready(function(){
+    $(".btn1").click(function(){
+    $(".booked").css("display","block");
+    $.ajax({
+        url:"dashboard.php",
+        type:"POST",
+        
+        success:function(data){
+        
+        $("#tableTitle").text("Booking Details");
+                $(".booked").html(data);
+        }
+    });
+    });
+});
+$(document).ready(function(){
+    $(".btn9").click(function(){
+    $(".booked").css("display","block");
+    $.ajax({
+        url:"users-inactive.php",
+        type:"POST",
+        
+        success:function(data){
+        
+        $("#tableTitle").text("Booking Details");
+                $(".booked").html(data);
+        }
+    });
+    });
+});
+$(document).ready(function(){
+    $(".btn2").click(function(){
+    $(".booked").css("display","block");
+    $.ajax({
+        url:"users-active.php",
+        type:"POST",
+        
+        success:function(data){
+        
+        $("#tableTitle").text("Booking Details");
+                $(".booked").html(data);
+        }
+    });
+    });
+});
+
+}

@@ -3,7 +3,7 @@
 $data="
 <div class='table-box' style='width:100%'>
     
-    <h3 style='margin-bottom:10px;' id='tableTitle'>
+    <h3 style='margin-bottom:10px;' id='tableTitle1'>
         Registration Applicant Details
     </h3>
 
