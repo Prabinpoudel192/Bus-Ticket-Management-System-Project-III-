@@ -1084,10 +1084,6 @@ window.location.href="adminpanel.php";
 function adminHome(){
     window.location.href="adminmain.php";
 }
-function mofo(){
-    alert('i fucking reached here');
-}
-
 function udisplay(target) {
   
         const sections = document.querySelectorAll(".section")

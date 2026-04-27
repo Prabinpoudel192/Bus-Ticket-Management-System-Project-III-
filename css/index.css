@@ -427,3 +427,10 @@ th {
      background:green;
     color:white;
 }
+.table-box input,select{
+    height:30px;
+    width:300px;
+    padding:5px;
+    border-radius:10px;
+    float:right;
+}

@@ -1,8 +1,45 @@
+<?php
+error_reporting(E_ALL); 
+ini_set('display_errors', 1);
+include 'db.php';
+include 'registerbus.php';
+if(isset($_POST['post3'])){
+    $company_name=$_POST['company_name'];
+    $owner_name=$_POST['owner_name'];
+    $engine_no=$_POST['engine_no'];
+    $chassis_no=$_POST['chassis_no'];
+    $vehicle_no=$_POST['vehicle_no'];
+    $seats=$_POST['seats'];
+    $bus_type=$_POST['bus_type'];
+    $start=$_POST['from_location'];
+    $end=$_POST['to_location'];
+    $fare=$_POST['fare'];
+    $arr_time=$_POST['arr_time'];
+    $dep_time=$_POST['dep_time'];
+    $route=$start." to ".$end;
+        $c1=new dbcon();
+        $c2=new registerbus($company_name,$owner_name,$engine_no,$chassis_no,$vehicle_no,$seats,$bus_type,$route,$fare,$arr_time,$dep_time);
+        $r=$c2->insert($c1->conn);
+         if($r=="error"){
+            echo "<script>alert('Error in registration.')</script>";
+            die();
+            }
+         if($r=="done"){
+            echo "<script>alert('Bus registration is successful!')</script>";
+         }
+         }
+else if(isset($_POST['post1'])){
+    $uname=$_POST['uname'];
+    $pwd=$_POST['pwd'];
+    header("Location:ticketbook.php");
+    
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Dashboard - Bus System</title>
+<title>Admin Dashboard - Bus Ticket Booking System</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../css/index.css">
 <script src="../javascript/jquery.js"></script>
@@ -30,20 +67,20 @@ body {
 <div class="navbar1">
     <h2>🚍 Admin Panel</h2>
     <div class="nav-buttons">
-        <button class="btn1" onClick="tabledisplay()">Dashboard</button>
-        <button class="btn2" onClick="tabledisplay()">Active Users</button>
+        <button class="btn1" onclick="adminfunc()">Dashboard</button>
+        <button class="btn2" onclick="adminfunc()">Active Users</button>
         <button class="btn3">Buses</button>
-        <button class="btn4">Logout</button>
+        <button class="btn4" onclick="window.location.href='index.php'">Logout</button>
     </div>
 </div>
 
 <!-- SIDEBAR -->
 <div class="sidebar1">
     <button class="btn5">Home</button>
-    <button class="btn6">Add Bus</button>
+    <button class="btn6" onclick="adminfunc()">Add Bus</button>
     <button class="btn7">Bookings</button>
     <button class="btn8">Payments</button>
-    <button class="btn9" onClick="tabledisplay()">User Registration</button>
+    <button class="btn9" onclick="adminfunc()">User Registration</button>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -78,11 +115,10 @@ body {
      <div class="booked" style="display:none;">
 
 
-     </div>    
-    </table>    
+     </div>       
     </div>
 
 </div>
-<script src=../javascript/style.js"> </script>
+<script src="../javascript/style.js"> </script>
 </body>
 </html>

@@ -128,51 +128,38 @@ function resetApp() {
   location.reload();
 }
 //Admin.php page javascript
-function tabledisplay{
-  $(document).ready(function(){
-    $(".btn1").click(function(){
-    $(".booked").css("display","block");
-    $.ajax({
-        url:"dashboard.php",
-        type:"POST",
-        
-        success:function(data){
-        
-        $("#tableTitle").text("Booking Details");
-                $(".booked").html(data);
-        }
-    });
-    });
-});
-$(document).ready(function(){
-    $(".btn9").click(function(){
-    $(".booked").css("display","block");
-    $.ajax({
-        url:"users-inactive.php",
-        type:"POST",
-        
-        success:function(data){
-        
-        $("#tableTitle").text("Booking Details");
-                $(".booked").html(data);
-        }
-    });
-    });
-});
-$(document).ready(function(){
-    $(".btn2").click(function(){
-    $(".booked").css("display","block");
-    $.ajax({
-        url:"users-active.php",
-        type:"POST",
-        
-        success:function(data){
-        
-        $("#tableTitle").text("Booking Details");
-                $(".booked").html(data);
-        }
-    });
-    });
-});
+function adminfunc(){
+ $(document).ready(function(){
+    function loadData(url, title){
+        $(".booked").show().html("Loading...");
 
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function(data){
+                $("#tableTitle").text(title);
+                $(".booked").html(data);
+            },
+            error: function(){
+                $(".booked").html("Error loading data");
+            }
+        });
+    
+      }
+    $(".btn1").click(function(){
+        loadData("dashboard.php", "Booking Details");
+    });
+
+    $(".btn2").click(function(){
+        loadData("users-active.php", "Active Users");
+    });
+
+    $(".btn9").click(function(){
+        loadData("users-inactive.php", "Registration Applicants");
+    });
+    $(".btn6").click(function(){
+      loadData("addbus.php","New Bus Registration");
+   });
+
+});
 }
