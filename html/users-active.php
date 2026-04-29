@@ -3,7 +3,7 @@ include 'db.php';
 class fetchUsers extends dbcon{
 function give(){
   $sql="select *from login where status='active'";
-$r=$this->conn->query($sql);
+  $r=$this->conn->query($sql);
 $data="
 <div class='table-box' style='width:100%'>
     

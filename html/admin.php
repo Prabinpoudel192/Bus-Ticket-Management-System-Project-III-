@@ -69,7 +69,7 @@ body {
     <div class="nav-buttons">
         <button class="btn1" onclick="adminfunc()">Dashboard</button>
         <button class="btn2" onclick="adminfunc()">Active Users</button>
-        <button class="btn3">Buses</button>
+        <button class="btn3" onclick="adminfunc()">Buses</button>
         <button class="btn4" onclick="window.location.href='index.php'">Logout</button>
     </div>
 </div>

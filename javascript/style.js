@@ -1,3 +1,6 @@
+let selectedSeats = [];
+let bookedSeats = ["3", "7"]; 
+
 function searchBuses() {
   const results = document.getElementById("results");
   results.innerHTML = "";
@@ -36,15 +39,15 @@ function selectBus(name) {
     function logout() {
       window.location.href = "index.html";
     }
-    function showPage(pageId) {
+    function showPage(pageId,seats) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelector(".display").style.display = "none";
   document.getElementById(pageId).classList.add("active");
-}
 
 
-let selectedSeats = [];
-let bookedSeats = ["3", "7"]; 
-let total=30;
+
+
+let total=seats;
 
 const bus = document.getElementById("bus");
 
@@ -100,8 +103,12 @@ for (let i = 1; i <= total; i += 2) {
 }
 
 table.appendChild(tbody);
-bus.appendChild(table);
+document.querySelector(".display").innerHTML="";
+document.querySelector(".display").appendChild(table);
+document.querySelector(".display").style.display = "block";
+    }
 function goToPassenger() {
+  document.querySelector("table").innerHTML="";
   if (selectedSeats.length === 0) {
     alert("Select at least one seat!");
     return;
@@ -127,6 +134,7 @@ function generateTicket() {
 function resetApp() {
   location.reload();
 }
+  
 //Admin.php page javascript
 function adminfunc(){
  $(document).ready(function(){
@@ -160,6 +168,39 @@ function adminfunc(){
     $(".btn6").click(function(){
       loadData("addbus.php","New Bus Registration");
    });
+    $(".btn3").click(function(){
+      loadData("bustable.php","Registered Bus List")
+    });
 
+});
+}
+
+//ticketbook.php all javascript
+function bookfunc(route,date,time){
+ $(document).ready(function(){
+    function loadData(url, title){
+        $(".display").show().html("Loading...");
+
+        $.ajax({
+            url: url,
+            type: "POST",
+             data: {
+            route: route,
+            date: date,
+            time: time
+        },
+            success: function(data){
+               $("#tableTitle").text(title);
+               $(".display").html(data);
+               console.log(data);
+            },
+            error: function(){
+                $(".display").html("Error loading data");
+            }
+        });
+    
+      }
+    
+        loadData("ticketbook1.php", "Available Buses");
 });
 }

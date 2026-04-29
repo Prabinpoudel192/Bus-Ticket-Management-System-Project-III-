@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 class registerbus{
  protected $company_name,$owner_name,$engine_no,$chassis_no,$vehicle_no,$seats,$bus_type,$route,$fare,$arr_time,$dep_time;
- function __construct($company_name,$owner_name,$engine_no,$chassis_no,$vehicle_no,$seats,$route,$fare,$arr_time,$dep_time){
+ function __construct($company_name,$owner_name,$engine_no,$chassis_no,$vehicle_no,$seats,$bus_type,$route,$fare,$arr_time,$dep_time){
     
     $this->company_name=$company_name;
     $this->owner_name=$owner_name;

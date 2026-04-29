@@ -1,19 +1,44 @@
-<?php
 
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Bus Ticket System</title>
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="../bootstrap-5.3.4-dist/css/bootstrap.min.css">
+<script src="../javascript/jquery.js"></script>
+<script src="../javascript/style.js"></script>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f4f4f4;
-}
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color:black;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: scroll;
+            position: relative;
+            z-index:0;
+        }
+
+         body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:url("../images/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            z-index: -1;
+        } 
 .page {
   display: none;
   padding: 20px;
@@ -33,24 +58,51 @@ body {
 }
 table {
   border: 2px solid black;
-  height:50px;
-  width: 100px;
   border-collapse: collapse;
+  width:400px;
 }
 td, th {
   border: 2px solid black;
   padding: 10px;
   text-align: center;
 }
+.search-card{
+  margin:100px 0px 100px 600px;
+}
+
 
 </style>
 
 </head>
 <body>
-<div id="home" class="page active">
-  <h1>🚌 Bus Ticket System</h1>
-  <button onclick="showPage('booking')">🎟️ Book Ticket</button>
-</div>
+ <script>
+$(document).ready(function(){
+$("form").on("submit", function(e) {
+    e.preventDefault(); // stop normal form submit
+
+    let from = $("input[name='from']").val();
+    let to = $("input[name='to']").val();
+    let date = $("input[name='date']").val();
+    let time = $("input[name='time']").val();
+    let route=from+" to "+to;
+
+    bookfunc(route,date,time);
+});
+});
+
+ </script>
+  <div class="display">
+  <div class="search-card">
+      <h1>Find Your Bus Ticket</h1>
+<form action="" method="post">
+      <div class="inputs">
+        <input type="text" placeholder="From (City)" name="from">
+        <input type="text" placeholder="To (City)" name="to">
+        <input type="date" name="date">
+        <input type="time" name="time">
+        <button type="submit" class="btn-search">Search Buses</button>
+      </div></form>
+</div></div>
 <div id="booking" class="page">
   <h2>Select Seats</h2>
 
@@ -74,6 +126,6 @@ td, th {
   <button onclick="window.print()">🖨️ Print</button>
   <button onclick="resetApp()">🔄 New Booking</button>
 </div>
-<script defer src="../javascript/style.js"></script>
+
 </body>
 </html>

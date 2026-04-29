@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'db.php';
 include 'login.php';
+$c1=new dbcon();
 if(isset($_POST['post2'])){
     $fname=$_POST['sfname'];
     $mname=$_POST['smname'];
@@ -15,7 +16,7 @@ if(isset($_POST['post2'])){
     $pwd=$_POST['spwd'];
     $acc=2;
     $status="inactive";
-        $c1=new dbcon();
+        
         $c2=new login($fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$pwd,$acc,$status);
         $r=$c2->insert($c1->conn);
          if($r=="duplicate"){
@@ -33,8 +34,14 @@ if(isset($_POST['post2'])){
 else if(isset($_POST['post1'])){
     $uname=$_POST['uname'];
     $pwd=$_POST['pwd'];
+    $sql="select *from login where uname='$uname' and pwd='$pwd'";
+    $r=$c1->conn->query($sql);
+    $row=$r->fetch_assoc();
+    if($row){
     header("Location:ticketbook.php");
-    
+    }else{
+        echo "<script>alert('User Not Found.')</script>";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -44,7 +51,6 @@ else if(isset($_POST['post1'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../bootstrap-5.3.4-dist/css/bootstrap.min.css">
    <link rel="stylesheet" href="../css/index.css">
-   <link rel="stylesheet" href="../css/style.css">
     <title>Bus Ticket Booking System</title>
 </head>
 <body>
