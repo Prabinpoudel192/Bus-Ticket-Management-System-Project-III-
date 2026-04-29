@@ -1,7 +1,7 @@
 let selectedSeats = [];
 let bookedSeats = ["3", "7"]; 
 
-function searchBuses() {
+/* function searchBuses() {
   const results = document.getElementById("results");
   results.innerHTML = "";
 
@@ -25,7 +25,7 @@ function searchBuses() {
 
     results.appendChild(card);
   });
-}
+}*/
 
 function selectBus(name) {
   alert("Selected Bus: " + name + " (Seat module will come next)");
@@ -39,19 +39,25 @@ function selectBus(name) {
     function logout() {
       window.location.href = "index.html";
     }
-    function showPage(pageId,seats) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.querySelector(".display").style.display = "none";
-  document.getElementById(pageId).classList.add("active");
-
-
+    function showPage(pageId,seats=0) {
+      document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+      document.querySelector(".display").innerHTML = ""; 
+      document.querySelector(".display").style.display = "none";
+      if(pageId==="passenger" || pageId==="ticket"){
+      document.getElementById(pageId).classList.add("active");
+      }
+      else if(pageId==="booking" && seats>0){
+        alert("I am here!!!");
+      document.getElementById(pageId).classList.add("active");
+      selectedSeats = [];
 
 
 let total=seats;
 
 const bus = document.getElementById("bus");
-
+bus.innerHTML="";
 let table = document.createElement("table");
+
 
 // Header
 table.innerHTML = `
@@ -94,21 +100,15 @@ for (let i = 1; i <= total; i += 2) {
         }
       };
     }
-
     td.appendChild(button);
     row.appendChild(td);
   }
-
   tbody.appendChild(row);
 }
-
-table.appendChild(tbody);
-document.querySelector(".display").innerHTML="";
-document.querySelector(".display").appendChild(table);
-document.querySelector(".display").style.display = "block";
-    }
+table.appendChild(tbody);      
+bus.appendChild(table);
+      }}
 function goToPassenger() {
-  document.querySelector("table").innerHTML="";
   if (selectedSeats.length === 0) {
     alert("Select at least one seat!");
     return;
@@ -118,14 +118,16 @@ function goToPassenger() {
 function generateTicket() {
   let name = document.getElementById("name").value;
   let age = document.getElementById("age").value;
+  let num=document.getElementById("mob").value;
 
-  if (!name || !age) {
+  if (!name || !age || !num) {
     alert("Fill all details!");
     return;
   }
   document.getElementById("ticketDetails").innerHTML = `
     <b>Name:</b> ${name} <br>
     <b>Age:</b> ${age} <br>
+    <b>Mobile:</b>${num}<br>
     <b>Seats:</b> ${selectedSeats.join(", ")}
   `;
 
@@ -192,7 +194,6 @@ function bookfunc(route,date,time){
             success: function(data){
                $("#tableTitle").text(title);
                $(".display").html(data);
-               console.log(data);
             },
             error: function(){
                 $(".display").html("Error loading data");

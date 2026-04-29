@@ -106,18 +106,18 @@ body::before {
 }
 
 /* ================= SEARCH CARD ================= */
-.search-card {
+.search-card,#passenger {
     background: rgba(0,0,0,0.5);
     padding: 25px;
     border-radius: 15px;
     width: 350px;
 }
 
-.search-card h1 {
+.search-card h1 ,#passenger h1{
     margin-bottom: 15px;
 }
 
-.search-card input {
+.search-card input,#passenger input {
     width: 100%;
     margin: 8px 0;
     padding: 10px;
@@ -125,7 +125,7 @@ body::before {
     border: none;
 }
 
-.search-card button {
+.search-card button,#passenger button {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
@@ -135,7 +135,7 @@ body::before {
     cursor: pointer;
 }
 
-.search-card button:hover {
+.search-card button:hover,#passenger button:hover {
     background: #059669;
 }
 

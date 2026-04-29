@@ -77,7 +77,7 @@ td, th {
 <body>
  <script>
 $(document).ready(function(){
-$("form").on("submit", function(e) {
+$("#search-form").on("submit", function(e) {
     e.preventDefault(); // stop normal form submit
 
     let from = $("input[name='from']").val();
@@ -94,7 +94,7 @@ $("form").on("submit", function(e) {
   <div class="display">
   <div class="search-card">
       <h1>Find Your Bus Ticket</h1>
-<form action="" method="post">
+<form action="" method="post" id="search-form">
       <div class="inputs">
         <input type="text" placeholder="From (City)" name="from">
         <input type="text" placeholder="To (City)" name="to">
@@ -112,11 +112,12 @@ $("form").on("submit", function(e) {
 </div>
 <div id="passenger" class="page">
   <h2>Passenger Details</h2>
-
+  <form action="" method="post">
   <input type="text" id="name" placeholder="Name">
   <input type="number" id="age" placeholder="Age">
-
-  <button onclick="generateTicket()">Confirm Booking</button>
+  <input type="number" id="mob" placeholder="number">
+  <button type="button" onclick="generateTicket()">Confirm Booking</button>
+</form>
 </div>
 <div id="ticket" class="page">
   <h2>🎟️ Your Ticket</h2>
