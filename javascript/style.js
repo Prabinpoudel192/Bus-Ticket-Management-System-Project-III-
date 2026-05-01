@@ -1,5 +1,6 @@
 let selectedSeats = [];
 let bookedSeats = ["3", "7"]; 
+let vehno="";
 
 /* function searchBuses() {
   const results = document.getElementById("results");
@@ -39,7 +40,7 @@ function selectBus(name) {
     function logout() {
       window.location.href = "index.html";
     }
-    function showPage(pageId,seats=0) {
+    function showPage(pageId,seats=0,vehicleno="null") {
       document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
       document.querySelector(".display").innerHTML = ""; 
       document.querySelector(".display").style.display = "none";
@@ -47,9 +48,9 @@ function selectBus(name) {
       document.getElementById(pageId).classList.add("active");
       }
       else if(pageId==="booking" && seats>0){
-        alert("I am here!!!");
       document.getElementById(pageId).classList.add("active");
       selectedSeats = [];
+      vehno=vehicleno;
 
 
 let total=seats;
@@ -115,24 +116,50 @@ function goToPassenger() {
   }
   showPage("passenger");
 }
-function generateTicket() {
-  let name = document.getElementById("name").value;
-  let age = document.getElementById("age").value;
-  let num=document.getElementById("mob").value;
-
-  if (!name || !age || !num) {
-    alert("Fill all details!");
-    return;
-  }
+//Ticket booking whole javascript start here
+function generateTicket(route,date,time,id,uname) {
+  let veh=vehno;
+  vehno="";
   document.getElementById("ticketDetails").innerHTML = `
-    <b>Name:</b> ${name} <br>
-    <b>Age:</b> ${age} <br>
-    <b>Mobile:</b>${num}<br>
     <b>Seats:</b> ${selectedSeats.join(", ")}
-  `;
+    <b>Route:</b>${route}<br>
+    <b>Date:</b>${date}<br>
+    <b>Time:</b>${time}<br>
+    <b>Vehicle NO:</b>${veh}<br>
 
-  showPage("ticket");
+  `;
+   $(document).ready(function(){
+    function loadData(url){
+        $(".display").show().html("Loading...");
+
+        $.ajax({
+            url: url,
+            type: "POST",
+             data: {
+            route: route,
+            date: date,
+            time: time,
+            id:id,
+            uname:uname,
+            veh:veh
+        },
+            success: function(data){
+               $(".display").html(data);
+            },
+            error: function(){
+                $(".display").html("Error loading data");
+                 showPage("ticket");
+            }
+        });
+    
+      }
+    
+        loadData("ticketbook2.php");
+});
+
 }
+//Ticket  booking whole js ends here
+
 function resetApp() {
   location.reload();
 }
@@ -140,14 +167,13 @@ function resetApp() {
 //Admin.php page javascript
 function adminfunc(){
  $(document).ready(function(){
-    function loadData(url, title){
+    function loadData(url){
         $(".booked").show().html("Loading...");
 
         $.ajax({
             url: url,
             type: "POST",
             success: function(data){
-                $("#tableTitle").text(title);
                 $(".booked").html(data);
             },
             error: function(){
@@ -157,21 +183,21 @@ function adminfunc(){
     
       }
     $(".btn1").click(function(){
-        loadData("dashboard.php", "Booking Details");
+        loadData("dashboard.php");
     });
 
     $(".btn2").click(function(){
-        loadData("users-active.php", "Active Users");
+        loadData("users-active.php");
     });
 
     $(".btn9").click(function(){
-        loadData("users-inactive.php", "Registration Applicants");
+        loadData("users-inactive.php");
     });
     $(".btn6").click(function(){
-      loadData("addbus.php","New Bus Registration");
+      loadData("addbus.php");
    });
     $(".btn3").click(function(){
-      loadData("bustable.php","Registered Bus List")
+      loadData("bustable.php")
     });
 
 });

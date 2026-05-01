@@ -57,6 +57,7 @@ body {
     background: linear-gradient(135deg, #1e3c72, #2a5298);
     color:black;
     overflow-x: hidden;
+    overflow-y:auto;
 }
 </style>
 </head>

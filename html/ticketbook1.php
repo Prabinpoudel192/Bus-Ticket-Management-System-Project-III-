@@ -47,7 +47,7 @@ $data="
                 <td>{$row['route']}</td>
                 <td>{$row['fare']}</td>
                 <td>{$row['dep_time']}</td>
-                <td><button onclick=\"showPage('booking',{$row['noofseat']})\">🎟️ Book Ticket</button></td>
+                <td><button onclick=\"showPage('booking',{$row['noofseat']},'{$row['vehicle_no']}')\">🎟️ Book Ticket</button></td>
               </tr>";
     
    }

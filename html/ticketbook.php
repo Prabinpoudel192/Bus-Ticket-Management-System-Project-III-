@@ -1,4 +1,8 @@
-
+  <?php
+  session_start();
+  $id=$_SESSION['u_id'];
+  $uname=$_SESSION['u_name'];
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,16 +81,23 @@ td, th {
 <body>
  <script>
 $(document).ready(function(){
+  let date="";
+  let time="";
+  let route="";
 $("#search-form").on("submit", function(e) {
-    e.preventDefault(); // stop normal form submit
-
+    e.preventDefault();
     let from = $("input[name='from']").val();
     let to = $("input[name='to']").val();
-    let date = $("input[name='date']").val();
-    let time = $("input[name='time']").val();
-    let route=from+" to "+to;
+      date = $("input[name='date']").val();
+      time = $("input[name='time']").val();
+      route=from+" to "+to;
 
     bookfunc(route,date,time);
+});
+$("#confirm").on("click", function(e) {
+    e.preventDefault();
+   generateTicket(route,date,time,<?=json_encode($id)?>,<?=json_encode($uname)?>);
+
 });
 });
 
@@ -111,12 +122,7 @@ $("#search-form").on("submit", function(e) {
   <button onclick="goToPassenger()">Continue</button>
 </div>
 <div id="passenger" class="page">
-  <h2>Passenger Details</h2>
-  <form action="" method="post">
-  <input type="text" id="name" placeholder="Name">
-  <input type="number" id="age" placeholder="Age">
-  <input type="number" id="mob" placeholder="number">
-  <button type="button" onclick="generateTicket()">Confirm Booking</button>
+  <button type="submit" id="confirm" >Confirm Booking</button>
 </form>
 </div>
 <div id="ticket" class="page">

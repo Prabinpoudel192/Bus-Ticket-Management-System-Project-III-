@@ -4,7 +4,7 @@ $data="
 <div class='table-box' style='width:100%;'>
     
     <h3 style='margin-bottom:10px;' id='tableTitle1'>
-        Registration Applicant Details
+        Ticket Booked Details
     </h3>
 
     <table style='width:100%; border-collapse:collapse;'>

@@ -38,6 +38,13 @@ else if(isset($_POST['post1'])){
     $r=$c1->conn->query($sql);
     $row=$r->fetch_assoc();
     if($row){
+     $u_id=$row['id'];
+     $u_name=$row['uname'];
+
+     session_start();
+     $_SESSION['u_id'] = $u_id;
+     $_SESSION['u_name'] = $u_name;
+     
     header("Location:ticketbook.php");
     }else{
         echo "<script>alert('User Not Found.')</script>";
@@ -64,6 +71,20 @@ else if(isset($_POST['post1'])){
                
             }
         });
+        
+$(document).ready(function(){
+$("#search-form").on("submit", function(e) {
+    e.preventDefault();
+
+    let from = $("input[name='from']").val();
+    let to = $("input[name='to']").val();
+    let date = $("input[name='date']").val();
+    let time = $("input[name='time']").val();
+    let route=from+" to "+to;
+
+    bookfunc(route,date,time);
+});
+});
         </script>
     <style>
         * {
@@ -143,17 +164,18 @@ else if(isset($_POST['post1'])){
             </h1>
             <p class="welcome-subtitle">Booking System</p>
              <section class="hero">
-    <div class="search-card">
+     <div class="display">
+  <div class="search-card">
       <h1>Find Your Bus Ticket</h1>
-
+<form action="" method="post" id="search-form">
       <div class="inputs">
-        <input type="text" placeholder="From (City)">
-        <input type="text" placeholder="To (City)">
-        <input type="date">
-      </div>
-
-      <button onclick="searchBuses()">Search Buses</button>
-    </div>
+        <input type="text" placeholder="From (City)" name="from">
+        <input type="text" placeholder="To (City)" name="to">
+        <input type="date" name="date">
+        <input type="time" name="time">
+        <button type="submit" class="btn-search">Search Buses</button>
+      </div></form>
+</div></div>
   </section>
         </div>
 
