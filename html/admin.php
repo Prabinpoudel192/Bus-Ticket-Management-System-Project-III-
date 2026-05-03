@@ -79,7 +79,7 @@ body {
 <div class="sidebar1">
     <button class="btn5">Home</button>
     <button class="btn6" onclick="adminfunc()">Add Bus</button>
-    <button class="btn7">Bookings</button>
+    <button class="btn7" onclick="adminfunc()">Bookings</button>
     <button class="btn8">Payments</button>
     <button class="btn9" onclick="adminfunc()">User Registration</button>
 </div>

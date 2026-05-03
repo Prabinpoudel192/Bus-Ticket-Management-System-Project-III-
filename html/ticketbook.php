@@ -96,7 +96,8 @@ $("#search-form").on("submit", function(e) {
 });
 $("#confirm").on("click", function(e) {
     e.preventDefault();
-   generateTicket(route,date,time,<?=json_encode($id)?>,<?=json_encode($uname)?>);
+    document.querySelector("#passenger").style.display="none";
+    generateTicket(route,date,time,<?=json_encode($id)?>,<?=json_encode($uname)?>);
 
 });
 });

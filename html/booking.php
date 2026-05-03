@@ -1,85 +1,60 @@
 <?php
-echo "<script>alert('i am here')</script>"
+include 'db.php';
+class fetchUsers extends dbcon{
+function give(){
+  $sql="select *from tickets where status='pending'";
+$r=$this->conn->query($sql);
+$data="
+<div class='table-box' style='width:100%'>
+    
+    <h3 style='margin-bottom:10px;' id='tableTitle'>
+        Unpaid Bookings
+    </h3>
+
+    <table style='width:100%; border-collapse:collapse;'>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Mobile</th>
+                <th>Company Name</th>
+                <th>Route</th>
+                <th>Seats</th>
+                <th>Travelling Date</th>
+                <th>Vehicle No</th>
+                <th>Fare</th>
+                <th>Total_fare</th>
+                <th>Tax</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>";
+   while($row=$r->fetch_assoc()){
+    $data.="<tr>
+                <td>{$row['name']}</td>
+                <td>{$row['address']}</td>
+                <td>{$row['mobile']}</td>
+                <td>{$row['company_name']}</td>
+                <td>{$row['route']}</td>
+                <td>{$row['seat']}</td>
+                <td>{$row['travel_date']}</td>
+                <td>{$row['veh_no']}</td>
+                <td>{$row['fare']}</td>
+                <td>{$row['total_fare']}</td>
+                <td>{$row['tax']}</td>
+                <td>{$row['total']}</td>
+                <td>{$row['status']}</td>
+                <td><button class='button' id='approve'>Approve</button><br><br><button class='button' id='delete'>Delete</button></td>
+              </tr>";
+    
+   }
+   $data.="</tbody></table>";
+    echo $data;
+}
+}
+$c2=new fetchUsers();
+$c2->give();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Booking Page</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  text-align: center;
-  margin: 0;
-}
-</style>
-
-</head>
-<body>
-
-<h1>🚌 Select Your Seats</h1>
-
-<!-- Legend -->
-<div class="legend">
-  <span><div class="box" style="background:#ccc;"></div> Available</span>
-  <span><div class="box" style="background:green;"></div> Selected</span>
-  <span><div class="box" style="background:red;"></div> Booked</span>
-</div>
-
-<!-- Seat Layout -->
-<div class="bus" id="bus"></div>
-
-<button onclick="proceed()">Continue</button>
-
-<script>
-// Demo booked seats
-let bookedSeats = ["2", "5", "9"];
-let selectedSeats = [];
-
-const bus = document.getElementById("bus");
-
-// Generate seats
-for (let i = 1; i <= 16; i++) {
-  let seat = document.createElement("div");
-  seat.classList.add("seat");
-  seat.innerText = i;
-
-  // If already booked
-  if (bookedSeats.includes(i.toString())) {
-    seat.classList.add("booked");
-  } else {
-    seat.onclick = function () {
-      seat.classList.toggle("selected");
-
-      let num = seat.innerText;
-
-      if (selectedSeats.includes(num)) {
-        selectedSeats = selectedSeats.filter(s => s !== num);
-      } else {
-        selectedSeats.push(num);
-      }
-    };
-  }
-
-  bus.appendChild(seat);
-}
-
-// Continue button
-function proceed() {
-  if (selectedSeats.length === 0) {
-    alert("Please select at least one seat!");
-    return;
-  }
-
-  // Store seats (for next page)
-  localStorage.setItem("selectedSeats", JSON.stringify(selectedSeats));
-
-  // Redirect
-  window.location.href = "passenger.html";
-}
-</script>
-
-</body>
-</html>

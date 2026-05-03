@@ -141,7 +141,8 @@ function generateTicket(route,date,time,id,uname) {
             time: time,
             id:id,
             uname:uname,
-            veh:veh
+            veh:veh,
+            seat:selectedSeats
         },
             success: function(data){
                $(".display").html(data);
@@ -198,6 +199,9 @@ function adminfunc(){
    });
     $(".btn3").click(function(){
       loadData("bustable.php")
+    });
+     $(".btn7").click(function(){
+      loadData("booking.php")
     });
 
 });
