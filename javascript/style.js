@@ -64,18 +64,27 @@ let table = document.createElement("table");
 table.innerHTML = `
   <thead>
     <tr>
-      <th>Side A</th>
-      <th>Side B</th>
+      <th colspan="2">Side A</th>
+      <th class="mid"></th>
+      <th colspan="2">Side B</th>
     </tr>
   </thead>
 `;
 
 let tbody = document.createElement("tbody");
 
-for (let i = 1; i <= total; i += 2) {
+for (let i = 1; i <= total; i += 4) {
   let row = document.createElement("tr");
 
-  for (let j = 0; j < 2; j++) {
+  for (let j = 0; j < 4; j++) {
+
+    // 👉 aisle between 2nd and 3rd seat
+    if (j === 2) {
+      let aisle = document.createElement("td");
+      aisle.innerHTML = "&nbsp;";
+      row.appendChild(aisle);
+    }
+
     let seatNum = i + j;
     if (seatNum > total) break;
 
@@ -84,15 +93,16 @@ for (let i = 1; i <= total; i += 2) {
 
     button.id = "btn" + seatNum;
     button.innerText = seatNum;
+    button.classList.add("button");
 
-    if (bookedSeats.includes(seatNum.toString())) {
+    const num = seatNum.toString();
+
+    if (bookedSeats.includes(num)) {
       button.classList.add("booked");
       button.disabled = true;
     } else {
       button.onclick = function () {
         button.classList.toggle("selected");
-
-        let num = seatNum.toString();
 
         if (selectedSeats.includes(num)) {
           selectedSeats = selectedSeats.filter(s => s !== num);
@@ -101,12 +111,15 @@ for (let i = 1; i <= total; i += 2) {
         }
       };
     }
+
     td.appendChild(button);
     row.appendChild(td);
   }
+
   tbody.appendChild(row);
 }
-table.appendChild(tbody);      
+
+table.appendChild(tbody);
 bus.appendChild(table);
       }}
 function goToPassenger() {

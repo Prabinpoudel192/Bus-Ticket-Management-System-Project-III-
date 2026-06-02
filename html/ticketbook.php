@@ -73,6 +73,28 @@ td, th {
 .search-card{
   margin:100px 0px 100px 600px;
 }
+.mid{
+  background:white;
+  width:30%;
+}
+.button{
+  height:40px;
+  width:100%;
+  border-radius:15px;
+}
+#cbutton{
+   width: auto;
+  height: 42px;
+  padding:5px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  background-color: #f2f2f2;
+  color: #222;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
 
 
 </style>
@@ -120,7 +142,7 @@ $("#confirm").on("click", function(e) {
 
   <div class="bus" id="bus"></div>
 
-  <button onclick="goToPassenger()">Continue</button>
+  <button onclick="goToPassenger()" id="cbutton">Continue</button>
 </div>
 <div id="passenger" class="page">
   <button type="submit" id="confirm" >Confirm Booking</button>
