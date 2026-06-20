@@ -1,33 +1,6 @@
 let selectedSeats = [];
 let bookedSeats = ["3", "7"]; 
 let vehno="";
-
-/* function searchBuses() {
-  const results = document.getElementById("results");
-  results.innerHTML = "";
-
-  const dummyBuses = [
-    { name: "Express Deluxe", from: "Kathmandu", to: "Bharatpur", time: "10:00 AM", price: 800 },
-    { name: "Super Fast", from: "Pokhara", to: "Chitwan", time: "2:00 PM", price: 950 },
-    { name: "Night Rider", from: "Butwal", to: "Kathmandu", time: "9:00 PM", price: 1200 }
-  ];
-
-  dummyBuses.forEach(bus => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <h3>${bus.name}</h3>
-      <p>${bus.from} → ${bus.to}</p>
-      <p>Departure: ${bus.time}</p>
-      <p>Price: Rs ${bus.price}</p>
-      <button class="book-btn" onclick="selectBus('${bus.name}')">View Seats</button>
-    `;
-
-    results.appendChild(card);
-  });
-}*/
-
 function selectBus(name) {
   alert("Selected Bus: " + name + " (Seat module will come next)");
 }
@@ -77,8 +50,6 @@ for (let i = 1; i <= total; i += 4) {
   let row = document.createElement("tr");
 
   for (let j = 0; j < 4; j++) {
-
-    // 👉 aisle between 2nd and 3rd seat
     if (j === 2) {
       let aisle = document.createElement("td");
       aisle.innerHTML = "&nbsp;";
@@ -130,7 +101,7 @@ function goToPassenger() {
   showPage("passenger");
 }
 //Ticket booking whole javascript start here
-function generateTicket(route,date,time,id,uname) {
+function generateTicket(route,date,time,id,uname,exptime) {
   let veh=vehno;
   vehno="";
   document.getElementById("ticketDetails").innerHTML = `
@@ -141,7 +112,7 @@ function generateTicket(route,date,time,id,uname) {
     <b>Vehicle NO:</b>${veh}<br>
 
   `;
-   $(document).ready(function(){
+     $(document).ready(function(){
     function loadData(url){
         $(".display").show().html("Loading...");
 
@@ -155,7 +126,9 @@ function generateTicket(route,date,time,id,uname) {
             id:id,
             uname:uname,
             veh:veh,
-            seat:selectedSeats
+            seat:selectedSeats,
+            exp:exptime
+
         },
             success: function(data){
                $(".display").html(data);
@@ -248,3 +221,24 @@ function bookfunc(route,date,time){
         loadData("ticketbook1.php", "Available Buses");
 });
 }
+
+function unconfirmed(){
+  
+  
+        $(".display").show().html("Loading...");
+
+        $.ajax({
+            url: "unconfirmed.php",
+            type: "POST",
+            success: function(data){
+               $(".display").hide();
+            },
+            error: function(){
+                $(".display").html("Error loading data");
+            }
+        });
+  
+      }
+      setInterval(unconfirmed,60000);
+
+

@@ -119,11 +119,12 @@ $("#search-form").on("submit", function(e) {
 $("#confirm").on("click", function(e) {
     e.preventDefault();
     document.querySelector("#passenger").style.display="none";
-    generateTicket(route,date,time,<?=json_encode($id)?>,<?=json_encode($uname)?>);
+    let exptime=<?=json_encode(time()+120)?>;
+    
+    generateTicket(route,date,time,<?=json_encode($id)?>,<?=json_encode($uname)?>,exptime);
 
 });
 });
-
  </script>
   <div class="display">
   <div class="search-card">

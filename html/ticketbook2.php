@@ -3,8 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'db.php';
 class fetchBus extends dbcon{
-    public $route,$date,$time,$id,$uname,$veh,$seat;
-function __construct($route,$date,$time,$id,$uname,$veh,$seat){ 
+    public $route,$date,$time,$id,$uname,$veh,$seat,$exp;
+function __construct($route,$date,$time,$id,$uname,$veh,$seat,$exp){ 
    parent::__construct();
    $this->route=$route;
    $this->date=$date;
@@ -13,6 +13,7 @@ function __construct($route,$date,$time,$id,$uname,$veh,$seat){
    $this->uname=$uname;
    $this->veh=$veh;
    $this->seat=$seat;
+   $this->exp=$exp;
 }
 function give(){
  $login=$this->conn->query("select fname,lname,address,mobile from login where id=$this->id")->fetch_assoc();
@@ -36,9 +37,9 @@ function give(){
     $fare = $bus['fare'];
     $fullname=$login['fname']." ".$login['lname'];
     $sql = "INSERT INTO tickets 
-    (name, address, mobile, company_name, route, seat, travel_date, veh_no, fare, total_fare, tax,status)
+    (name, address, mobile, company_name, route, seat, travel_date, veh_no, fare, total_fare, tax,status,expire)
      VALUES 
-    ('$fullname', '$address', '$mobile', '$company', '$route', '$str', '$this->date', '$this->veh', '$fare', '$total_fare', '$tax','pending')";
+    ('$fullname', '$address', '$mobile', '$company', '$route', '$str', '$this->date', '$this->veh', '$fare', '$total_fare', '$tax','pending',$this->exp)";
     $row=$this->conn->query($sql);
     if(!$row){
         die("Ticket can't be confirmed, Try again!!!");
@@ -103,6 +104,7 @@ $id=$_POST['id'];
 $uname=$_POST['uname'];
 $veh=$_POST['veh'];
 $seat=$_POST['seat'];
-$c2=new fetchBus($route,$date,$time,$id,$uname,$veh,$seat);
+$exp=$_POST['exp'];
+$c2=new fetchBus($route,$date,$time,$id,$uname,$veh,$seat,$exp);
 $c2->give();
 ?>
