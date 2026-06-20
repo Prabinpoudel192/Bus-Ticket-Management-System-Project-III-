@@ -112,7 +112,7 @@ $("#search-form").on("submit", function(e) {
     let to = $("input[name='to']").val();
       date = $("input[name='date']").val();
       time = $("input[name='time']").val();
-      route=from+" to "+to;
+      route=from+"-"+to;
 
     bookfunc(route,date,time);
 });
@@ -133,8 +133,6 @@ $("#confirm").on("click", function(e) {
       <div class="inputs">
         <input type="text" placeholder="From (City)" name="from">
         <input type="text" placeholder="To (City)" name="to">
-        <input type="date" name="date">
-        <input type="time" name="time">
         <button type="submit" class="btn-search">Search Buses</button>
       </div></form>
 </div></div>

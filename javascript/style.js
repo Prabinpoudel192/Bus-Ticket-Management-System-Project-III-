@@ -24,7 +24,20 @@ function selectBus(name) {
       document.getElementById(pageId).classList.add("active");
       selectedSeats = [];
       vehno=vehicleno;
-
+      $.ajax({
+            url:"bookedandreserved.php",
+            type: "POST",
+             data: {
+            vehno: vehno,
+            
+        },
+            success: function(data){
+              alert(data);
+            },
+            error: function(){
+                $(".display").html("Error loading data");
+            }
+        });
 
 let total=seats;
 
@@ -225,17 +238,12 @@ function bookfunc(route,date,time){
 function unconfirmed(){
   
   
-        $(".display").show().html("Loading...");
+       
 
         $.ajax({
             url: "unconfirmed.php",
             type: "POST",
-            success: function(data){
-               $(".display").hide();
-            },
-            error: function(){
-                $(".display").html("Error loading data");
-            }
+          
         });
   
       }

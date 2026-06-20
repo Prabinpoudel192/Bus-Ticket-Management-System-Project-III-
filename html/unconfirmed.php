@@ -11,13 +11,6 @@ $present = time();
 $sql = "DELETE FROM tickets WHERE expire < $present";
 
 $r = $this->conn->query($sql);
-
-if (!$r) {
-    echo "ERROR"; 
-    return;
-}
-
-echo "OK";
 }
 }
 

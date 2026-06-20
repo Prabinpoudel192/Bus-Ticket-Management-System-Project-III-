@@ -3,15 +3,13 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'db.php';
 class fetchBus extends dbcon{
-    public $route,$date,$time;
-function __construct($route,$date,$time){ 
+    public $route;
+function __construct($route){ 
    parent::__construct();
    $this->route=$route;
-   $this->date=$date;
-   $this->time=$time;
 }
 function give(){
-  $sql="select company_name,vehicle_no,noofseat,bus_type,route,fare,dep_time from bus where route='$this->route' and dep_time='$this->time'";
+  $sql="select company_name,vehicle_no,noofseat,bus_type,route,fare,dep_time from bus where route='$this->route'";
   $r=$this->conn->query($sql);
   if(!$r){
     die("Error in fetching data");
@@ -56,8 +54,6 @@ $data="
 }
 }
 $route=$_POST['route'];
-$date=$_POST['date'];
-$time=$_POST['time'];
-$c2=new fetchBus($route,$date,$time);
+$c2=new fetchBus($route);
 $c2->give();
 ?>
