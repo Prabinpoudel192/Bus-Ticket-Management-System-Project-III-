@@ -137,10 +137,180 @@ $("#search-form").on("submit", function(e) {
           gap: 4px;  
           margin:0;             
               }
+<!--test page css -->
+.hero-section{
+    text-align:center;
+    padding:60px 20px;
+    color:white;
+}
 
+.hero-section h1{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.hero-section p{
+    opacity:0.9;
+}
+
+.hero-btn{
+    padding:12px 25px;
+    margin:10px;
+    border:none;
+    cursor:pointer;
+    background:#ffcc00;
+    font-weight:bold;
+    border-radius:8px;
+}
+
+.hero-btn.secondary{
+    background:#00c2ff;
+    color:white;
+}
+
+.search-preview{
+    margin:20px auto;
+    width:80%;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.preview-box input{
+    padding:10px;
+    margin:5px;
+}
+
+.preview-box button{
+    padding:10px 15px;
+    background:green;
+    color:white;
+    border:none;
+}
+
+.ad-section{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin:30px;
+    flex-wrap:wrap;
+}
+
+.ad-card{
+    background:rgba(255,255,255,0.9);
+    border-radius:10px;
+    width:500px;
+    height:500px;
+    text-align:center;
+    font-weight:bold;
+}
+#pra1,#pra2,#pra3{
+    border-radius:10px;
+    height:100%;
+    width:100%;
+    object-fit:cover;
+}
+
+.features{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin:30px;
+    flex-wrap:wrap;
+    color:white;
+}
+
+.feature{
+    background:rgba(0,0,0,0.3);
+    padding:15px 20px;
+    border-radius:10px;
+}
+<!--test page css end -->
         
        
     </style>
+    <script>
+let images = [
+  "../images/ad2.webp",
+  "../images/ad3.webp",
+  "../images/ad4.jpeg",
+   "../images/ad5.avif",
+  "../images/ad6.webp",
+  "../images/ad7.webp",
+  "../images/ad8.webp",
+   "../images/ad9.webp",
+  "../images/ad10.webp",
+  "../images/ad11.webp",
+  "../images/ad12.webp"
+];
+
+let index = 0;
+
+setInterval(() => {
+    index = (index + 1) % images.length;
+    document.getElementById("pra1").src = images[(index+11)%images.length];
+    }, 10000);
+    setInterval(()=>{
+      document.getElementById("pra2").src= images[(index+17)%images.length];  
+    },13000);
+  setInterval(()=>{
+    document.getElementById("pra3").src= images[(index+19)%images.length];
+  },8000);  
+    
+
+
+</script>
+
+    <!--test page -->
+    <!-- ================= HOME / LANDING PAGE ================= -->
+<div class="welcome-screen" id="welcome">
+
+    <!-- HERO SECTION -->
+    <div class="hero-section">
+        <h1>Fast & Reliable Bus Booking</h1>
+        <p>Book your tickets instantly, choose your seat, and travel stress-free.</p>
+    </div>
+
+    <!-- SEARCH PREVIEW (marketing only, no backend change) -->
+    <div class="search-preview">
+        <h3>Search Your Route</h3>
+        <div class="preview-box">
+            <input type="text" placeholder="From">
+            <input type="text" placeholder="To">
+            <input type="date">
+            <input type="time">
+            <button onclick="login()">Search Buses</button>
+        </div>
+        <small>*Login required to book tickets</small>
+    </div>
+
+    <!-- ADVERTISEMENT BANNER -->
+    <div class="ad-section">
+        <div class="ad-card">
+        <img id="pra1" src="../images/ad1.webp">
+        </div>
+        <div class="ad-card">
+        <img id="pra2" src="../images/ad5.avif">
+        </div>
+        <div class="ad-card">
+        <img id="pra3" src="../images/ad10.webp">
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features">
+        <div class="feature">Features of this websites</div>
+        <div class="feature">Features of this websites</div>
+        <div class="feature">Features of this websites</div>
+        <div class="feature">Features of this websites</div>
+    </div>
+
+</div>
+<!-- ================= HOME END ================= -->
+
+
+    <!--test page end -->
 
     <!-- Animated Background -->
     <div class="bg-animation">
@@ -158,7 +328,7 @@ $("#search-form").on("submit", function(e) {
 
     <div class="main-container">
         <!-- Welcome Screen -->
-        <div class="welcome-screen" id="welcome">
+       <!-- <div class="welcome-screen" id="welcome">
             <h1 class="welcome-title icon-cart">
                 Bus Ticket
             </h1>
@@ -177,7 +347,7 @@ $("#search-form").on("submit", function(e) {
       </div></form>
 </div></div>
   </section>
-        </div>
+        </div>-->
 
         <!-- Login Form -->
         <div class="form-container" id="pra4">

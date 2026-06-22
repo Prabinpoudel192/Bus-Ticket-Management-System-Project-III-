@@ -111,7 +111,6 @@ $("#search-form").on("submit", function(e) {
     let from = $("input[name='from']").val();
     let to = $("input[name='to']").val();
       date = $("input[name='date']").val();
-      time = $("input[name='time']").val();
       route=from+"-"+to;
 
     bookfunc(route,date,time);
@@ -119,7 +118,7 @@ $("#search-form").on("submit", function(e) {
 $("#confirm").on("click", function(e) {
     e.preventDefault();
     document.querySelector("#passenger").style.display="none";
-    let exptime=<?=json_encode(time()+120)?>;
+    let exptime=<?=json_encode(time()+6000)?>;
     
     generateTicket(route,date,time,<?=json_encode($id)?>,<?=json_encode($uname)?>,exptime);
 
@@ -133,6 +132,7 @@ $("#confirm").on("click", function(e) {
       <div class="inputs">
         <input type="text" placeholder="From (City)" name="from">
         <input type="text" placeholder="To (City)" name="to">
+        <input type="date" name="date">
         <button type="submit" class="btn-search">Search Buses</button>
       </div></form>
 </div></div>

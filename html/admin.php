@@ -16,7 +16,7 @@ if(isset($_POST['post3'])){
     $fare=$_POST['fare'];
     $arr_time=$_POST['arr_time'];
     $dep_time=$_POST['dep_time'];
-    $route=$start." to ".$end;
+    $route=$start."-".$end;
         $c1=new dbcon();
         $c2=new registerbus($company_name,$owner_name,$engine_no,$chassis_no,$vehicle_no,$seats,$bus_type,$route,$fare,$arr_time,$dep_time);
         $r=$c2->insert($c1->conn);
