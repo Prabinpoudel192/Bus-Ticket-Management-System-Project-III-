@@ -32,7 +32,8 @@ function selectBus(name) {
             
         },
             success: function(data){
-              alert(data);
+              selectedSeats=data;
+              alert("This is value of selected Seats"+selectedSeats);
             },
             error: function(){
                 $(".display").html("Error loading data");
