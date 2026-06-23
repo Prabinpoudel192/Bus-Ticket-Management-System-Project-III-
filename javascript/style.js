@@ -1,4 +1,5 @@
 let selectedSeats = [];
+let tempBooked=[];
 let bookedSeats = ["3", "7"]; 
 let vehno="";
 function selectBus(name) {
@@ -31,14 +32,21 @@ function selectBus(name) {
             vehno: vehno,
             
         },
+            dataType:"json",
             success: function(data){
-              selectedSeats=data;
-              alert("This is value of selected Seats"+selectedSeats);
+              tempBooked = [...new Set(
+            data
+           .flatMap(item => item.seat.split(','))
+           .map(seat => seat.trim())
+             )];
+             createSeats();
             },
             error: function(){
                 $(".display").html("Error loading data");
             }
         });
+      }
+function createSeats(){
 
 let total=seats;
 
@@ -85,7 +93,11 @@ for (let i = 1; i <= total; i += 4) {
     if (bookedSeats.includes(num)) {
       button.classList.add("booked");
       button.disabled = true;
-    } else {
+    }else if(tempBooked.includes(String(num))){
+      button.classList.toggle("selected");
+      button.disabled=true;
+    }
+     else {
       button.onclick = function () {
         button.classList.toggle("selected");
 
@@ -106,6 +118,7 @@ for (let i = 1; i <= total; i += 4) {
 
 table.appendChild(tbody);
 bus.appendChild(table);
+tempBooked=[];
       }}
 function goToPassenger() {
   if (selectedSeats.length === 0) {

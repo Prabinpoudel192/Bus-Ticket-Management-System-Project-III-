@@ -57,6 +57,7 @@ else if(isset($_POST['post1'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../bootstrap-5.3.4-dist/css/bootstrap.min.css">
+    <script src="../javascript/jquery.js"></script>
    <link rel="stylesheet" href="../css/index.css">
     <title>Bus Ticket Booking System</title>
 </head>
