@@ -104,7 +104,6 @@ td, th {
  <script>
 $(document).ready(function(){
   let date="";
-  let time="";
   let route="";
 $("#search-form").on("submit", function(e) {
     e.preventDefault();
@@ -113,14 +112,14 @@ $("#search-form").on("submit", function(e) {
       date = $("input[name='date']").val();
       route=from+"-"+to;
 
-    bookfunc(route,date,time);
+    bookfunc(route,date);
 });
-$("#confirm").on("click", function(e) {
+
+$("#cbutton").on("click", function(e) {
     e.preventDefault();
-    document.querySelector("#passenger").style.display="none";
     let exptime=<?=json_encode(time()+6000)?>;
-    
-    generateTicket(route,date,time,<?=json_encode($id)?>,<?=json_encode($uname)?>,exptime);
+    $("#booking").hide();
+    generateTicket(route,date,<?=json_encode($id)?>,<?=json_encode($uname)?>,exptime);
 
 });
 });
@@ -141,12 +140,12 @@ $("#confirm").on("click", function(e) {
 
   <div class="bus" id="bus"></div>
 
-  <button onclick="goToPassenger()" id="cbutton">Continue</button>
+  <button id="cbutton">Confirm</button>
 </div>
-<div id="passenger" class="page">
+<!--<div id="passenger" class="page">
   <button type="submit" id="confirm" >Confirm Booking</button>
 </form>
-</div>
+</div>-->
 <div id="ticket" class="page">
   <h2>🎟️ Your Ticket</h2>
 

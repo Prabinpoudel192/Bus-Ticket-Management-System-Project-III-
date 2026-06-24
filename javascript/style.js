@@ -128,14 +128,13 @@ function goToPassenger() {
   showPage("passenger");
 }
 //Ticket booking whole javascript start here
-function generateTicket(route,date,time,id,uname,exptime) {
+function generateTicket(route,date,id,uname,exptime) {
   let veh=vehno;
   vehno="";
   document.getElementById("ticketDetails").innerHTML = `
     <b>Seats:</b> ${selectedSeats.join(", ")}
     <b>Route:</b>${route}<br>
     <b>Date:</b>${date}<br>
-    <b>Time:</b>${time}<br>
     <b>Vehicle NO:</b>${veh}<br>
 
   `;
@@ -149,7 +148,6 @@ function generateTicket(route,date,time,id,uname,exptime) {
              data: {
             route: route,
             date: date,
-            time: time,
             id:id,
             uname:uname,
             veh:veh,
@@ -221,7 +219,7 @@ function adminfunc(){
 }
 
 //ticketbook.php all javascript
-function bookfunc(route,date,time){
+function bookfunc(route,date){
  $(document).ready(function(){
     function loadData(url, title){
         $(".display").show().html("Loading...");
@@ -231,8 +229,7 @@ function bookfunc(route,date,time){
             type: "POST",
              data: {
             route: route,
-            date: date,
-            time: time
+            date: date
         },
             success: function(data){
                $("#tableTitle").text(title);

@@ -3,12 +3,11 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'db.php';
 class fetchBus extends dbcon{
-    public $route,$date,$time,$id,$uname,$veh,$seat,$exp;
-function __construct($route,$date,$time,$id,$uname,$veh,$seat,$exp){ 
+    public $route,$date,$id,$uname,$veh,$seat,$exp;
+function __construct($route,$date,$id,$uname,$veh,$seat,$exp){ 
    parent::__construct();
    $this->route=$route;
    $this->date=$date;
-   $this->time=$time;
    $this->id=$id;
    $this->uname=$uname;
    $this->veh=$veh;
@@ -99,12 +98,11 @@ $data = "
 }}
 $route=$_POST['route'];
 $date=$_POST['date'];
-$time=$_POST['time'];
 $id=$_POST['id'];
 $uname=$_POST['uname'];
 $veh=$_POST['veh'];
 $seat=$_POST['seat'];
 $exp=$_POST['exp'];
-$c2=new fetchBus($route,$date,$time,$id,$uname,$veh,$seat,$exp);
+$c2=new fetchBus($route,$date,$id,$uname,$veh,$seat,$exp);
 $c2->give();
 ?>
