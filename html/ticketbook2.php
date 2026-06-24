@@ -78,16 +78,12 @@ $data = "
     <hr>
 
     <div style='text-align:center; margin-top:15px;'>
-
-        <button style='padding:10px 15px; background:green; color:white; border:none; cursor:pointer;'>
-            Reserve Ticket
-        </button>
-
         <button style='padding:10px 15px; background:#ff6600; color:white; border:none; cursor:pointer; margin-left:10px;'>
             Pay via eSewa
         </button>
 
     </div>
+    
 
 </div>
 ";
