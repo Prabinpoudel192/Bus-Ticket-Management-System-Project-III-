@@ -40,6 +40,7 @@ function give(){
      VALUES 
     ('$fullname', '$address', '$mobile', '$company', '$route', '$str', '$this->date', '$this->veh', '$fare', '$total_fare', '$tax','pending',$this->exp)";
     $row=$this->conn->query($sql);
+    $insert_val=$this->conn->insert_id;
     if(!$row){
         die("Ticket can't be confirmed, Try again!!!");
     }else{
@@ -78,7 +79,7 @@ $data = "
     <hr>
 
     <div style='text-align:center; margin-top:15px;'>
-        <button style='padding:10px 15px; background:#ff6600; color:white; border:none; cursor:pointer; margin-left:10px;'>
+        <button style='padding:10px 15px; background:#ff6600; color:white; border:none; cursor:pointer; margin-left:10px;' onclick='esewa.php?id=$insert_id'>
             Pay via eSewa
         </button>
 
