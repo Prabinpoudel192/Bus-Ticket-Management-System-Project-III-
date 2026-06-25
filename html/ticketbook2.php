@@ -79,9 +79,12 @@ $data = "
     <hr>
 
     <div style='text-align:center; margin-top:15px;'>
-        <button style='padding:10px 15px; background:#ff6600; color:white; border:none; cursor:pointer; margin-left:10px;' onclick='esewa.php?id=$insert_id'>
+        <a href='esewa.php?id=$insert_val'>
+        <button
+            style='padding:10px 15px; background:#ff6600; color:white; border:none; cursor:pointer; margin-left:10px;'>
             Pay via eSewa
         </button>
+    </a>
 
     </div>
     
