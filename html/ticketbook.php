@@ -2,6 +2,11 @@
   session_start();
   $id=$_SESSION['u_id'];
   $uname=$_SESSION['u_name'];
+  $from = $_POST['from'] ?? '';
+  $to = $_POST['to'] ?? '';
+  $date = $_POST['date'] ?? '';
+
+  $route = $from . "-" . $to;
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -103,17 +108,16 @@ td, th {
 <body>
  <script>
 $(document).ready(function(){
-  let date="";
-  let route="";
-$("#search-form").on("submit", function(e) {
-    e.preventDefault();
-    let from = $("input[name='from']").val();
-    let to = $("input[name='to']").val();
-      date = $("input[name='date']").val();
-      route=from+"-"+to;
+  let date=<?=json_encode($date)?>;
+  let route=<?=json_encode($route)?>;
+  if(route !== "-" && date !== ""){
+        bookfunc(route,date);
+    }
+  else{
+    alert("Something went wrong");
+    window.location.href="index.php";
+  }
 
-    bookfunc(route,date);
-});
 
 $("#cbutton").on("click", function(e) {
     e.preventDefault();
@@ -126,14 +130,7 @@ $("#cbutton").on("click", function(e) {
  </script>
   <div class="display">
   <div class="search-card">
-      <h1>Find Your Bus Ticket</h1>
-<form action="" method="post" id="search-form">
-      <div class="inputs">
-        <input type="text" placeholder="From (City)" name="from">
-        <input type="text" placeholder="To (City)" name="to">
-        <input type="date" name="date">
-        <button type="submit" class="btn-search">Search Buses</button>
-      </div></form>
+      
 </div></div>
 <div id="booking" class="page">
   <h2>Select Seats</h2>
@@ -142,10 +139,7 @@ $("#cbutton").on("click", function(e) {
 
   <button id="cbutton">Confirm</button>
 </div>
-<!--<div id="passenger" class="page">
-  <button type="submit" id="confirm" >Confirm Booking</button>
-</form>
-</div>-->
+
 <div id="ticket" class="page">
   <h2>🎟️ Your Ticket</h2>
 

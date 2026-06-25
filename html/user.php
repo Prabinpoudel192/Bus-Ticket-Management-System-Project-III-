@@ -49,10 +49,12 @@ overflow-x:hidden;
 <p>Book buses, discover tours, and travel smarter.</p>
 
 <div class="search-box">
-<input type="text" placeholder="From">
-<input type="text" placeholder="To">
-<input type="date">
-<button>Search Bus</button>
+<form action="ticketbook.php" method="POST" id="search-form">
+<input type="text" name="from" placeholder="From">
+<input type="text" name="to" placeholder="To">
+<input type="date" name="date">
+<button type="submit" class="btn-search">Search Buses</button>
+</form>
 </div>
 
 </div>
@@ -108,7 +110,7 @@ overflow-x:hidden;
 <div class="packages">
 
 <div class="package">
-<img src="../imges/ad1.webp">
+<img src="../images/ad1.webp">
 <div class="package-content">
 <h3>Mustang Tour</h3>
 <p>⭐ 4.9 Rating</p>
@@ -117,7 +119,7 @@ overflow-x:hidden;
 </div>
 
 <div class="package">
-<img src="../imges/ad2.webp">
+<img src="../images/ad2.webp">
 <div class="package-content">
 <h3>Pokhara Retreat</h3>
 <p>⭐ 4.8 Rating</p>
@@ -242,6 +244,19 @@ counter.innerText=target;
 
 update();
 
+});
+$(document).ready(function(){
+  let date="";
+  let route="";
+$("#search-form").on("submit", function(e) {
+    e.preventDefault();
+    let from = $("input[name='from']").val();
+    let to = $("input[name='to']").val();
+      date = $("input[name='date']").val();
+      route=from+"-"+to;
+
+    sendData(date,route);
+});
 });
 
 </script>

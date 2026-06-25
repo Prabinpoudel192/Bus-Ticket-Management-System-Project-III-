@@ -45,7 +45,7 @@ else if(isset($_POST['post1'])){
      $_SESSION['u_id'] = $u_id;
      $_SESSION['u_name'] = $u_name;
      
-    header("Location:ticketbook.php");
+    header("Location:user.php");
     }else{
         echo "<script>alert('User Not Found.')</script>";
     }

@@ -232,6 +232,8 @@ function bookfunc(route,date){
             date: date
         },
             success: function(data){
+              alert(" ajax is successful");
+              console.log(data);
                $("#tableTitle").text(title);
                $(".display").html(data);
             },
