@@ -41,6 +41,29 @@ $signature = base64_encode($s);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
+    <style>
+      #pra15{
+      height:auto;
+      width:200px;
+      margin:100px 0px 0px 400px;
+      padding:20px;
+      background-color:black;
+      border:5px solid black;
+       }
+      #pra15 form{
+       font-size: 25px;
+       font-weight:bold;
+       border-radius:30px;
+       text-align:center;
+       background-color:black;
+        }
+      #pra15 form label{
+       font-weight:bold;
+       font-size:25px;
+       color:white;
+        }
+
+    </style>
     <title>Esewa Payment</title>
 </head>
 <body>
@@ -52,7 +75,7 @@ $signature = base64_encode($s);
  <input type="hidden" id="product_code" name="product_code" value ="EPAYTEST" readonly>
  <input type="hidden" id="product_service_charge" name="product_service_charge" value="0" readonly>
  <input type="hidden" id="product_delivery_charge" name="product_delivery_charge" value="0" readonly>
- <input type="hidden" id="total_amount" name="total_amount" value="<?= $total ?>" readonly>
+ <label>Tax-Amount:</label><br><input type="text" id="total_amount" name="total_amount" value="<?= $total ?>" readonly>
  <input type="hidden" id="success_url" name="success_url" value="<?= "https://localhost/projectII/Codes/sucess.php?id=$id" ?>" readonly>
  <input type="hidden" id="failure_url" name="failure_url" value="<?= "https://localhost/projectII/Codes/user.php" ?>" readonly>
  <input type="hidden" id="signed_field_names" name="signed_field_names" value="<?= $signed_field_names ?>" readonly>
