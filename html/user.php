@@ -1,9 +1,17 @@
+  <?php
+  session_start();
+  $id=$_SESSION['u_id'];
+  $uname=$_SESSION['u_name'];
+  $mobile=$_SESSION['u_mobile'];
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../css/user.css">
+ <script src="../javascript/jquery.js"></script>
+  <script src="../javascript/style.js"></script>
 <title>Bus Ticket Management System</title>
 
 <style>
@@ -31,12 +39,12 @@ overflow-x:hidden;
 <div class="logo"><img src="../images/logobusticket.png">Ticket And Destination Booking</div>
 
 <nav>
-<a href="#">Home</a>
+<a href="user.php">Home</a>
 <a href="#">Book Ticket</a>
-<a href="#">My Tickets</a>
+<a href="#" id="showTickets">My Tickets</a>
 <a href="#">Tours</a>
 <a href="#">Profile</a>
-<a href="#">Logout</a>
+<a href="index.php">Logout</a>
 </nav>
 </header>
 
@@ -246,17 +254,23 @@ update();
 
 });
 $(document).ready(function(){
-  let date="";
-  let route="";
-$("#search-form").on("submit", function(e) {
-    e.preventDefault();
-    let from = $("input[name='from']").val();
-    let to = $("input[name='to']").val();
-      date = $("input[name='date']").val();
-      route=from+"-"+to;
-
-    sendData(date,route);
-});
+$("#showTickets").on("click", function(e) {
+ $.ajax({
+            url: "myTickets.php",
+            type: "POST",
+             data: {
+             uname: <?= json_encode($uname) ?>,
+             mobile:<?= json_encode($mobile) ?>
+        },
+            success: function(data){
+               $(".hero").html(data);
+            },
+            error: function(){
+                $(".display").html("Error loading data");
+            }
+        });
+    
+      });
 });
 
 </script>

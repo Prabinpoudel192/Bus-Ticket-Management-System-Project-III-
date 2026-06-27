@@ -1,4 +1,9 @@
 <?php
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+echo "<pre>";
+
+
 include 'db.php';
 
 class confirm extends dbcon {
@@ -9,7 +14,7 @@ class confirm extends dbcon {
             die("<script>alert('No product id found');</script>");
         }
 
-        $pid = $_GET['id'];
+        $pid = (int)$_GET['id'];
 
         $sql = "update tickets set status='confirm' where id='$pid'";
         $r = $this->conn->query($sql);

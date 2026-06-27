@@ -121,7 +121,11 @@ $(document).ready(function(){
 
 $("#cbutton").on("click", function(e) {
     e.preventDefault();
-    let exptime=<?=json_encode(time()+6000)?>;
+     if (selectedSeats.length === 0) {
+        alert("Select at least one seat!");
+        return;
+    }
+    let exptime=<?=json_encode(time()+600)?>;
     $("#booking").hide();
     generateTicket(route,date,<?=json_encode($id)?>,<?=json_encode($uname)?>,exptime);
 

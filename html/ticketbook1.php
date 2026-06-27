@@ -4,9 +4,11 @@ ini_set('display_errors', 1);
 include 'db.php';
 class fetchBus extends dbcon{
     public $route;
-function __construct($route){ 
+    public $date;
+function __construct($route,$date){ 
    parent::__construct();
    $this->route=$route;
+   $this->date=$date;
 }
 function give(){
   $sql="select company_name,vehicle_no,noofseat,bus_type,route,fare,dep_time from bus where route='$this->route'";
@@ -45,7 +47,7 @@ $data="
                 <td>{$row['route']}</td>
                 <td>{$row['fare']}</td>
                 <td>{$row['dep_time']}</td>
-                <td><button onclick=\"showPage('booking',{$row['noofseat']},'{$row['vehicle_no']}')\">🎟️ Book Ticket</button></td>
+                <td><button onclick=\"showPage('booking',{$row['noofseat']},'{$row['vehicle_no']}','$this->date')\">🎟️ Book Ticket</button></td>
               </tr>";
     
    }
@@ -53,7 +55,8 @@ $data="
    }
 }
 }
-$route=$_POST['route'];
-$c2=new fetchBus($route);
+$proute=$_POST['route'];
+$pdate=$_POST['date'];
+$c2=new fetchBus($proute,$pdate);
 $c2->give();
 ?>

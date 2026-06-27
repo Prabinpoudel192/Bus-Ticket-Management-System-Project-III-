@@ -40,10 +40,12 @@ else if(isset($_POST['post1'])){
     if($row){
      $u_id=$row['id'];
      $u_name=$row['uname'];
+     $u_mobile=$row['mobile'];
 
      session_start();
      $_SESSION['u_id'] = $u_id;
      $_SESSION['u_name'] = $u_name;
+     $_SESSION['u_mobile'] = $u_mobile;
      
     header("Location:user.php");
     }else{

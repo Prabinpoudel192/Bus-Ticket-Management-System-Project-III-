@@ -28,7 +28,7 @@ $fare        = $data['fare'];
 $total_fare  = $data['total_fare'];
 $tax         = $data['tax'];
 $total       = $data['total'];
-$tranuid = $id . time();
+$tranuid = $id."RAM". time();
 $signed_field_names = "total_amount,transaction_uuid,product_code";
 $signature_string = "total_amount={$total},transaction_uuid={$tranuid},product_code=EPAYTEST";
 $secret_key = "8gBm/:&EnhH.1/q";
@@ -76,8 +76,8 @@ $signature = base64_encode($s);
  <input type="hidden" id="product_service_charge" name="product_service_charge" value="0" readonly>
  <input type="hidden" id="product_delivery_charge" name="product_delivery_charge" value="0" readonly>
  <label>Tax-Amount:</label><br><input type="text" id="total_amount" name="total_amount" value="<?= $total ?>" readonly>
- <input type="hidden" id="success_url" name="success_url" value="<?= "https://localhost/projectII/Codes/sucess.php?id=$id" ?>" readonly>
- <input type="hidden" id="failure_url" name="failure_url" value="<?= "https://localhost/projectII/Codes/user.php" ?>" readonly>
+ <input type="hidden" id="success_url" name="success_url" value="<?= "http://localhost/Bus-Ticket-Management-System-Project-III-/html/success.php?id=$id" ?>" readonly>
+ <input type="hidden" id="failure_url" name="failure_url" value="<?= "http://localhost/Bus-Ticket-Management-System-Project-III-/html/user.php" ?>" readonly>
  <input type="hidden" id="signed_field_names" name="signed_field_names" value="<?= $signed_field_names ?>" readonly>
  <input type="hidden" id="signature" name="signature" value="<?= $signature ?>" readonly>
  <input value="Submit" type="submit" style="border-radius:30px;">

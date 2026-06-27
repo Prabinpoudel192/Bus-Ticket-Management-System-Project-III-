@@ -1,6 +1,6 @@
 let selectedSeats = [];
 let tempBooked=[];
-let bookedSeats = ["3", "7"]; 
+let bookedSeats = []; 
 let vehno="";
 function selectBus(name) {
   alert("Selected Bus: " + name + " (Seat module will come next)");
@@ -14,7 +14,7 @@ function selectBus(name) {
     function logout() {
       window.location.href = "index.html";
     }
-    function showPage(pageId,seats=0,vehicleno="null") {
+    function showPage(pageId,seats=0,vehicleno="null",date="null") {
       document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
       document.querySelector(".display").innerHTML = ""; 
       document.querySelector(".display").style.display = "none";
@@ -26,24 +26,32 @@ function selectBus(name) {
       selectedSeats = [];
       vehno=vehicleno;
       $.ajax({
-            url:"bookedandreserved.php",
+            url:"reserve.php",
             type: "POST",
              data: {
             vehno: vehno,
+            date:date,
             
         },
             dataType:"json",
             success: function(data){
-              tempBooked = [...new Set(
-            data
-           .flatMap(item => item.seat.split(','))
-           .map(seat => seat.trim())
-             )];
+              console.log(data);
+                tempBooked = [...new Set(
+        data.pending
+            .flatMap(item => item.seat.split(','))
+            .map(seat => seat.trim())
+    )];
+
+    bookedSeats = [...new Set(
+        data.confirmed
+            .flatMap(item => item.seat.split(','))
+            .map(seat => seat.trim())
+    )];
              createSeats();
             },
             error: function(){
                 $(".display").html("Error loading data");
-            }
+           }
         });
       }
 function createSeats(){
@@ -112,13 +120,14 @@ for (let i = 1; i <= total; i += 4) {
     td.appendChild(button);
     row.appendChild(td);
   }
-
+  
   tbody.appendChild(row);
 }
 
 table.appendChild(tbody);
 bus.appendChild(table);
 tempBooked=[];
+bookedSeats=[];
       }}
 function goToPassenger() {
   if (selectedSeats.length === 0) {
@@ -245,19 +254,15 @@ function bookfunc(route,date){
         loadData("ticketbook1.php", "Available Buses");
 });
 }
-
 function unconfirmed(){
-  
-  
-       
-
         $.ajax({
             url: "unconfirmed.php",
             type: "POST",
-          
+            success:function(data){
+             //alert(data);
+            }
         });
-  
       }
-      setInterval(unconfirmed,60000);
+      setInterval(unconfirmed,20000);
 
 
