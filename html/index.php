@@ -34,10 +34,10 @@ if(isset($_POST['post2'])){
 else if(isset($_POST['post1'])){
     $uname=$_POST['uname'];
     $pwd=$_POST['pwd'];
-    $sql="select *from login where uname='$uname' and pwd='$pwd'";
+    $sql="select *from login where uname='$uname' and pwd='$pwd' and status='active'";
     $r=$c1->conn->query($sql);
     $row=$r->fetch_assoc();
-    if($row){
+    if($row && $row['acc']==2){
      $u_id=$row['id'];
      $u_name=$row['uname'];
      $u_mobile=$row['mobile'];
@@ -48,6 +48,17 @@ else if(isset($_POST['post1'])){
      $_SESSION['u_mobile'] = $u_mobile;
      
     header("Location:user.php");
+    }else if($row && $row['acc']==3){
+     $u_id=$row['id'];
+     $u_name=$row['uname'];
+     $u_mobile=$row['mobile'];
+
+     session_start();
+     $_SESSION['u_id'] = $u_id;
+     $_SESSION['u_name'] = $u_name;
+     $_SESSION['u_mobile'] = $u_mobile;
+     
+    header("Location:admin.php");
     }else{
         echo "<script>alert('User Not Found.')</script>";
     }

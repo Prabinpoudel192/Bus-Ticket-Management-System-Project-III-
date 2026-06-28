@@ -100,6 +100,18 @@ td, th {
   transition: all 0.2s ease;
   box-shadow: 0 1px 2px rgba(0,0,0,0.15);
 }
+#home{
+  height:50px;
+  width:50px;
+  border-radius:15px;
+}
+#home img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    display: block;
+}
 
 
 </style>
@@ -132,6 +144,10 @@ $("#cbutton").on("click", function(e) {
 });
 });
  </script>
+ <div id="home">
+  <a href="user.php" ><img src="../images/home.webp">
+</a> 
+</div>
   <div class="display">
   <div class="search-card">
       

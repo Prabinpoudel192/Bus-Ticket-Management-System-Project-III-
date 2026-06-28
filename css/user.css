@@ -62,7 +62,8 @@ overflow:hidden;
 }
 
 .hero-content{
-color:white;
+color:black;
+height:100%;
 }
 
 .hero-content h1{

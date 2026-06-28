@@ -82,13 +82,23 @@ $data="
 
         <!-- Time Selection -->
         <div class='form-group'>
-            <label>Departure Time</label>
-            <input type='time' name='dep_time' required>
-        </div>
+             <label>Departure Time</label>
+    <input type='time' name='dep_time' required>
 
-        <div class='form-group'>
-            <label>Arrival Time</label>
-            <input type='time' name='arr_time' required>
+    <select name='dep_meridiem' required>
+        <option value='AM'>AM</option>
+        <option value='PM'>PM</option>
+    </select>
+</div>
+
+<div class='form-group'>
+    <label>Arrival Time</label>
+    <input type='time' name='arr_time' required>
+
+    <select name='arr_meridiem' required>
+        <option value='AM'>AM</option>
+        <option value='PM'>PM</option>
+    </select>
         </div>
 
         <!-- Submit -->

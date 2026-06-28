@@ -14,8 +14,8 @@ if(isset($_POST['post3'])){
     $start=$_POST['from_location'];
     $end=$_POST['to_location'];
     $fare=$_POST['fare'];
-    $arr_time=$_POST['arr_time'];
-    $dep_time=$_POST['dep_time'];
+    $arr_time=$_POST['arr_time']." ".$_POST['arr_meridiem'];
+    $dep_time=$_POST['dep_time']." ".$_POST['dep_meridiem'];
     $route=$start."-".$end;
         $c1=new dbcon();
         $c2=new registerbus($company_name,$owner_name,$engine_no,$chassis_no,$vehicle_no,$seats,$bus_type,$route,$fare,$arr_time,$dep_time);
@@ -60,6 +60,9 @@ body {
     overflow-y:auto;
 }
 </style>
+<script>
+
+</script>
 </head>
 
 <body>
@@ -68,20 +71,20 @@ body {
 <div class="navbar1">
     <h2>🚍 Admin Panel</h2>
     <div class="nav-buttons">
-        <button class="btn1" onclick="adminfunc()">Dashboard</button>
-        <button class="btn2" onclick="adminfunc()">Active Users</button>
-        <button class="btn3" onclick="adminfunc()">Buses</button>
+        <button class="btn1" >Dashboard</button>
+        <button class="btn2" >Active Users</button>
+        <button class="btn3" >Buses</button>
         <button class="btn4" onclick="window.location.href='index.php'">Logout</button>
     </div>
 </div>
 
 <!-- SIDEBAR -->
 <div class="sidebar1">
-    <button class="btn5">Home</button>
-    <button class="btn6" onclick="adminfunc()">Add Bus</button>
-    <button class="btn7" onclick="adminfunc()">Bookings</button>
+    <button class="btn5" onclick="doThis()">Home</button>
+    <button class="btn6" >Add Bus</button>
+    <button class="btn7" >Bookings</button>
     <button class="btn8">Payments</button>
-    <button class="btn9" onclick="adminfunc()">User Registration</button>
+    <button class="btn9">User Registration</button>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -90,27 +93,29 @@ body {
     <h2>Dashboard Overview</h2>
 
     <!-- CARDS -->
-    <div class="cards">
-        <div class="card">
-            <h3>Total Users</h3>
-            <p>120</p>
-        </div>
+   <div class="cards">
 
-        <div class="card">
-            <h3>Total Buses</h3>
-            <p>35</p>
-        </div>
-
-        <div class="card">
-            <h3>Bookings</h3>
-            <p>240</p>
-        </div>
-
-        <div class="card">
-            <h3>Revenue</h3>
-            <p>₹ 50,000</p>
-        </div>
+    <div class="card">
+        <h3>Total Users</h3>
+        <p id="total_users">0</p>
     </div>
+
+    <div class="card">
+        <h3>Total Buses</h3>
+        <p id="total_buses">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Bookings</h3>
+        <p id="total_booking">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Revenue</h3>
+        <p id="revenue">₹0</p>
+    </div>
+
+</div>
 
     <!-- TABLE -->
      <div class="booked" style="display:none;">

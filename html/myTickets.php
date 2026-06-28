@@ -13,7 +13,7 @@ function give(){
  $login=$this->conn->query("select *from tickets where mobile=$this->mobile")->fetch_assoc();
  
   if(!$login){
-    die("Error in fetching data");
+      $data = '<h2 style=\'color:white; margin:100px 0px 0px 50px;\'>No Ticket has been reserved or confirmed.</h2>';
   }else{
     if($login['status']=='pending'){
 $data = "
@@ -34,6 +34,7 @@ $data = "
     <p>Route: {$login['route']}</p>
     <p>Seates Booked:{$login['seat']}</P>
     <p>Date:{$login['travel_date']}</p>
+    <p>Departure Time:{$login['travel_time']}</p>
     <p>Vehicle No:{$login['veh_no']} </p>
 
     <hr>
@@ -78,6 +79,7 @@ $data = "
     <p>Route: {$login['route']}</p>
     <p>Seates Booked:{$login['seat']}</P>
     <p>Date:{$login['travel_date']}</p>
+    <p>Departure Time:{$login['travel_time']}</p>
     <p>Vehicle No:{$login['veh_no']} </p>
 
     <hr>

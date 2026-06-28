@@ -185,9 +185,8 @@ function resetApp() {
   location.reload();
 }
   
-//Admin.php page javascript
-function adminfunc(){
- $(document).ready(function(){
+//admin.php page whole javascript
+$(document).ready(function(){
     function loadData(url){
         $(".booked").show().html("Loading...");
 
@@ -203,10 +202,11 @@ function adminfunc(){
         });
     
       }
+    
     $(".btn1").click(function(){
         loadData("dashboard.php");
     });
-
+    $(".btn1").click();
     $(".btn2").click(function(){
         loadData("users-active.php");
     });
@@ -224,8 +224,34 @@ function adminfunc(){
       loadData("booking.php")
     });
 
+
+
+function dataSets(){
+    $.ajax({
+            url: "admindata.php",
+            type: "POST",
+            dataType:"json",
+            success: function(data){
+               $("#total_users").text(data.total_users);
+               $("#total_buses").text(data.total_buses);
+               $("#total_booking").text(data.total_booking);
+               $("#revenue").text("₹ " + data.revenue);   
+            },
+            error: function(){
+                $(".cards").html("Error loading data");
+                
+            }
+        });
+    
+      }
+    
+        dataSets();
 });
+function doThis(){
+    window.location.href="adminuser.php";
 }
+//admin.php javascript ends here
+
 
 //ticketbook.php all javascript
 function bookfunc(route,date){

@@ -41,7 +41,11 @@ $data="
                 <td>{$row['uname']}</td>
                 <td>{$row['pwd']}</td>
                 <td>{$row['status']}</td>
-                <td><button class='button' id='approve'>Approve</button><br><br><button class='button' id='delete'>Delete</button></td>
+                <td><button class='approve' data-id='{$row['id']}'>Approve</button>
+                  <br><br>
+                 <button class='delete' data-id='{$row['id']}'>Delete</button>
+                 <br><br>
+                 <button class='admin' data-id='{$row['id']}'>Admin</button></td>
               </tr></tbody>";
     
    }
@@ -52,3 +56,32 @@ $data="
 $c2=new fetchUsers();
 $c2->give();
 ?>
+<script>
+function performAction(id, task) {
+
+    $.ajax({
+        url: "approve.php",
+        type: "POST",
+        data: {
+            id: id,
+            task: task
+        },
+        success: function(response){
+            alert(response);
+            $(".btn9").click();
+        }
+    });
+
+}
+$(document).on("click", ".approve", function () {
+    performAction($(this).data("id"), "app");
+});
+
+$(document).on("click", ".delete", function () {
+    performAction($(this).data("id"), "del");
+});
+
+$(document).on("click", ".admin", function () {
+    performAction($(this).data("id"), "admin");
+});
+</script>
