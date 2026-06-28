@@ -80,7 +80,7 @@ body {
 
 <!-- SIDEBAR -->
 <div class="sidebar1">
-    <button class="btn5" onclick="doThis()">Home</button>
+    <button class="btn5" onclick="doThis()">ADS Page</button>
     <button class="btn6" >Add Bus</button>
     <button class="btn7" >Bookings</button>
     <button class="btn8">Payments</button>

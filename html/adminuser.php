@@ -1,307 +1,439 @@
-  <?php
-  session_start();
-  $id=$_SESSION['u_id'];
-  $uname=$_SESSION['u_name'];
-  $mobile=$_SESSION['u_mobile'];
-  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../css/user.css">
- <script src="../javascript/jquery.js"></script>
-  <script src="../javascript/style.js"></script>
-<title>Bus Ticket Management System</title>
+
+<title>Offer Management</title>
 
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
-}
-
-html{
-scroll-behavior:smooth;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-background:#f4f7fb;
-overflow-x:hidden;
+    background:#eef2f7;
 }
-@media print {
 
-    header,
-    footer,
-    .stats,
-    .hidden,
-    .bus {
-        display: none !important;
-    }
+/* Top Navbar */
 
-    body {
-        margin: 0;
-        padding: 0;
-        background: white;
-    }
+.navbar{
 
-    .hero {
-        display: block;
-        margin: 0;
-        padding: 0;
-    }
+    width:100%;
+    height:70px;
 
-    .hero-content {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+    background:#1e3c72;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+
+    color:white;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.3);
+
+}
+
+.logo{
+
+    font-size:25px;
+
+    font-weight:bold;
+
+}
+
+.menu{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.menu button{
+
+    padding:10px 20px;
+
+    border:none;
+
+    border-radius:6px;
+
+    background:white;
+
+    color:#1e3c72;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.menu button:hover{
+
+    background:#ffd54f;
+
+}
+/* Content */
+
+.container{
+
+    width:90%;
+
+    margin:40px auto;
+
+}
+
+.page{
+
+    display:none;
+
+    background:white;
+
+    border-radius:10px;
+
+    padding:30px;
+
+    min-height:500px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+
+}
+
+.page.active{
+
+    display:block;
+
+}
+
+.page h2{
+
+    margin-bottom:20px;
+
+    color:#1e3c72;
+
+}
+
+.container{
+    width:95%;
+    margin:auto;
+}
+
+h1{
+    margin-bottom:20px;
+    color:#1e3c72;
+}
+
+.section{
+    background:#fff;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 3px 8px rgba(0,0,0,.15);
+}
+
+.section h2{
+    margin-bottom:20px;
+    color:#2a5298;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+textarea{
+    resize:vertical;
+}
+
+.row{
+    display:flex;
+    gap:15px;
+}
+
+.col{
+    flex:1;
+}
+
+button{
+    background:#2a5298;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1e3c72;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+table th,
+table td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:center;
+}
+
+table th{
+    background:#2a5298;
+    color:white;
+}
+
+.action button{
+    margin:2px;
+}
+#ram{
+    width:80px;
+    height:80px;
+    border:none;
+    background:none;
+    padding:0;
+    cursor:pointer;
+}
+
+#ram img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
 }
 
 </style>
+
 </head>
+
 <body>
 
-<header>
-<div class="logo"><img src="../images/logobusticket.png">Ticket And Destination Booking</div>
+<div class="navbar">
+<div class="logo">
+Offer Management
+</div>
 
-<nav>
-<a href="user.php">Home</a>
-<a href="#" id="showTickets">My Tickets</a>
-<a href="#">Tours</a>
-<a href="#">Profile</a>
-<a href="index.php">Logout</a>
-</nav>
-</header>
+<div class="menu">
 
-<section class="hero">
+<button onclick="window.location.href='admin.php'">
+Admin Panel
+</button>
+<button onclick="showPage('discount')">
+20% OFF
+</button>
 
-<div class="hero-content">
+<button onclick="showPage('summer')">
+Summer Package
+</button>
 
-<h1>Explore Nepal With Comfort</h1>
+<button onclick="showPage('festival')">
+Festival Offer
+</button>
 
-<p>Book buses, discover tours, and travel smarter.</p>
+<button onclick="showPage('ads')">
+Advertisements
+</button>
 
-<div class="search-box">
-<form action="ticketbook.php" method="POST" id="search-form">
-<input type="text" name="from" placeholder="From">
-<input type="text" name="to" placeholder="To">
-<input type="date" name="date">
-<button type="submit" class="btn-search">Search Buses</button>
-</form>
+</div>
+
+</div>
+<div class="container">
+
+<div class="page active" id="discount">
+
+<h2>20% OFF Offers</h2>
+
+<div class="row">
+
+<div class="col">
+<label>Offer Title</label>
+<input type="text">
+</div>
+
+<div class="col">
+<label>Discount (%)</label>
+<input type="number">
 </div>
 
 </div>
 
-<!--<div class="bus"><img src="../images/ad1.webp"></div>-->
-
-</section>
-
-<section class="hidden">
-
-<h2 class="section-title">🔥 Special Offers</h2>
-
-<div class="ads">
-
-<div class="ad-card">
-<h3>20% OFF</h3>
-<p>Kathmandu → Pokhara</p>
+<div class="form-group">
+<label>Description</label>
+<textarea rows="3"></textarea>
 </div>
 
-<div class="ad-card">
-<h3>Summer Package</h3>
-<p>Visit Mustang this season.</p>
+<div class="row">
+
+<div class="col">
+<label>Start Date</label>
+<input type="date">
 </div>
 
-<div class="ad-card">
-<h3>Festival Offer</h3>
-<p>Travel and save more.</p>
+<div class="col">
+<label>End Date</label>
+<input type="date">
 </div>
 
-</div>
+<div class="col">
+<label>Status</label>
 
-</section>
+<select>
+<option>Active</option>
+<option>Inactive</option>
+</select>
 
-<section class="hidden">
-
-<h2 class="section-title">🚌 Popular Routes</h2>
-
-<div class="routes">
-
-<div class="route-card">Kathmandu → Pokhara</div>
-<div class="route-card">Kathmandu → Chitwan</div>
-<div class="route-card">Pokhara → Butwal</div>
-<div class="route-card">Kathmandu → Nepalgunj</div>
-
-</div>
-
-</section>
-
-<section class="hidden">
-
-<h2 class="section-title">⭐ Recommended Packages</h2>
-
-<div class="packages">
-
-<div class="package">
-<img src="../images/ad1.webp">
-<div class="package-content">
-<h3>Mustang Tour</h3>
-<p>⭐ 4.9 Rating</p>
-<button>View Details</button>
-</div>
-</div>
-
-<div class="package">
-<img src="../images/ad2.webp">
-<div class="package-content">
-<h3>Pokhara Retreat</h3>
-<p>⭐ 4.8 Rating</p>
-<button>View Details</button>
-</div>
-</div>
-
-<div class="package">
-<img src="../images/ad3.webp">
-<div class="package-content">
-<h3>Chitwan Safari</h3>
-<p>⭐ 4.7 Rating</p>
-<button>View Details</button>
-</div>
 </div>
 
 </div>
 
-</section>
-
-<div class="stats">
-
-<div class="stat">
-<h2 class="counter" data-target="1200">0</h2>
-<p>Buses</p>
-</div>
-
-<div class="stat">
-<h2 class="counter" data-target="25000">0</h2>
-<p>Customers</p>
-</div>
-
-<div class="stat">
-<h2 class="counter" data-target="150">0</h2>
-<p>Tours</p>
-</div>
-
-<div class="stat">
-<h2 class="counter" data-target="99">0</h2>
-<p>% Satisfaction</p>
-</div>
+<button>Save Offer</button>
 
 </div>
 
-<section class="hidden">
+<div class="page" id="summer">
 
-<h2 class="section-title">Why Choose Us?</h2>
+<h2>Summer Packages</h2>
 
-<div class="features">
+<input type="text" placeholder="Package Name">
 
-<div class="feature">
-<h3>🎫 Instant Booking</h3>
-<p>Book seats in seconds.</p>
+<br><br>
+
+<textarea rows="3" placeholder="Package Description"></textarea>
+
+<br><br>
+
+<div class="row">
+
+<div class="col">
+<input type="text" placeholder="Route">
 </div>
 
-<div class="feature">
-<h3>🛡 Secure Platform</h3>
-<p>Your data stays protected.</p>
+<div class="col">
+<input type="number" placeholder="Price">
 </div>
 
-<div class="feature">
-<h3>⭐ Top Rated Tours</h3>
-<p>Based on customer reviews.</p>
-</div>
-
-<div class="feature">
-<h3>📍 Travel Anywhere</h3>
-<p>Across Nepal.</p>
+<div class="col">
+<input type="file">
 </div>
 
 </div>
 
-</section>
+<br>
 
-<footer>
+<button>Add Summer Package</button>
 
-<h2>TravelNepal</h2>
 
-<p>Bus Booking & Tour Recommendation Platform</p>
+</div>
 
-</footer>
+<div class="page" id="festival">
+
+<h2>Festival Offers</h2>
+
+<div class="row">
+
+<div class="col">
+<input type="text" placeholder="Festival Name">
+</div>
+
+<div class="col">
+<input type="number" placeholder="Discount">
+</div>
+
+</div>
+
+<br>
+
+<textarea rows="3" placeholder="Festival Description"></textarea>
+
+<br><br>
+
+<input type="file">
+
+<br><br>
+
+<button>Save Festival Offer</button>
+
+</div>
+
+
+<div class="page" id="ads">
+
+<h2>Advertisements</h2>
+
+<input type="text" placeholder="Advertisement Title">
+
+<br><br>
+
+<textarea rows="3" placeholder="Advertisement Description"></textarea>
+
+<br><br>
+
+<div class="row">
+
+<div class="col">
+<input type="url" placeholder="Redirect URL">
+</div>
+
+<div class="col">
+<input type="number" placeholder="Priority">
+</div>
+
+<div class="col">
+<input type="file">
+</div>
+
+</div>
+
+<br>
+
+<button>Publish Advertisement</button>
+
+</div>
+
+</div>
 
 <script>
 
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add('show');
-}
-});
-});
+function showPage(id){
 
-document.querySelectorAll('.hidden').forEach(el=>{
-observer.observe(el);
-});
+    let pages=document.querySelectorAll(".page");
 
-const counters=document.querySelectorAll('.counter');
+    pages.forEach(function(page){
 
-counters.forEach(counter=>{
+        page.classList.remove("active");
 
-const update=()=>{
+    });
 
-const target=+counter.getAttribute('data-target');
-
-const count=+counter.innerText;
-
-const inc=target/100;
-
-if(count<target){
-
-counter.innerText=Math.ceil(count+inc);
-
-setTimeout(update,20);
-
-}else{
-
-counter.innerText=target;
+    document.getElementById(id).classList.add("active");
 
 }
-
-};
-
-update();
-
-});
-$(document).ready(function(){
-$("#showTickets").on("click", function(e) {
- $.ajax({
-            url: "myTickets.php",
-            type: "POST",
-             data: {
-             uname: <?= json_encode($uname) ?>,
-             mobile:<?= json_encode($mobile) ?>
-        },
-            success: function(data){
-               $(".hero-content").html(data);
-            },
-            error: function(){
-                $(".hero-content").html("Error loading data");
-            }
-        });
-    
-      });
-});
 
 </script>
-
 </body>
 </html>
