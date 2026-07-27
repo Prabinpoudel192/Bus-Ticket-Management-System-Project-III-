@@ -180,7 +180,11 @@ function generateTicket(route,date,id,uname,exptime) {
 
 }
 //Ticket  booking whole js ends here
-
+//Advertisement portion js starts here
+function bookAd(id){
+  alert("The id is "+id);
+}
+//Advertisement portion js ends here
 function resetApp() {
   location.reload();
 }
@@ -223,6 +227,10 @@ $(document).ready(function(){
      $(".btn7").click(function(){
       loadData("booking.php")
     });
+    $(".btn10").click(function(){
+      loadData("staff.php")
+    });
+
 
 
 
@@ -285,7 +293,6 @@ function unconfirmed(){
             url: "unconfirmed.php",
             type: "POST",
             success:function(data){
-             //alert(data);
             }
         });
       }

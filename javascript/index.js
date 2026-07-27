@@ -1,10 +1,19 @@
-function login() {
+function login(route,date) {
     setTimeout(() => {
         document.getElementById('welcome').style.display = 'none';
         document.getElementById('pra4').style.display = 'block';
+        document.getElementById('praa4').style.display = 'none';
         document.getElementById('pra5').style.display = 'none';
         document.getElementById('pra10').style.display = 'none';
-    }, 2000);
+    
+},2000);
+ $(document).ready(function(){
+  $(".submit-btn1").on("click", function(e) {
+    e.preventDefault();
+
+    alert("Backend is underconstruction");
+   });
+   });
 }
 function signup() {
     setTimeout(() => {

@@ -1,0 +1,139 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color:black;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            position: relative;
+            z-index:0;
+        }
+
+         body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:url("../images/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            z-index: -1;
+        } 
+        
+        [id^="msg"] {
+            font-size: 8px;
+            margin-top: 2px;
+            display: none;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .welcome-screen {
+            display: block;
+        }
+        .checkbox-group  {
+          display: inline-flex;   
+          align-items: center;
+          gap: 4px;  
+          margin:0;             
+              }
+<!--test page css -->
+.hero-section{
+    text-align:center;
+    padding:60px 20px;
+    color:white;
+}
+
+.hero-section h1{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.hero-section p{
+    opacity:0.9;
+}
+
+.hero-btn{
+    padding:12px 25px;
+    margin:10px;
+    border:none;
+    cursor:pointer;
+    background:#ffcc00;
+    font-weight:bold;
+    border-radius:8px;
+}
+
+.hero-btn.secondary{
+    background:#00c2ff;
+    color:white;
+}
+
+.search-preview{
+    margin:20px auto;
+    width:80%;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.preview-box input{
+    padding:10px;
+    margin:5px;
+}
+
+.preview-box button{
+    padding:10px 15px;
+    background:green;
+    color:white;
+    border:none;
+}
+
+.ad-section{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin:30px;
+    flex-wrap:wrap;
+}
+
+.ad-card{
+    background:rgba(255,255,255,0.9);
+    border-radius:10px;
+    width:500px;
+    height:500px;
+    text-align:center;
+    font-weight:bold;
+}
+#pra1,#pra2,#pra3{
+    border-radius:10px;
+    height:100%;
+    width:100%;
+    object-fit:cover;
+}
+
+.features{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin:30px;
+    flex-wrap:wrap;
+    color:white;
+}
+
+.feature{
+    background:rgba(0,0,0,0.3);
+    padding:15px 20px;
+    border-radius:10px;
+}

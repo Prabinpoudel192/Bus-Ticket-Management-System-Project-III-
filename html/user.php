@@ -1,8 +1,41 @@
-  <?php
+<?php
   session_start();
   $id=$_SESSION['u_id'];
   $uname=$_SESSION['u_name'];
   $mobile=$_SESSION['u_mobile'];
+
+  include 'db.php';
+  $c1=new dbcon();
+  $m=3; 
+
+  $c_sql="select avg(rating) as site_avg from ad_ratings";
+  $c_res=$c1->conn->query($c_sql);
+  $c_row=$c_res->fetch_assoc();
+  $C=$c_row['site_avg'] ? $c_row['site_avg'] : 0;
+
+  $top_sql="select a.*,
+            (select avg(rating) from ad_ratings where ad_id=a.id) as R,
+            (select count(*) from ad_ratings where ad_id=a.id) as v
+            from ads a where a.status='active'";
+  $top_res=$c1->conn->query($top_sql);
+
+  $top_ads=[];
+  while($row=$top_res->fetch_assoc()){
+      $v=$row['v'];
+      $R=$row['R'];
+      if($v>0){
+          $row['wr']=(($v/($v+$m))*$R)+(($m/($v+$m))*$C);
+      }else{
+          $row['wr']=0;
+      }
+      $top_ads[]=$row;
+  }
+
+  usort($top_ads, function($a,$b){
+      return $b['wr'] <=> $a['wr'];
+  });
+
+  $top_ads=array_slice($top_ads,0,3);
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,7 +103,7 @@ overflow-x:hidden;
 <nav>
 <a href="user.php">Home</a>
 <a href="#" id="showTickets">My Tickets</a>
-<a href="#">Tours</a>
+<a href="tour.php">Tours</a>
 <a href="#">Profile</a>
 <a href="index.php">Logout</a>
 </nav>
@@ -86,9 +119,9 @@ overflow-x:hidden;
 
 <div class="search-box">
 <form action="ticketbook.php" method="POST" id="search-form">
-<input type="text" name="from" placeholder="From">
-<input type="text" name="to" placeholder="To">
-<input type="date" name="date">
+<input type="text" name="from" placeholder="From" required>
+<input type="text" name="to" placeholder="To" required>
+<input type="date" name="date" min="<?= date('Y-m-d') ?>" required>
 <button type="submit" class="btn-search">Search Buses</button>
 </form>
 </div>
@@ -145,32 +178,21 @@ overflow-x:hidden;
 
 <div class="packages">
 
+<?php if(count($top_ads)===0): ?>
+<p>No recommended packages yet.</p>
+<?php else: ?>
+<?php foreach($top_ads as $ad): ?>
 <div class="package">
-<img src="../images/ad1.webp">
+<img src="<?= !empty($ad['image']) ? '../images/ads/'.htmlspecialchars($ad['image']) : '../images/ad1.webp' ?>">
 <div class="package-content">
-<h3>Mustang Tour</h3>
-<p>⭐ 4.9 Rating</p>
-<button>View Details</button>
+<h3><?= htmlspecialchars($ad['title']) ?></h3>
+<p>⭐ <?= $ad['v']>0 ? round($ad['R'],1) : 'Not rated yet' ?></p>
+<button onclick="window.open('<?= htmlspecialchars($ad['redirect_url']) ?>','_blank')">View Details</button>
+<button onclick="bookAd(<?= $ad['id'] ?>)">Book Now</button>
 </div>
 </div>
-
-<div class="package">
-<img src="../images/ad2.webp">
-<div class="package-content">
-<h3>Pokhara Retreat</h3>
-<p>⭐ 4.8 Rating</p>
-<button>View Details</button>
-</div>
-</div>
-
-<div class="package">
-<img src="../images/ad3.webp">
-<div class="package-content">
-<h3>Chitwan Safari</h3>
-<p>⭐ 4.7 Rating</p>
-<button>View Details</button>
-</div>
-</div>
+<?php endforeach; ?>
+<?php endif; ?>
 
 </div>
 

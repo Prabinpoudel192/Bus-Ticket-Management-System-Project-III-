@@ -1,3 +1,51 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+include 'db.php';
+include 'ads.php';
+
+if(isset($_POST['post_ad'])){
+    $title=$_POST['ad_title'];
+    $description=$_POST['ad_description'];
+    $redirect_url=$_POST['ad_url'];
+    $price=$_POST['price'];
+    $image="";
+
+    if(isset($_FILES['ad_image']) && $_FILES['ad_image']['error']==0){
+        $allowed=['jpg','jpeg','png','webp'];
+        $ext=strtolower(pathinfo($_FILES['ad_image']['name'], PATHINFO_EXTENSION));
+
+        if(in_array($ext,$allowed)){
+            $upload_dir="../images/ads/";
+            if(!is_dir($upload_dir)){
+                mkdir($upload_dir,0755,true);
+            }
+            $newname=uniqid('ad_').'.'.$ext;
+            $target=$upload_dir.$newname;
+
+            if(move_uploaded_file($_FILES['ad_image']['tmp_name'],$target)){
+                $image=$newname;
+            }else{
+                echo "<script>alert('Failed to upload image.')</script>";
+            }
+        }else{
+            echo "<script>alert('Invalid image format. Use jpg, jpeg, png or webp.')</script>";
+        }
+    }else{
+        echo "<script>alert('Please select an image for the advertisement.')</script>";
+    }
+
+    $c1=new dbcon();
+    $c2=new Ads($title,$description,$price,$image,$redirect_url,'ads');
+    $r=$c2->insert($c1->conn);
+
+    if($r=="done"){
+        echo "<script>alert('Advertisement published successfully!')</script>";
+    }else{
+        echo "<script>alert('Error while publishing advertisement.')</script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -255,7 +303,6 @@ Summer Package
 <button onclick="showPage('festival')">
 Festival Offer
 </button>
-
 <button onclick="showPage('ads')">
 Advertisements
 </button>
@@ -265,7 +312,7 @@ Advertisements
 </div>
 <div class="container">
 
-<div class="page active" id="discount">
+<div class="page<?= isset($_POST['post_ad']) ? '' : ' active' ?>" id="discount">
 
 <h2>20% OFF Offers</h2>
 
@@ -382,37 +429,46 @@ Advertisements
 </div>
 
 
-<div class="page" id="ads">
+<div class="page<?= isset($_POST['post_ad']) ? ' active' : '' ?>" id="ads">
 
 <h2>Advertisements</h2>
 
-<input type="text" placeholder="Advertisement Title">
+<form action="adminuser.php" method="post" enctype="multipart/form-data">
 
-<br><br>
+<div class="form-group">
+<label>Advertisement Title</label>
+<input type="text" name="ad_title" required>
+</div>
 
-<textarea rows="3" placeholder="Advertisement Description"></textarea>
-
-<br><br>
+<div class="form-group">
+<label>Advertisement Description</label>
+<textarea rows="3" name="ad_description" required></textarea>
+</div>
 
 <div class="row">
 
 <div class="col">
-<input type="url" placeholder="Redirect URL">
+<label>Redirect URL</label>
+<input type="url" name="ad_url" placeholder="https://example.com" required>
 </div>
 
 <div class="col">
-<input type="number" placeholder="Priority">
+<label>Price</label>
+<input type="number" name="price" placeholder="Price" required>
 </div>
 
 <div class="col">
-<input type="file">
+<label>Ad Image</label>
+<input type="file" name="ad_image" accept=".jpg,.jpeg,.png,.webp" required>
 </div>
 
 </div>
 
 <br>
 
-<button>Publish Advertisement</button>
+<button type="submit" name="post_ad">Publish Advertisement</button>
+
+</form>
 
 </div>
 

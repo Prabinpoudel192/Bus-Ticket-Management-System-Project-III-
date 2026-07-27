@@ -3,21 +3,25 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'db.php';
 class fetchBus extends dbcon{
-    public $uname,$mobile;
+    public $uname,$mobile,$date;
 function __construct($uname,$mobile){ 
    parent::__construct();
    $this->uname=$uname;
    $this->mobile=$mobile;
 }
 function give(){
- $login=$this->conn->query("select *from tickets where mobile=$this->mobile")->fetch_assoc();
- 
-  if(!$login){
-      $data = '<h2 style=\'color:white; margin:100px 0px 0px 50px;\'>No Ticket has been reserved or confirmed.</h2>';
-  }else{
-    if($login['status']=='pending'){
-$data = "
-<div style='width:420px; margin:auto; padding:20px; border:2px dashed #333; font-family:Arial; background:#fff;'>
+ $date = date('Y-m-d');
+ $result = $this->conn->query("select * from tickets where mobile='$this->mobile' and travel_date>='$date'");
+
+ if(!$result || $result->num_rows == 0){
+     $data = '<h2 style=\'color:white; margin:100px 0px 0px 50px;\'>No Ticket has been reserved or confirmed.</h2>';
+ } else {
+     $data = "<div style='display:flex; flex-wrap:wrap; gap:20px; justify-content:center;'>";
+
+     while($login = $result->fetch_assoc()){
+         if($login['status']=='pending'){
+             $data .= "
+<div style='width:420px; max-height:500px; overflow-y:auto; margin:auto; padding:20px; border:2px dashed #333; font-family:Arial; background:#fff;'>
 
     <h2 style='text-align:center;'>🎟️ BUS TICKET</h2>
     <hr>
@@ -48,21 +52,19 @@ $data = "
     <hr>
 
     <div style='text-align:center; margin-top:15px;'>
-       <a href='esewa.php?id=$insert_val'>
-        <button
-            style='padding:10px 15px; background:#ff6600; color:white; border:none; cursor:pointer; margin-left:10px;'>
+       <a href='esewa.php?id={$login['id']}'>
+        <button>
             Pay via eSewa
         </button>
     </a>
 
     </div>
-    
 
 </div>
 ";
-    }else if($login['status']=='confirm'){
-       $data = "
-<div style='width:420px; margin:auto; padding:20px; border:2px dashed #333; font-family:Arial; background:#fff;'>
+         } else if($login['status']=='confirm'){
+             $data .= "
+<div style='width:420px; max-height:500px; overflow-y:auto; margin:auto; padding:20px; border:2px dashed #333; font-family:Arial; background:#fff;'>
 
     <h2 style='text-align:center;'>🎟️ BUS TICKET</h2>
     <hr>
@@ -95,15 +97,17 @@ $data = "
     <div style='text-align:center; margin-top:15px;'>
        <button onclick='window.print()'>🖨️ Print</button>
        <button onclick='resetApp()'>🔄 New Booking</button>
-
     </div>
-    
 
 </div>
-"; 
-    }  
-   }
-   echo $data;
+";
+         }
+     }
+
+     $data .= "</div>";
+ }
+
+ echo $data;
 }
 }
 

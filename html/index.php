@@ -60,8 +60,26 @@ else if(isset($_POST['post1'])){
      
     header("Location:admin.php");
     }else{
+         $uname=$_POST['uname'];
+         $pwd=$_POST['pwd'];
+         $sql="select *from staff where username='$uname' and password='$pwd'";
+         $r=$c1->conn->query($sql);
+         $row=$r->fetch_assoc();
+          if($row && $row['acc']==4){
+             $u_id="staff";
+             $u_name=$row['username'];
+             $u_mobile=$row['contact'];
+
+              session_start();
+              $_SESSION['u_id'] = $u_id;
+              $_SESSION['u_name'] = $u_name;
+              $_SESSION['u_mobile'] = $u_mobile;
+     
+              header("Location:staffuser.php");
+    }else{
         echo "<script>alert('User Not Found.')</script>";
     }
+        }
 }
 ?>
 <!DOCTYPE html>
@@ -71,7 +89,8 @@ else if(isset($_POST['post1'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../bootstrap-5.3.4-dist/css/bootstrap.min.css">
     <script src="../javascript/jquery.js"></script>
-   <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/index1.css">
     <title>Bus Ticket Booking System</title>
 </head>
 <body>
@@ -87,164 +106,18 @@ else if(isset($_POST['post1'])){
         });
         
 $(document).ready(function(){
-$("#search-form").on("submit", function(e) {
+$("#bir").on("submit", function(e) {
     e.preventDefault();
 
     let from = $("input[name='from']").val();
     let to = $("input[name='to']").val();
     let date = $("input[name='date']").val();
-    let time = $("input[name='time']").val();
-    let route=from+" to "+to;
-
-    bookfunc(route,date,time);
+    let route=from+"-"+to;
+    
+    login(route,date);
 });
 });
-        </script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color:black;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            overflow: hidden;
-            position: relative;
-            z-index:0;
-        }
-
-         body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:url("../images/background.jpg");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.2;
-            z-index: -1;
-        } 
-        
-        [id^="msg"] {
-            font-size: 8px;
-            margin-top: 2px;
-            display: none;
-        }
-
-        .form-container {
-            display: none;
-        }
-
-        .welcome-screen {
-            display: block;
-        }
-        .checkbox-group  {
-          display: inline-flex;   
-          align-items: center;
-          gap: 4px;  
-          margin:0;             
-              }
-<!--test page css -->
-.hero-section{
-    text-align:center;
-    padding:60px 20px;
-    color:white;
-}
-
-.hero-section h1{
-    font-size:40px;
-    margin-bottom:10px;
-}
-
-.hero-section p{
-    opacity:0.9;
-}
-
-.hero-btn{
-    padding:12px 25px;
-    margin:10px;
-    border:none;
-    cursor:pointer;
-    background:#ffcc00;
-    font-weight:bold;
-    border-radius:8px;
-}
-
-.hero-btn.secondary{
-    background:#00c2ff;
-    color:white;
-}
-
-.search-preview{
-    margin:20px auto;
-    width:80%;
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    text-align:center;
-}
-
-.preview-box input{
-    padding:10px;
-    margin:5px;
-}
-
-.preview-box button{
-    padding:10px 15px;
-    background:green;
-    color:white;
-    border:none;
-}
-
-.ad-section{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    margin:30px;
-    flex-wrap:wrap;
-}
-
-.ad-card{
-    background:rgba(255,255,255,0.9);
-    border-radius:10px;
-    width:500px;
-    height:500px;
-    text-align:center;
-    font-weight:bold;
-}
-#pra1,#pra2,#pra3{
-    border-radius:10px;
-    height:100%;
-    width:100%;
-    object-fit:cover;
-}
-
-.features{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    margin:30px;
-    flex-wrap:wrap;
-    color:white;
-}
-
-.feature{
-    background:rgba(0,0,0,0.3);
-    padding:15px 20px;
-    border-radius:10px;
-}
-<!--test page css end -->
-        
        
-    </style>
-    <script>
 let images = [
   "../images/ad2.webp",
   "../images/ad3.webp",
@@ -282,23 +155,22 @@ setInterval(() => {
 
     <!-- HERO SECTION -->
     <div class="hero-section">
-        <h1>Fast & Reliable Bus Booking</h1>
+        <h1>Fast & Reliable Bus Ticket Booking</h1>
         <p>Book your tickets instantly, choose your seat, and travel stress-free.</p>
     </div>
-
-    <!-- SEARCH PREVIEW (marketing only, no backend change) -->
+      <!-- SEARCH PREVIEW (marketing only, no backend change) -->
     <div class="search-preview">
         <h3>Search Your Route</h3>
         <div class="preview-box">
-            <input type="text" placeholder="From">
-            <input type="text" placeholder="To">
-            <input type="date">
-            <input type="time">
-            <button onclick="login()">Search Buses</button>
+            <form id="bir">
+            <input type="text" placeholder="From" name="from" required>
+            <input type="text" placeholder="To" name="to" required>
+            <input type="date" name="date" min="<?= date('Y-m-d') ?>" required>
+            <button type="submit">Search Buses</button>
+            </form>
         </div>
         <small>*Login required to book tickets</small>
     </div>
-
     <!-- ADVERTISEMENT BANNER -->
     <div class="ad-section">
         <div class="ad-card">
@@ -341,28 +213,6 @@ setInterval(() => {
     </div>
 
     <div class="main-container">
-        <!-- Welcome Screen -->
-       <!-- <div class="welcome-screen" id="welcome">
-            <h1 class="welcome-title icon-cart">
-                Bus Ticket
-            </h1>
-            <p class="welcome-subtitle">Booking System</p>
-             <section class="hero">
-     <div class="display">
-  <div class="search-card">
-      <h1>Find Your Bus Ticket</h1>
-<form action="" method="post" id="search-form">
-      <div class="inputs">
-        <input type="text" placeholder="From (City)" name="from">
-        <input type="text" placeholder="To (City)" name="to">
-        <input type="date" name="date">
-        <input type="time" name="time">
-        <button type="submit" class="btn-search">Search Buses</button>
-      </div></form>
-</div></div>
-  </section>
-        </div>-->
-
         <!-- Login Form -->
         <div class="form-container" id="pra4">
             <h2 class="form-title icon-login">
@@ -377,6 +227,22 @@ setInterval(() => {
                     <input type="password" class="form-input" placeholder="Password" name="pwd" required>
                 </div>
                 <input type="submit" value="Sign In" name="post1" class="submit-btn">
+            </form>
+        </div>
+         <!-- Before login searchform -->
+        <div class="form-container" id="praa4">
+            <h2 class="form-title icon-login">
+                Welcome Back
+            </h2>
+            <p class="form-subtitle">Sign in to your account</p>
+            <form action="" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Username" name="uname" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="Password" name="pwd" required>
+                </div>
+                <input type="submit" value="Sign In" name="post3" class="submit-btn1">
             </form>
         </div>
 

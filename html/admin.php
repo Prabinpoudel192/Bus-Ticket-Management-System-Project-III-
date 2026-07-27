@@ -85,6 +85,7 @@ body {
     <button class="btn7" >Bookings</button>
     <button class="btn8">Payments</button>
     <button class="btn9">User Registration</button>
+    <button class="btn10">Staff Registration</button>
 </div>
 
 <!-- MAIN CONTENT -->

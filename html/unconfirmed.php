@@ -13,21 +13,16 @@ class del extends dbcon {
         $this->today = date('Y-m-d');
     }
 
-function dele(){
+function delete(){
 
 
-$sql = "DELETE FROM tickets WHERE travel_date='$this->today' and status='pending' and expire < $this->present";
+$sql = "DELETE FROM tickets WHERE travel_date<='$this->today' and status='pending' and expire < $this->present";
 
 $r = $this->conn->query($sql);
 }
-function verify(){
-    
 
-   echo json_encode($this->present ."  ".$this->today);
-}
 }
 
 $c2 = new del();
-$c2->dele();
-//$c2->verify();
+$c2->delete();
 ?>
