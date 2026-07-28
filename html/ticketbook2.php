@@ -37,9 +37,9 @@ function give(){
     $fare = $bus['fare'];
     $fullname=$login['fname']." ".$login['lname'];
     $sql = "INSERT INTO tickets 
-    (name, address, mobile, company_name, route, seat, travel_date, travel_time, veh_no, fare, total_fare, tax,status,expire)
+    (name, address, mobile, company_name, route, seat, travel_date, travel_time, veh_no, fare, total_fare, tax,status,payment_method,expire)
      VALUES 
-    ('$fullname', '$address', '$mobile', '$company', '$route', '$str', '$this->date', '$dept_time', '$this->veh', '$fare', '$total_fare', '$tax','pending',$this->exp)";
+    ('$fullname', '$address', '$mobile', '$company', '$route', '$str', '$this->date', '$dept_time', '$this->veh', '$fare', '$total_fare', '$tax','pending','none',$this->exp)";
     $row=$this->conn->query($sql);
     $insert_val=$this->conn->insert_id;
     if(!$row){

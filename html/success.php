@@ -16,7 +16,7 @@ class confirm extends dbcon {
 
         $pid = (int)$_GET['id'];
 
-        $sql = "update tickets set status='confirm' where id='$pid'";
+        $sql = "update tickets set status='confirm',payment_method='online' where id='$pid'";
         $r = $this->conn->query($sql);
 
         if ($r) {

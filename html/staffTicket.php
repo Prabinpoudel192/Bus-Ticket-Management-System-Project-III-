@@ -1,0 +1,180 @@
+  <?php
+  include 'db.php';
+  session_start();
+  $id=$_SESSION['u_id'];
+  $uname=$_SESSION['u_name'];
+  $mobile=$_SESSION['u_mobile'];
+  $veh="";
+  $conn = new dbcon();
+  $conn = $conn->conn;
+  $sql="select assigned_veh from staff where username='$uname'";
+  $r=$conn->query($sql)->fetch_assoc();
+  if($r){
+    $veh=$r['assigned_veh'];
+    echo "<script>alert('The value is $veh')</script>";
+    }else{
+    echo "<script>alert('Unable to fetch staff details.')</script>";
+  }
+  ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bus Ticket System</title>
+<link rel="stylesheet" href="../css/index.css">
+<link rel="stylesheet" href="../bootstrap-5.3.4-dist/css/bootstrap.min.css">
+<script src="../javascript/jquery.js"></script>
+<script src="../javascript/staff.js"></script>
+<style>
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color:black;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: scroll;
+            position: relative;
+            z-index:0;
+        }
+
+         body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:url("../images/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            z-index: -1;
+        } 
+.page {
+  display: none;
+  padding: 20px;
+}
+
+.active {
+  display: block;
+}
+.selected{
+  background-color:yellow;
+  color:red;
+}
+.booked{
+  background-color:red;
+  color:black;
+  font-weight:900;
+}
+table {
+  border: 2px solid black;
+  border-collapse: collapse;
+  width:400px;
+}
+td, th {
+  border: 2px solid black;
+  padding: 10px;
+  text-align: center;
+}
+.search-card{
+  margin:100px 0px 100px 600px;
+}
+.mid{
+  background:white;
+  width:30%;
+}
+.button{
+  height:40px;
+  width:100%;
+  border-radius:15px;
+}
+#cbutton{
+   width: auto;
+  height: 42px;
+  padding:5px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  background-color: #f2f2f2;
+  color: #222;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+#home{
+  height:50px;
+  width:50px;
+  border-radius:15px;
+}
+#home img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    display: block;
+}
+
+
+</style>
+
+</head>
+<body>
+ <script>
+$(document).ready(function(){
+  let veh=<?= json_encode($veh) ?>;
+  if(veh !== null){
+        showPage("booking",veh);
+    }
+  else{
+    alert("Something went wrong");
+    window.location.href="index.php";
+  }
+
+
+$("#cbutton").on("click", function(e) {
+    e.preventDefault();
+     if (selectedSeats.length === 0) {
+        alert("Select at least one seat!");
+        return;
+    }
+    let exptime=<?=json_encode(time()+600)?>;
+    $("#booking").hide();
+    generateTicket(route,date,<?=json_encode($id)?>,<?=json_encode($uname)?>,exptime);
+
+});
+});
+ </script>
+ <div id="home">
+  <a href="staffuser.php" ><img src="../images/home.webp">
+</a> 
+</div>
+  <div class="display">
+  <div class="search-card">
+      
+</div></div>
+<div id="booking" class="page">
+  <h2>Select Seats</h2>
+
+  <div class="bus" id="bus"></div>
+
+  <button id="cbutton">Confirm</button>
+</div>
+
+<div id="ticket" class="page">
+  <h2>🎟️ Your Ticket</h2>
+
+  <p id="ticketDetails"></p>
+
+  <button onclick="window.print()">🖨️ Print</button>
+  <button onclick="resetApp()">🔄 New Booking</button>
+</div>
+
+</body>
+</html>

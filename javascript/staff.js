@@ -14,7 +14,8 @@ function selectBus(name) {
     function logout() {
       window.location.href = "index.html";
     }
-    function showPage(pageId,seats=0,vehicleno="null",date="null") {
+    function showPage(pageId,vehicleno="null") {
+      console.log(pageId,vehicleno);
       document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
       document.querySelector(".display").innerHTML = ""; 
       document.querySelector(".display").style.display = "none";
@@ -26,12 +27,10 @@ function selectBus(name) {
       selectedSeats = [];
       vehno=vehicleno;
       $.ajax({
-            url:"reserve.php",
+            url:"reserve1.php",
             type: "POST",
              data: {
-            vehno: vehno,
-            date:date,
-            
+            vehno: vehno,    
         },
             dataType:"json",
             success: function(data){
@@ -179,89 +178,11 @@ function generateTicket(route,date,id,uname,exptime) {
 
 }
 //Ticket  booking whole js ends here
-//Advertisement portion js starts here
-function bookAd(id){
-  alert("The id is "+id);
-}
-//Advertisement portion js ends here
-function resetApp() {
-  location.reload();
-}
-  
-//admin.php page whole javascript
-$(document).ready(function(){
-    function loadData(url){
-        $(".booked").show().html("Loading...");
 
-        $.ajax({
-            url: url,
-            type: "POST",
-            success: function(data){
-                $(".booked").html(data);
-            },
-            error: function(){
-                $(".booked").html("Error loading data");
-            }
-        });
-    
-      }
-    
-    $(".btn1").click(function(){
-        loadData("dashboard.php");
-    });
-    $(".btn1").click();
-    $(".btn2").click(function(){
-        loadData("users-active.php");
-    });
-
-    $(".btn9").click(function(){
-        loadData("users-inactive.php");
-    });
-    $(".btn6").click(function(){
-      loadData("addbus.php");
-   });
-    $(".btn3").click(function(){
-      loadData("bustable.php")
-    });
-     $(".btn7").click(function(){
-      loadData("booking.php")
-    });
-    $(".btn10").click(function(){
-      loadData("staff.php")
-    });
-
-
-
-
-function dataSets(){
-    $.ajax({
-            url: "admindata.php",
-            type: "POST",
-            dataType:"json",
-            success: function(data){
-               $("#total_users").text(data.total_users);
-               $("#total_buses").text(data.total_buses);
-               $("#total_booking").text(data.total_booking);
-               $("#revenue").text("₹ " + data.revenue);   
-            },
-            error: function(){
-                $(".cards").html("Error loading data");
-                
-            }
-        });
-    
-      }
-    
-        dataSets();
-});
-function doThis(){
-    window.location.href="adminuser.php";
-}
-//admin.php javascript ends here
 
 
 //ticketbook.php all javascript
-function bookfunc(route,date){
+function bookfunc(veh){
  $(document).ready(function(){
     function loadData(url, title){
         $(".display").show().html("Loading...");
@@ -270,8 +191,7 @@ function bookfunc(route,date){
             url: url,
             type: "POST",
              data: {
-            route: route,
-            date: date
+             veh:veh
         },
             success: function(data){
                $("#tableTitle").text(title);
@@ -284,7 +204,7 @@ function bookfunc(route,date){
     
       }
     
-        loadData("ticketbook1.php", "Available Buses");
+        loadData("staffTicket1.php", "Staff Cash Booking System");
 });
 }
 function unconfirmed(){

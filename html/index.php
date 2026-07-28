@@ -66,7 +66,7 @@ else if(isset($_POST['post1'])){
          $r=$c1->conn->query($sql);
          $row=$r->fetch_assoc();
           if($row && $row['acc']==4){
-             $u_id="staff";
+             $u_id=$row['acc'];
              $u_name=$row['username'];
              $u_mobile=$row['contact'];
 
