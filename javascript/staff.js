@@ -14,7 +14,7 @@ function selectBus(name) {
     function logout() {
       window.location.href = "index.html";
     }
-    function showPage(pageId,vehicleno="null") {
+    function showPage(pageId,vehicleno="null",seats=0) {
       console.log(pageId,vehicleno);
       document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
       document.querySelector(".display").innerHTML = ""; 

@@ -4,17 +4,23 @@
   $id=$_SESSION['u_id'];
   $uname=$_SESSION['u_name'];
   $mobile=$_SESSION['u_mobile'];
-  $veh="";
   $conn = new dbcon();
   $conn = $conn->conn;
-  $sql="select assigned_veh from staff where username='$uname'";
-  $r=$conn->query($sql)->fetch_assoc();
-  if($r){
-    $veh=$r['assigned_veh'];
-    echo "<script>alert('The value is $veh')</script>";
-    }else{
+  $sql = "select assigned_veh from staff where username='$uname'";
+$r = $conn->query($sql)->fetch_assoc();
+
+if ($r) {
+    $veh = $r['assigned_veh'];
+    $sql1 = "select noofseat from bus where vehicle_no='$veh'";
+    $rs = $conn->query($sql1)->fetch_assoc();
+    if ($rs) {
+        $seats = $rs['noofseat'];
+    } else {
+        echo "<script>alert('Unable to fetch bus details.')</script>";
+    }
+} else {
     echo "<script>alert('Unable to fetch staff details.')</script>";
-  }
+}
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,8 +135,9 @@ td, th {
  <script>
 $(document).ready(function(){
   let veh=<?= json_encode($veh) ?>;
+  let seats=<?=json_encode($seats)?>;
   if(veh !== null){
-        showPage("booking",veh);
+        showPage("booking",veh,seats);
     }
   else{
     alert("Something went wrong");
@@ -139,6 +146,10 @@ $(document).ready(function(){
 
 
 $("#cbutton").on("click", function(e) {
+ window.location.href="cashform.php";
+});
+
+$("#cbook").on("click",function(e){
     e.preventDefault();
      if (selectedSeats.length === 0) {
         alert("Select at least one seat!");
@@ -150,6 +161,7 @@ $("#cbutton").on("click", function(e) {
 
 });
 });
+
  </script>
  <div id="home">
   <a href="staffuser.php" ><img src="../images/home.webp">
@@ -164,7 +176,7 @@ $("#cbutton").on("click", function(e) {
 
   <div class="bus" id="bus"></div>
 
-  <button id="cbutton">Confirm</button>
+  <button id="cbutton" >Confirm</button>
 </div>
 
 <div id="ticket" class="page">
