@@ -11,9 +11,9 @@ $username = $_POST['username'];
 $password =$_POST['password'];
 $contact = $_POST['contact'];
 $assigned_veh = $_POST['assigned_veh'];
-
-$stmt = $conn->prepare("INSERT INTO staff (name, username, password, contact, assigned_veh) VALUES (?, ?, ?, ?, ?)");
-$stmt->bind_param("sssss", $name, $username, $password, $contact, $assigned_veh);
+$acc=4;
+$stmt = $conn->prepare("INSERT INTO staff (name, username, password, contact, assigned_veh,acc) VALUES (?, ?, ?, ?, ?,?)");
+$stmt->bind_param("sssssi", $name, $username, $password, $contact, $assigned_veh,$acc);
 
 if($stmt->execute()){
     echo "<script>alert('Staff registered successfully'); window.location.href='admin.php';</script>";

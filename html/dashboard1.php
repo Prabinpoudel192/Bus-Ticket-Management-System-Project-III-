@@ -97,7 +97,7 @@ class dashboardGraph extends dbcon
 
         </div>
 
-        <div style='display:flex; flex-wrap:wrap; gap:20px; margin-top:20px;'>
+        <div style='display:flex; flex-wrap:wrap; gap:20px; margin-top:20px; background-color:white;'>
 
             <div class='table-box' style='width:340px;'>
                 <h3 style='margin-bottom:10px;'>Revenue by Route</h3>
@@ -115,7 +115,7 @@ class dashboardGraph extends dbcon
 
         </div>
 
-        <div class='table-box' style='width:100%; margin-top:20px;'>
+        <div class='table-box' style='width:100%; margin-top:20px; background-color:white;'>
             <h3 style='margin-bottom:10px;'>Revenue by Booking Date</h3>
             <div style='position:relative; height:280px; width:100%;'>
                 <canvas id='dateChart'></canvas>
