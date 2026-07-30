@@ -49,7 +49,7 @@ body {
 
 .display{
     margin-bottom:20px;
-    width:50%;
+    width:90%;
 }
 </style>
  <script>
@@ -59,8 +59,40 @@ $(document).ready(function(){
     $(".btn1").click(function(){
         window.location.href="staffTicket.php";
     });
+    $(".btn2").click(function(){
+    $("#booking").addClass("active");
+    $.ajax({
+        url:"staffbooked.php",
+        type: "POST",
+        data: { veh: <?=json_encode($veh_no)?> },
+        success: function(data){
+           $(".display").html(data);
+        },
+        error: function(){
+            $(".display").html("Error loading data");
+        }
+    });
+});
+$(document).on("click", ".button", function(){
+    let id = $(this).data("id");
+
+    if(!confirm("Are you sure you want to delete this booking?")) return;
+
+    $.ajax({
+        url: "release_seat.php",
+        type: "POST",
+        data: { id: id },
+        success: function(data){
+            $(".display").html(data);
+        },
+        error: function(){
+            $(".display").html("Error loading data");
+        }
+    });
+});
 
 });
+   
 
  </script>
 </head>
@@ -71,14 +103,14 @@ $(document).ready(function(){
     <h2>🚍 Staff Panel</h2>
 
     <div class="nav-buttons">
-        <button class="btn1">Available Seats</button>
         <button class="btn4" onclick="window.location.href='index.php'">Logout</button>
     </div>
 </div>
 
 <!-- SIDEBAR -->
 <div class="sidebar1">
-    <button class="btn6">Book Seat</button>
+    <button class="btn1">Available Seats</button>
+    <button class="btn2">Free Seats</button>
     <button class="btn7">My Bookings</button>
 </div>
 

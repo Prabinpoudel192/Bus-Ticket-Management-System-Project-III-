@@ -35,18 +35,20 @@ function selectBus(name) {
         },
             dataType:"json",
             success: function(data){
-                tempBooked = [...new Set(
+    tempBooked = [...new Set(
         data.pending
+            .filter(item => item.seat)
             .flatMap(item => item.seat.split(','))
             .map(seat => seat.trim())
     )];
 
     bookedSeats = [...new Set(
         data.confirmed
+            .filter(item => item.seat)
             .flatMap(item => item.seat.split(','))
             .map(seat => seat.trim())
     )];
-             createSeats();
+    createSeats();
             },
             error: function(){
                 $(".display").html("Error loading data");

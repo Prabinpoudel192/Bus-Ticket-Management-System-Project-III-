@@ -15,7 +15,6 @@ function selectBus(name) {
       window.location.href = "index.html";
     }
     function showPage(pageId,vehicleno="null",seats=0) {
-      console.log(pageId,vehicleno);
       document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
       document.querySelector(".display").innerHTML = ""; 
       document.querySelector(".display").style.display = "none";
@@ -34,19 +33,21 @@ function selectBus(name) {
         },
             dataType:"json",
             success: function(data){
-                tempBooked = [...new Set(
+    tempBooked = [...new Set(
         data.pending
+            .filter(item => item.seat)
             .flatMap(item => item.seat.split(','))
             .map(seat => seat.trim())
     )];
 
     bookedSeats = [...new Set(
         data.confirmed
+            .filter(item => item.seat)
             .flatMap(item => item.seat.split(','))
             .map(seat => seat.trim())
     )];
-             createSeats();
-            },
+    createSeats();
+},
             error: function(){
                 $(".display").html("Error loading data");
            }
@@ -135,17 +136,7 @@ function goToPassenger() {
   showPage("passenger");
 }
 //Ticket booking whole javascript start here
-function generateTicket(route,date,id,uname,exptime) {
-  let veh=vehno;
-  vehno="";
-  document.getElementById("ticketDetails").innerHTML = `
-    <b>Seats:</b> ${selectedSeats.join(", ")}
-    <b>Route:</b>${route}<br>
-    <b>Date:</b>${date}<br>
-    <b>Vehicle NO:</b>${veh}<br>
-
-  `;
-     $(document).ready(function(){
+function generateTicket(tid) {
     function loadData(url){
         $(".display").show().html("Loading...");
 
@@ -153,14 +144,7 @@ function generateTicket(route,date,id,uname,exptime) {
             url: url,
             type: "POST",
              data: {
-            route: route,
-            date: date,
-            id:id,
-            uname:uname,
-            veh:veh,
-            seat:selectedSeats,
-            exp:exptime
-
+            tid:tid,
         },
             success: function(data){
                $(".display").html(data);
@@ -173,8 +157,8 @@ function generateTicket(route,date,id,uname,exptime) {
     
       }
     
-        loadData("ticketbook2.php");
-});
+        loadData("staffTicket2.php");
+
 
 }
 //Ticket  booking whole js ends here

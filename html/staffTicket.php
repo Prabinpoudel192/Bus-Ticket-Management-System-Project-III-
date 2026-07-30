@@ -11,10 +11,11 @@ $r = $conn->query($sql)->fetch_assoc();
 
 if ($r) {
     $veh = $r['assigned_veh'];
-    $sql1 = "select noofseat from bus where vehicle_no='$veh'";
+    $sql1 = "select company_name,noofseat from bus where vehicle_no='$veh'";
     $rs = $conn->query($sql1)->fetch_assoc();
     if ($rs) {
         $seats = $rs['noofseat'];
+        $bcompany=$rs['company_name'];
     } else {
         echo "<script>alert('Unable to fetch bus details.')</script>";
     }
@@ -136,6 +137,7 @@ td, th {
 $(document).ready(function(){
   let veh=<?= json_encode($veh) ?>;
   let seats=<?=json_encode($seats)?>;
+  let companyname=<?=json_encode($bcompany)?>;
   if(veh !== null){
         showPage("booking",veh,seats);
     }
@@ -146,7 +148,7 @@ $(document).ready(function(){
 
 
 $("#cbutton").on("click", function(e) {
- window.location.href="cashform.php";
+  window.location.href = "cashform.php?veh_no=" + encodeURIComponent(veh) + "&bseats=" + encodeURIComponent(selectedSeats)+"&bcompany=" + encodeURIComponent(companyname);
 });
 
 $("#cbook").on("click",function(e){
