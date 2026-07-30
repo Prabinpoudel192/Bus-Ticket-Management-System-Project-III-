@@ -58,7 +58,7 @@ else if(isset($_POST['post1'])){
      $_SESSION['u_name'] = $u_name;
      $_SESSION['u_mobile'] = $u_mobile;
      
-    header("Location:admin.php");
+    header("Location:admin1.php");
     }else{
          $uname=$_POST['uname'];
          $pwd=$_POST['pwd'];

@@ -215,16 +215,13 @@ body{
 
 <script>
 $(document).ready(function(){
-    $(".stars span").hover(function(){
-        let val=$(this).data("val");
-        $(this).parent().children().each(function(){
-            $(this).toggleClass("filled", $(this).data("val")<=val);
-        });
-    });
-
     $(".stars").on("click","span",function(){
         let val=$(this).data("val");
         let adId=$(this).parent().data("ad-id");
+
+        $(this).parent().children().each(function(){
+            $(this).toggleClass("filled", $(this).data("val")<=val);
+        });
 
         $.ajax({
             url:"rate_ad.php",

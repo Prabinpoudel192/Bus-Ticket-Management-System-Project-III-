@@ -209,7 +209,7 @@ $(document).ready(function(){
       }
     
     $(".btn1").click(function(){
-        loadData("dashboard.php");
+        loadData("dashboard1.php");
     });
     $(".btn1").click();
     $(".btn2").click(function(){
@@ -230,6 +230,12 @@ $(document).ready(function(){
     });
     $(".btn10").click(function(){
       loadData("staff.php")
+    });
+    $(".btn11").click(function(){
+      loadData("ads1.php")
+    });
+    $(".btn12").click(function(){
+      loadData("festival.php")
     });
 
 

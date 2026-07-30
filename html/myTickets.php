@@ -20,34 +20,34 @@ function give(){
 
      while($login = $result->fetch_assoc()){
          if($login['status']=='pending'){
-             $data .= "
+            $data .= "
 <div style='width:420px; max-height:500px; overflow-y:auto; margin:auto; padding:20px; border:2px dashed #333; font-family:Arial; background:#fff;'>
 
-    <h2 style='text-align:center;'>🎟️ BUS TICKET</h2>
+    <h2 style='text-align:center; color:#1e3c72;'><b><i>BUS TICKET</i></b></h2>
     <hr>
 
-    <h4>👤 Passenger Details</h4>
-    <p>Name: {$login['name']}</p>
-    <p>Address: {$login['address']}</p>
-    <p>Mobile: {$login['mobile']}</p>
-
-    <hr>
-
-    <h4>🚌 Bus Details</h4>
-    <p>Company: {$login['company_name']}</p>
-    <p>Route: {$login['route']}</p>
-    <p>Seates Booked:{$login['seat']}</P>
-    <p>Date:{$login['travel_date']}</p>
-    <p>Departure Time:{$login['travel_time']}</p>
-    <p>Vehicle No:{$login['veh_no']} </p>
+    <h4 style='color:#c0392b;'>-<b><i>Passenger Details</i></b></h4>
+    <p>Name: <span style='color:#2c3e50;'>{$login['name']}</span></p>
+    <p>Address: <span style='color:#2c3e50;'>{$login['address']}</span></p>
+    <p>Mobile: <span style='color:#2c3e50;'>{$login['mobile']}</span></p>
 
     <hr>
 
-    <h4>💰 Fare Summary</h4>
-    <p>Base Fare: Rs. <span id='fare'>{$login['total_fare']}</span></p>
-    <p>Tax (13%): Rs. <span id='tax'>{$login['tax']}</span></p>
+    <h4 style='color:#c0392b;'><b><i>Bus Details</i></b></h4>
+    <p>Company: <span style='color:#2c3e50;'>{$login['company_name']}</span></p>
+    <p>Route: <span style='color:#2c3e50;'>{$login['route']}</span></p>
+    <p>Seates Booked: <span style='color:#2c3e50;'>{$login['seat']}</span></p>
+    <p>Date: <span style='color:#2c3e50;'>{$login['travel_date']}</span></p>
+    <p>Departure Time: <span style='color:#2c3e50;'>{$login['travel_time']}</span></p>
+    <p>Vehicle No: <span style='color:#2c3e50;'>{$login['veh_no']}</span> </p>
+
     <hr>
-    <p><b>Total: Rs. <span id='total'>{$login['total']}</span></b></p>
+
+    <h4 style='color:#c0392b;'><b><i>Fare Summary</i></b></h4>
+    <p>Base Fare: Rs. <span id='fare' style='color:#27ae60;'>{$login['total_fare']}</span></p>
+    <p>Tax (13%): Rs. <span id='tax' style='color:#e67e22;'>{$login['tax']}</span></p>
+    <hr>
+    <p><b>Total: Rs. <span id='total' style='color:#27ae60;'>{$login['total']}</span></b></p>
 
     <hr>
 
@@ -62,48 +62,46 @@ function give(){
 
 </div>
 ";
-         } else if($login['status']=='confirm'){
-             $data .= "
-<div style='width:420px; max-height:500px; overflow-y:auto; margin:auto; padding:20px; border:2px dashed #333; font-family:Arial; background:#fff;'>
+        } else if($login['status']=='confirm'){
+   $data .= "
+<div id='ticket-{$login['id']}' style='width:420px; margin:auto; padding:12px; border:2px dashed #333; font-family:Arial; background:#fff; font-size:12px; line-height:1.3;'>
 
-    <h2 style='text-align:center;'>🎟️ BUS TICKET</h2>
-    <hr>
+    <h2 style='text-align:center; font-size:16px; margin:0 0 6px; color:#1e3c72;'><b><i>BUS TICKET</i></b></h2>
+    <hr style='margin:6px 0;'>
 
-    <h4>👤 Passenger Details</h4>
-    <p>Name: {$login['name']}</p>
-    <p>Address: {$login['address']}</p>
-    <p>Mobile: {$login['mobile']}</p>
+    <h4 style='margin:6px 0 3px; color:#c0392b;'><b><i>Passenger Details</i></b></h4>
+    <p style='margin:2px 0;'>Name: <span style='color:#2c3e50;'>{$login['name']}</span></p>
+    <p style='margin:2px 0;'>Address: <span style='color:#2c3e50;'>{$login['address']}</span></p>
+    <p style='margin:2px 0;'>Mobile: <span style='color:#2c3e50;'>{$login['mobile']}</span></p>
 
-    <hr>
+    <hr style='margin:6px 0;'>
 
-    <h4>🚌 Bus Details</h4>
-    <p>Company: {$login['company_name']}</p>
-    <p>Route: {$login['route']}</p>
-    <p>Seates Booked:{$login['seat']}</P>
-    <p>Date:{$login['travel_date']}</p>
-    <p>Departure Time:{$login['travel_time']}</p>
-    <p>Vehicle No:{$login['veh_no']} </p>
+    <h4 style='margin:6px 0 3px; color:#c0392b;'><b><i>Bus Details</i></b></h4>
+    <p style='margin:2px 0;'>Company: <span style='color:#2c3e50;'>{$login['company_name']}</span></p>
+    <p style='margin:2px 0;'>Route: <span style='color:#2c3e50;'>{$login['route']}</span></p>
+    <p style='margin:2px 0;'>Seates Booked: <span style='color:#2c3e50;'>{$login['seat']}</span></p>
+    <p style='margin:2px 0;'>Date: <span style='color:#2c3e50;'>{$login['travel_date']}</span></p>
+    <p style='margin:2px 0;'>Departure Time: <span style='color:#2c3e50;'>{$login['travel_time']}</span></p>
+    <p style='margin:2px 0;'>Vehicle No: <span style='color:#2c3e50;'>{$login['veh_no']}</span> </p>
 
-    <hr>
+    <hr style='margin:6px 0;'>
 
-    <h4>💰 Fare Summary</h4>
-    <p>Base Fare: Rs. <span id='fare'>{$login['total_fare']}</span></p>
-    <p>Tax (13%): Rs. <span id='tax'>{$login['tax']}</span></p>
-    <hr>
-    <p><b>Total: Rs. <span id='total'>{$login['total']}</span></b></p>
+    <h4 style='margin:6px 0 3px; color:#c0392b;'><b><i>Fare Summary</i></b></h4>
+    <p style='margin:2px 0;'>Base Fare: Rs. <span id='fare' style='color:#27ae60;'>{$login['total_fare']}</span></p>
+    <p style='margin:2px 0;'>Tax (13%): Rs. <span id='tax' style='color:#e67e22;'>{$login['tax']}</span></p>
+    <hr style='margin:6px 0;'>
+    <p style='margin:2px 0;'><b>Total: Rs. <span id='total' style='color:#27ae60;'>{$login['total']}</span></b></p>
 
-    <hr>
+    <hr style='margin:6px 0;'>
 
-    <div style='text-align:center; margin-top:15px;'>
-       <button onclick='window.print()'>🖨️ Print</button>
+    <div style='text-align:center; margin-top:10px;'>
+       <button onclick='printTicket({$login['id']})'>🖨️ Print</button>
        <button onclick='resetApp()'>🔄 New Booking</button>
     </div>
 
 </div>
 ";
-         }
-     }
-
+}}
      $data .= "</div>";
  }
 

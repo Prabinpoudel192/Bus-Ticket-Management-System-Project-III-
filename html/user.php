@@ -34,8 +34,44 @@
   usort($top_ads, function($a,$b){
       return $b['wr'] <=> $a['wr'];
   });
+  $popularRoutes = [];
+$q = $c1->conn->query("SELECT route, COUNT(*) AS total 
+                        FROM tickets 
+                        GROUP BY route 
+                        ORDER BY total DESC 
+                        LIMIT 4");
+if($q){
+    while($row = $q->fetch_assoc()){
+        $popularRoutes[] = $row;
+    }
+}
 
   $top_ads=array_slice($top_ads,0,3);
+
+  // ---- Stats section data ----
+  $busCount = 0;
+  $q = $c1->conn->query("SELECT COUNT(*) AS total FROM bus");
+  if($q && $row = $q->fetch_assoc()){
+      $busCount = $row['total'];
+  }
+
+  $customerCount = 0;
+  $q = $c1->conn->query("SELECT COUNT(*) AS total FROM login where acc='2' and status='active'");
+  if($q && $row = $q->fetch_assoc()){
+      $customerCount = $row['total'];
+  }
+
+  $tourCount = 0;
+  $q = $c1->conn->query("SELECT COUNT(*) AS total FROM ads WHERE status='active'");
+  if($q && $row = $q->fetch_assoc()){
+      $tourCount = $row['total'];
+  }
+
+  $satisfaction = 0;
+  $q = $c1->conn->query("SELECT AVG(rating) AS avg_rating FROM ad_ratings");
+  if($q && $row = $q->fetch_assoc() && $row['avg_rating'] > 0){
+      $satisfaction = round(($row['avg_rating'] / 5) * 100);
+  }
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -163,10 +199,13 @@ overflow-x:hidden;
 
 <div class="routes">
 
-<div class="route-card">Kathmandu → Pokhara</div>
-<div class="route-card">Kathmandu → Chitwan</div>
-<div class="route-card">Pokhara → Butwal</div>
-<div class="route-card">Kathmandu → Nepalgunj</div>
+<?php if(count($popularRoutes)===0): ?>
+<p>No routes booked yet.</p>
+<?php else: ?>
+<?php foreach($popularRoutes as $r): ?>
+<div class="route-card"><?= htmlspecialchars($r['route']) ?></div>
+<?php endforeach; ?>
+<?php endif; ?>
 
 </div>
 
@@ -201,22 +240,22 @@ overflow-x:hidden;
 <div class="stats">
 
 <div class="stat">
-<h2 class="counter" data-target="1200">0</h2>
+<h2 class="counter" data-target="<?= $busCount ?>">0</h2>
 <p>Buses</p>
 </div>
 
 <div class="stat">
-<h2 class="counter" data-target="25000">0</h2>
+<h2 class="counter" data-target="<?= $customerCount ?>">0</h2>
 <p>Customers</p>
 </div>
 
 <div class="stat">
-<h2 class="counter" data-target="150">0</h2>
+<h2 class="counter" data-target="<?= $tourCount ?>">0</h2>
 <p>Tours</p>
 </div>
 
 <div class="stat">
-<h2 class="counter" data-target="99">0</h2>
+<h2 class="counter" data-target="<?= $satisfaction ?>">0</h2>
 <p>% Satisfaction</p>
 </div>
 
@@ -322,6 +361,30 @@ $("#showTickets").on("click", function(e) {
     
       });
 });
+function printTicket(id) {
+    const ticketHTML = document.getElementById('ticket-' + id).outerHTML;
+
+    let printFrame = document.getElementById('print-frame');
+    if (!printFrame) {
+        printFrame = document.createElement('iframe');
+        printFrame.id = 'print-frame';
+        printFrame.style.position = 'fixed';
+        printFrame.style.right = '0';
+        printFrame.style.bottom = '0';
+        printFrame.style.width = '0';
+        printFrame.style.height = '0';
+        printFrame.style.border = '0';
+        document.body.appendChild(printFrame);
+    }
+
+    const doc = printFrame.contentWindow.document;
+    doc.open();
+    doc.write('<html><head><title>Ticket</title></head><body>' + ticketHTML + '</body></html>');
+    doc.close();
+
+    printFrame.contentWindow.focus();
+    printFrame.contentWindow.print();
+}
 
 </script>
 
