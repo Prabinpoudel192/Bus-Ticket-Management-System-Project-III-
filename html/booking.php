@@ -27,7 +27,6 @@ $data="
                 <th>Tax</th>
                 <th>Total</th>
                 <th>Status</th>
-                <th>Action</th>
             </tr>
         </thead>
 
@@ -47,7 +46,6 @@ $data="
                 <td>{$row['tax']}</td>
                 <td>{$row['total']}</td>
                 <td>{$row['status']}</td>
-                <td><button class='button' id='approve'>Approve</button><br><br><button class='button' id='delete'>Delete</button></td>
               </tr>";
     
    }

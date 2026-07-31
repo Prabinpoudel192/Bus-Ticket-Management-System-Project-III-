@@ -31,7 +31,7 @@ function __construct($vehno,$date){
     }
     echo json_encode([
         "pending" => $this->pending,
-        "confirmed" => $this->confirmed
+        "confirmed" => $this->confirmed,
     ]);
 }
 }

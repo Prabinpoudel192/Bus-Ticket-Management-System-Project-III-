@@ -228,7 +228,7 @@ body{
                 &nbsp;<span style="color:#27ae60; font-size:12px;">(20% OFF)</span>
             </p>
 
-            <form id="<?= $formId ?>" action="ticketbook.php" method="post" style="display:none;">
+            <form id="<?= $formId ?>" action="ticketbook.php?dis=1" method="post" style="display:none;">
                 <input type="hidden" name="from" value="<?= htmlspecialchars($fromCity) ?>">
                 <input type="hidden" name="to" value="<?= htmlspecialchars($toCity) ?>">
                 <input type="hidden" name="date" value="<?= date('Y-m-d') ?>">
@@ -294,6 +294,10 @@ function bookAd(id){
         success: function(data){
 
             // Display the form below the buttons
+            $("#form" + id).css({
+             "height": "auto",
+             "overflow": "visible"
+              });
             $("#form" + id).html(data);
 
             // Set the hidden ad_id
@@ -320,7 +324,7 @@ function bookAd(id){
 
                             alert("Booking Successful");
 
-                            $("#package" + id).fadeOut(500, function(){
+                            $("#form" + id).fadeOut(500, function(){
                                 $(this).remove();
                             });
 
@@ -328,6 +332,9 @@ function bookAd(id){
                         else if(res.status == "duplicate"){
 
                             alert("You have already booked this package.");
+                             $("#form" + id).fadeOut(500, function(){
+                                $(this).remove();
+                            });
 
                         }
                         else if(res.status == "login_required"){

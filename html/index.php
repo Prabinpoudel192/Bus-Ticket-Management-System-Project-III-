@@ -14,7 +14,7 @@ if(isset($_POST['post2'])){
     $gender=$_POST['sgender'];
     $uname=$_POST['suname'];
     $pwd=$_POST['spwd'];
-    $acc=2;
+    $acc=1;
     $status="inactive";
         
         $c2=new login($fname,$mname,$lname,$address,$email,$mobile,$gender,$uname,$pwd,$acc,$status);
@@ -280,15 +280,15 @@ setInterval(() => {
                 <div class="radio-group gender-group">
                     <span class="radio-group-label">Gender:</span>
                     <div class="radio-item">
-                        <input type="radio" name="sgender" value="m" id="male" required>
+                        <input type="radio" name="sgender" value="Male" id="male" required>
                         <label for="male">Male</label>
                     </div>
                     <div class="radio-item">
-                        <input type="radio" name="sgender" value="f" id="female" required>
+                        <input type="radio" name="sgender" value="Female" id="female" required>
                         <label for="female">Female</label>
                     </div>
                     <div class="radio-item">
-                        <input type="radio" name="sgender" value="o" id="other" required>
+                        <input type="radio" name="sgender" value="Other" id="other" required>
                         <label for="other">Other</label>
                     </div>
                 </div>

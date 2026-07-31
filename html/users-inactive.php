@@ -2,7 +2,7 @@
 include 'db.php';
 class fetchUsers extends dbcon{
 function give(){
-  $sql="select *from login where status='inactive'";
+  $sql="select *from login where status='inactive' and acc='1'";
 $r=$this->conn->query($sql);
 $data="
 <div class='table-box' style='width:100%'>

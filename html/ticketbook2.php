@@ -3,8 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'db.php';
 class fetchBus extends dbcon{
-    public $route,$date,$id,$uname,$veh,$seat,$exp;
-function __construct($route,$date,$id,$uname,$veh,$seat,$exp){ 
+    public $route,$date,$id,$uname,$veh,$seat,$exp,$qt;
+function __construct($route,$date,$id,$uname,$veh,$seat,$exp,$qt){ 
    parent::__construct();
    $this->route=$route;
    $this->date=$date;
@@ -13,6 +13,7 @@ function __construct($route,$date,$id,$uname,$veh,$seat,$exp){
    $this->veh=$veh;
    $this->seat=$seat;
    $this->exp=$exp;
+   $this->qt=$qt;
 }
 function give(){
  $login=$this->conn->query("select fname,lname,address,mobile from login where id=$this->id")->fetch_assoc();
@@ -23,6 +24,9 @@ function give(){
     //These values is to be inserted in the database
     $tic_num = is_array($this->seat) ? count($this->seat) : 1;
     $total_fare = $bus['fare'] * $tic_num;
+    if($this->qt==1){
+    $total_fare = $total_fare-(0.2*$total_fare);
+    }
     $tax = $total_fare * 0.13;
     $total=$total_fare+$tax;
     $str = is_array($this->seat)
@@ -104,6 +108,7 @@ $uname=$_POST['uname'];
 $veh=$_POST['veh'];
 $seat=$_POST['seat'];
 $exp=$_POST['exp'];
-$c2=new fetchBus($route,$date,$id,$uname,$veh,$seat,$exp);
+$qt=$_POST['qt'];
+$c2=new fetchBus($route,$date,$id,$uname,$veh,$seat,$exp,$qt);
 $c2->give();
 ?>

@@ -2,6 +2,7 @@
   session_start();
   $id=$_SESSION['u_id'];
   $uname=$_SESSION['u_name'];
+  $dis = $_GET['dis'] ?? '';
   $from = $_POST['from'] ?? '';
   $to = $_POST['to'] ?? '';
   $date = $_POST['date'] ?? '';
@@ -122,8 +123,9 @@ td, th {
 $(document).ready(function(){
   let date=<?=json_encode($date)?>;
   let route=<?=json_encode($route)?>;
+  let dis=<?=json_encode($dis)?>;
   if(route !== "-" && date !== ""){
-        bookfunc(route,date);
+        bookfunc(route,date,dis);
     }
   else{
     alert("Something went wrong");

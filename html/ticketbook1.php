@@ -5,10 +5,12 @@ include 'db.php';
 class fetchBus extends dbcon{
     public $route;
     public $date;
-function __construct($route,$date){ 
+    public $qt;
+function __construct($route,$date,$qt){ 
    parent::__construct();
    $this->route=$route;
    $this->date=$date;
+   $this->qt=$qt;
 }
 function give(){
   $sql="select company_name,vehicle_no,noofseat,bus_type,route,fare,dep_time from bus where route='$this->route'";
@@ -47,7 +49,7 @@ $data="
                 <td>{$row['route']}</td>
                 <td>{$row['fare']}</td>
                 <td>{$row['dep_time']}</td>
-                <td><button onclick=\"showPage('booking',{$row['noofseat']},'{$row['vehicle_no']}','$this->date')\">🎟️ Book Ticket</button></td>
+                <td><button onclick=\"showPage('booking',{$row['noofseat']},'{$row['vehicle_no']}','$this->date',$this->qt)\">🎟️ Book Ticket</button></td>
               </tr>";
     
    }
@@ -57,6 +59,7 @@ $data="
 }
 $proute=$_POST['route'];
 $pdate=$_POST['date'];
-$c2=new fetchBus($proute,$pdate);
+$type=$_POST['qt'];
+$c2=new fetchBus($proute,$pdate,$type);
 $c2->give();
 ?>

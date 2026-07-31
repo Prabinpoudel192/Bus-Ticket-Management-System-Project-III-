@@ -2,6 +2,7 @@ let selectedSeats = [];
 let tempBooked=[];
 let bookedSeats = []; 
 let vehno="";
+let pqt=0;
 function selectBus(name) {
   alert("Selected Bus: " + name + " (Seat module will come next)");
 }
@@ -14,7 +15,8 @@ function selectBus(name) {
     function logout() {
       window.location.href = "index.html";
     }
-    function showPage(pageId,seats=0,vehicleno="null",date="null") {
+    function showPage(pageId,seats=0,vehicleno="null",date="null",qt=0) {
+      pqt=qt;
       document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
       document.querySelector(".display").innerHTML = ""; 
       document.querySelector(".display").style.display = "none";
@@ -31,7 +33,6 @@ function selectBus(name) {
              data: {
             vehno: vehno,
             date:date,
-            
         },
             dataType:"json",
             success: function(data){
@@ -162,7 +163,8 @@ function generateTicket(route,date,id,uname,exptime) {
             uname:uname,
             veh:veh,
             seat:selectedSeats,
-            exp:exptime
+            exp:exptime,
+            qt:pqt,
 
         },
             success: function(data){
@@ -171,6 +173,7 @@ function generateTicket(route,date,id,uname,exptime) {
             error: function(){
                 $(".display").html("Error loading data");
                  showPage("ticket");
+                 pqt=0;
             }
         });
     
@@ -306,6 +309,9 @@ $(document).ready(function(){
      $(".btn7").click(function(){
       loadData("booking.php")
     });
+    $(".btn8").click(function(){
+      loadData("payment.php")
+    });
     $(".btn10").click(function(){
       loadData("staff.php")
     });
@@ -347,9 +353,9 @@ function doThis(){
 
 
 //ticketbook.php all javascript
-function bookfunc(route,date){
- $(document).ready(function(){
-    function loadData(url, title){
+function bookfunc(route,date,dis=0){
+  if(dis==1){
+     function loadData(url){
         $(".display").show().html("Loading...");
 
         $.ajax({
@@ -357,10 +363,11 @@ function bookfunc(route,date){
             type: "POST",
              data: {
             route: route,
-            date: date
+            date: date,
+            qt:1,
         },
             success: function(data){
-               $("#tableTitle").text(title);
+               $("#tableTitle").text("Ticket Discount");
                $(".display").html(data);
             },
             error: function(){
@@ -370,9 +377,33 @@ function bookfunc(route,date){
     
       }
     
-        loadData("ticketbook1.php", "Available Buses");
-});
-}
+        loadData("ticketbook1.php");
+  }else{
+ 
+    function loadData(url){
+        $(".display").show().html("Loading...");
+
+        $.ajax({
+            url: url,
+            type: "POST",
+             data: {
+            route: route,
+            date: date,
+            qt:0,
+        },
+            success: function(data){
+               $("#tableTitle").text("Available Buses");
+               $(".display").html(data);
+            },
+            error: function(){
+                $(".display").html("Error loading data");
+            }
+        });
+    
+      }
+    
+        loadData("ticketbook1.php");
+}}
 function unconfirmed(){
         $.ajax({
             url: "unconfirmed.php",
