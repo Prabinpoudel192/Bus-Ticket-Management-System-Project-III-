@@ -14,14 +14,19 @@ if (!isset($_SESSION['u_id'])) {
 }
 
 $user_id = $_SESSION['u_id'];
-$ad_id = $_POST['ad_id'] ?? 0;
 
-if (!$ad_id) {
+// Get form values
+$ad_id   = $_POST['ad_id'] ?? 0;
+$name    = trim($_POST['name'] ?? '');
+$mobile  = trim($_POST['mobile'] ?? '');
+$address = trim($_POST['address'] ?? '');
+
+if (!$ad_id || $name == '' || $mobile == '' || $address == '') {
     echo json_encode(["status" => "error"]);
     exit();
 }
 
-// Fetch ad details
+// Fetch advertisement details
 $stmt = $conn->prepare("SELECT title, price, category FROM ads WHERE id = ?");
 $stmt->bind_param("i", $ad_id);
 $stmt->execute();
@@ -33,23 +38,7 @@ if (!$adRow) {
     exit();
 }
 
-// Fetch user details from login table
-$stmt = $conn->prepare("SELECT fname, mname, lname, address, mobile FROM login WHERE id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$userRow = $stmt->get_result()->fetch_assoc();
-$stmt->close();
-
-if (!$userRow) {
-    echo json_encode(["status" => "error"]);
-    exit();
-}
-
-$name = trim($userRow['fname'] . ' ' . $userRow['mname'] . ' ' . $userRow['lname']);
-$mobile = $userRow['mobile'];
-$address = $userRow['address'];
-
-// Prevent duplicate pending/confirmed requests for the same ad by the same user
+// Prevent duplicate booking
 $stmt = $conn->prepare("SELECT id FROM ad_bookings WHERE ad_id = ? AND user_id = ? AND status IN ('pending','confirm')");
 $stmt->bind_param("ii", $ad_id, $user_id);
 $stmt->execute();
@@ -61,13 +50,47 @@ if ($existing) {
     exit();
 }
 
-$stmt = $conn->prepare("INSERT INTO ad_bookings (ad_id, user_id, name, mobile, address, ad_title, category, price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')");
-$stmt->bind_param("iissssss", $ad_id, $user_id, $name, $mobile, $address, $adRow['title'], $adRow['category'], $adRow['price']);
+// Insert booking
+$stmt = $conn->prepare("
+    INSERT INTO ad_bookings
+    (
+        ad_id,
+        user_id,
+        name,
+        mobile,
+        address,
+        ad_title,
+        category,
+        price,
+        status
+    )
+    VALUES
+    (
+        ?, ?, ?, ?, ?, ?, ?, ?, 'pending'
+    )
+");
+
+$stmt->bind_param(
+    "iissssss",
+    $ad_id,
+    $user_id,
+    $name,
+    $mobile,
+    $address,
+    $adRow['title'],
+    $adRow['category'],
+    $adRow['price']
+);
 
 if ($stmt->execute()) {
     echo json_encode(["status" => "done"]);
 } else {
-    echo json_encode(["status" => "error"]);
+    echo json_encode([
+        "status" => "error",
+        "message" => $stmt->error
+    ]);
 }
+
 $stmt->close();
+$conn->close();
 ?>

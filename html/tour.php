@@ -271,6 +271,7 @@ body{
 
             <button class="book-btn" style="margin-bottom:8px; background:#666;" onclick="window.open('<?= htmlspecialchars($ad['redirect_url']) ?>','_blank')">View Details</button>
             <button class="book-btn" onclick="bookAd(<?= $ad['id'] ?>)">Book Now</button>
+            <div id="form<?= $ad['id'] ?>"></div>
         </div>
     </div>
     <?php endforeach; ?>
@@ -282,6 +283,88 @@ body{
 </div>
 
 <script>
+function bookAd(id){
+
+    $.ajax({
+        url: "ad_form.php",
+        type: "POST",
+        data: {
+            ad_id: id
+        },
+        success: function(data){
+
+            // Display the form below the buttons
+            $("#form" + id).html(data);
+
+            // Set the hidden ad_id
+            $("#form" + id + " #ad_id").val(id);
+
+            // Remove any previous submit handlers
+            $("#form" + id + " #bookingForm").off("submit").on("submit", function(e){
+
+                e.preventDefault();
+
+                $.ajax({
+
+                    url: "book_ad.php",
+
+                    type: "POST",
+
+                    data: $(this).serialize(),
+
+                    dataType: "json",
+
+                    success: function(res){
+
+                        if(res.status == "done"){
+
+                            alert("Booking Successful");
+
+                            $("#package" + id).fadeOut(500, function(){
+                                $(this).remove();
+                            });
+
+                        }
+                        else if(res.status == "duplicate"){
+
+                            alert("You have already booked this package.");
+
+                        }
+                        else if(res.status == "login_required"){
+
+                            alert("Please login first.");
+
+                        }
+                        else{
+
+                            alert("Booking failed.");
+
+                        }
+
+                    },
+
+                    error: function(){
+
+                        alert("Server error.");
+
+                    }
+
+                });
+
+            });
+
+        },
+
+        error: function(){
+
+            alert("Form couldn't be opened.");
+
+        }
+
+    });
+
+}
+
 $(document).ready(function(){
     $(".stars").on("click","span",function(){
         let val=$(this).data("val");

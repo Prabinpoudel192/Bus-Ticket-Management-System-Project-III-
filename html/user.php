@@ -13,11 +13,30 @@
   $c_row=$c_res->fetch_assoc();
   $C=$c_row['site_avg'] ? $c_row['site_avg'] : 0;
 
-  $top_sql="select a.*,
-            (select avg(rating) from ad_ratings where ad_id=a.id) as R,
-            (select count(*) from ad_ratings where ad_id=a.id) as v
-            from ads a where a.status='active'";
-  $top_res=$c1->conn->query($top_sql);
+ $stmt = $c1->conn->prepare("
+SELECT a.*,
+       (SELECT AVG(rating)
+        FROM ad_ratings
+        WHERE ad_id = a.id) AS R,
+
+       (SELECT COUNT(*)
+        FROM ad_ratings
+        WHERE ad_id = a.id) AS v
+
+FROM ads a
+
+WHERE a.status='active'
+AND a.id NOT IN (
+    SELECT ad_id
+    FROM ad_bookings
+    WHERE user_id = ?
+      AND status IN ('pending','confirm')
+)
+");
+
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$top_res = $stmt->get_result();
 
   $top_ads=[];
   while($row=$top_res->fetch_assoc()){
@@ -140,7 +159,7 @@ overflow-x:hidden;
 <a href="user.php">Home</a>
 <a href="#" id="showTickets">My Tickets</a>
 <a href="tour.php">Tours</a>
-<a href="#">Profile</a>
+<a href="profile.php">Profile</a>
 <a href="index.php">Logout</a>
 </nav>
 </header>
@@ -224,10 +243,18 @@ overflow-x:hidden;
 <div class="package">
 <img src="<?= !empty($ad['image']) ? '../images/ads/'.htmlspecialchars($ad['image']) : '../images/ad1.webp' ?>">
 <div class="package-content">
-<h3><?= htmlspecialchars($ad['title']) ?></h3>
-<p>⭐ <?= $ad['v']>0 ? round($ad['R'],1) : 'Not rated yet' ?></p>
-<button onclick="window.open('<?= htmlspecialchars($ad['redirect_url']) ?>','_blank')">View Details</button>
-<button onclick="bookAd(<?= $ad['id'] ?>)">Book Now</button>
+    <h3><?= htmlspecialchars($ad['title']) ?></h3>
+    <p>⭐ <?= $ad['v']>0 ? round($ad['R'],1) : 'Not rated yet' ?></p>
+
+    <button onclick="window.open('<?= htmlspecialchars($ad['redirect_url']) ?>','_blank')">
+        View Details
+    </button>
+
+    <button onclick="bookAd(<?= $ad['id'] ?>)">
+        Book Now
+    </button>
+
+    <div id="form<?= $ad['id'] ?>"></div>
 </div>
 </div>
 <?php endforeach; ?>

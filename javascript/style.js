@@ -183,7 +183,85 @@ function generateTicket(route,date,id,uname,exptime) {
 //Ticket  booking whole js ends here
 //Advertisement portion js starts here
 function bookAd(id){
-  alert("The id is "+id);
+
+    $.ajax({
+        url: "ad_form.php",
+        type: "POST",
+        data: {
+            ad_id: id
+        },
+        success: function(data){
+
+            // Display the form below the buttons
+            $("#form" + id).html(data);
+
+            // Set the hidden ad_id
+            $("#form" + id + " #ad_id").val(id);
+
+            // Remove any previous submit handlers
+            $("#form" + id + " #bookingForm").off("submit").on("submit", function(e){
+
+                e.preventDefault();
+
+                $.ajax({
+
+                    url: "book_ad.php",
+
+                    type: "POST",
+
+                    data: $(this).serialize(),
+
+                    dataType: "json",
+
+                    success: function(res){
+
+                        if(res.status == "done"){
+
+                            alert("Booking Successful");
+
+                            $("#package" + id).fadeOut(500, function(){
+                                $(this).remove();
+                            });
+
+                        }
+                        else if(res.status == "duplicate"){
+
+                            alert("You have already booked this package.");
+
+                        }
+                        else if(res.status == "login_required"){
+
+                            alert("Please login first.");
+
+                        }
+                        else{
+
+                            alert("Booking failed.");
+
+                        }
+
+                    },
+
+                    error: function(){
+
+                        alert("Server error.");
+
+                    }
+
+                });
+
+            });
+
+        },
+
+        error: function(){
+
+            alert("Form couldn't be opened.");
+
+        }
+
+    });
+
 }
 //Advertisement portion js ends here
 function resetApp() {

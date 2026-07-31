@@ -15,18 +15,40 @@ function give(){
 
  if(!$result || $result->num_rows == 0){
      $data = '<h2 style=\'color:white; margin:100px 0px 0px 50px;\'>No Ticket has been reserved or confirmed.</h2>';
- } else {
-     $data = "<div style='display:flex; flex-wrap:wrap; gap:20px; justify-content:center;'>";
+     echo $data;
+     return;
+ }
 
-     while($login = $result->fetch_assoc()){
-         if($login['status']=='pending'){
-            $data .= "
-<div style='width:420px; max-height:500px; overflow-y:auto; margin:auto; padding:20px; border:2px dashed #333; font-family:Arial; background:#fff;'>
+ $gridCards = "";
+ $detailCards = "";
+
+ while($login = $result->fetch_assoc()){
+
+     $statusLabel = $login['status']=='pending' ? "Pending Payment" : "Confirmed";
+     $statusColor = $login['status']=='pending' ? "#e67e22" : "#27ae60";
+
+     // ---- Compact grid card (summary, click to expand) ----
+     $gridCards .= "
+<div class='ticket-card' onclick=\"showTicket({$login['id']})\">
+    <div class='ticket-card-status' style='background:{$statusColor};'>{$statusLabel}</div>
+    <h3>{$login['company_name']}</h3>
+    <p class='route'>{$login['route']}</p>
+    <p>📅 {$login['travel_date']} &nbsp; 🕒 {$login['travel_time']}</p>
+    <p>Seat(s): {$login['seat']}</p>
+    <p class='total'>Rs. {$login['total']}</p>
+</div>
+";
+
+     // ---- Full ticket detail (hidden until clicked) ----
+     if($login['status']=='pending'){
+        $detailCards .= "
+<div id='ticket-{$login['id']}' class='ticket-detail'>
+    <button class='back-btn' onclick='backToGrid()'>⬅ Back to My Tickets</button>
 
     <h2 style='text-align:center; color:#1e3c72;'><b><i>BUS TICKET</i></b></h2>
     <hr>
 
-    <h4 style='color:#c0392b;'>-<b><i>Passenger Details</i></b></h4>
+    <h4 style='color:#c0392b;'><b><i>Passenger Details</i></b></h4>
     <p>Name: <span style='color:#2c3e50;'>{$login['name']}</span></p>
     <p>Address: <span style='color:#2c3e50;'>{$login['address']}</span></p>
     <p>Mobile: <span style='color:#2c3e50;'>{$login['mobile']}</span></p>
@@ -57,14 +79,13 @@ function give(){
             Pay via eSewa
         </button>
     </a>
-
     </div>
-
 </div>
 ";
         } else if($login['status']=='confirm'){
-   $data .= "
-<div id='ticket-{$login['id']}' style='width:420px; margin:auto; padding:12px; border:2px dashed #333; font-family:Arial; background:#fff; font-size:12px; line-height:1.3;'>
+   $detailCards .= "
+<div id='ticket-{$login['id']}' class='ticket-detail'>
+    <button class='back-btn' onclick='backToGrid()'>⬅ Back to My Tickets</button>
 
     <h2 style='text-align:center; font-size:16px; margin:0 0 6px; color:#1e3c72;'><b><i>BUS TICKET</i></b></h2>
     <hr style='margin:6px 0;'>
@@ -98,12 +119,121 @@ function give(){
        <button onclick='printTicket({$login['id']})'>🖨️ Print</button>
        <button onclick='resetApp()'>🔄 New Booking</button>
     </div>
-
 </div>
 ";
-}}
-     $data .= "</div>";
+}
  }
+
+ $data = "
+<style>
+#ticketsGrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:16px;
+    padding:20px;
+    max-height:70vh;
+    overflow-y:auto;
+}
+
+.ticket-card{
+    background:#fff;
+    border-radius:10px;
+    padding:14px;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+    transition:transform .15s ease;
+    position:relative;
+}
+
+.ticket-card:hover{
+    transform:translateY(-3px);
+}
+
+.ticket-card h3{
+    color:#1e3c72;
+    margin:6px 0 4px;
+    font-size:16px;
+}
+
+.ticket-card .route{
+    font-weight:bold;
+    color:#2c3e50;
+    margin-bottom:4px;
+}
+
+.ticket-card p{
+    font-size:13px;
+    color:#444;
+    margin:2px 0;
+}
+
+.ticket-card .total{
+    font-weight:bold;
+    color:#27ae60;
+    margin-top:6px;
+}
+
+.ticket-card-status{
+    display:inline-block;
+    color:#fff;
+    font-size:11px;
+    padding:3px 8px;
+    border-radius:12px;
+    margin-bottom:6px;
+}
+
+.ticket-detail{
+    display:none;
+    width:420px;
+    max-height:80vh;
+    overflow-y:auto;
+    margin:20px auto;
+    padding:20px;
+    border:2px dashed #333;
+    font-family:Arial;
+    background:#fff;
+}
+
+.back-btn{
+    display:block;
+    margin-bottom:15px;
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    background:#1e3c72;
+    color:#fff;
+    cursor:pointer;
+}
+</style>
+
+<div id='ticketsGrid'>
+{$gridCards}
+</div>
+
+{$detailCards}
+
+<script>
+function showTicket(id){
+    document.getElementById('ticketsGrid').style.display = 'none';
+
+    document.querySelectorAll('.ticket-detail').forEach(function(el){
+        el.style.display = 'none';
+    });
+
+    var target = document.getElementById('ticket-' + id);
+    if(target){
+        target.style.display = 'block';
+    }
+}
+
+function backToGrid(){
+    document.querySelectorAll('.ticket-detail').forEach(function(el){
+        el.style.display = 'none';
+    });
+    document.getElementById('ticketsGrid').style.display = 'grid';
+}
+</script>
+";
 
  echo $data;
 }
