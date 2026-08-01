@@ -158,20 +158,7 @@ setInterval(() => {
         <h1>Fast & Reliable Bus Ticket Booking</h1>
         <p>Book your tickets instantly, choose your seat, and travel stress-free.</p>
     </div>
-      <!-- SEARCH PREVIEW (marketing only, no backend change) -->
-    <div class="search-preview">
-        <h3>Search Your Route</h3>
-        <div class="preview-box">
-            <form id="bir">
-            <input type="text" placeholder="From" name="from" required>
-            <input type="text" placeholder="To" name="to" required>
-            <input type="date" name="date" min="<?= date('Y-m-d') ?>" required>
-            <button type="submit">Search Buses</button>
-            </form>
-        </div>
-        <small>*Login required to book tickets</small>
-    </div>
-    <!-- ADVERTISEMENT BANNER -->
+      <!-- ADVERTISEMENT BANNER -->
     <div class="ad-section">
         <div class="ad-card">
         <img id="pra1" src="../images/ad1.webp">
@@ -229,24 +216,7 @@ setInterval(() => {
                 <input type="submit" value="Sign In" name="post1" class="submit-btn">
             </form>
         </div>
-         <!-- Before login searchform -->
-        <div class="form-container" id="praa4">
-            <h2 class="form-title icon-login">
-                Welcome Back
-            </h2>
-            <p class="form-subtitle">Sign in to your account</p>
-            <form action="" method="post">
-                <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Username" name="uname" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-input" placeholder="Password" name="pwd" required>
-                </div>
-                <input type="submit" value="Sign In" name="post3" class="submit-btn1">
-            </form>
-        </div>
-
-        <!-- Signup Form -->
+     <!-- New Users Registration -->
         <div class="form-container" id="pra5">
             <h2 class="form-title icon-signup">
                 Join Us
@@ -310,73 +280,6 @@ setInterval(() => {
                 <input type="submit" value="Create Account" name="post2" class="submit-btn">
             </form>
         </div>
-
-        <!-- Admin Form -->
-          <div class="form-container" id="pra10">
-            <h2 class="form-title icon-signup">
-                Admin Access
-            </h2>
-            <p class="form-subtitle">Create your Admin account</p>
-            <form onsubmit="return validation1()" action="" method="post">
-                <div class="form-group">
-                    <input type="text" class="form-input" placeholder="First Name" name="afname" required>
-                    <div id="msg11"></div>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Middle Name" name="amname">
-                    <div id="msg12"></div>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Last Name" name="alname" required>
-                    <div id="msg13"></div>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-input form-textarea" placeholder="Address" name="aaddress" required></textarea>
-                    <div id="msg15"></div>
-                </div>
-                <div class="form-group">
-                    <input type="email" class="form-input" placeholder="Email" name="aemail" required>
-                    <div id="msg17"></div>
-                </div>
-                <div class="form-group">
-                    <input type="tel" class="form-input" placeholder="Mobile Number" name="amobile" required>
-                    <div id="msg14"></div>
-                </div>
-                <div class="radio-group gender-group">
-                    <span class="radio-group-label">Gender:</span>
-                    <div class="radio-item">
-                        <input type="radio" name="agender" value="m" id="male" required>
-                        <label for="male">Male</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" name="agender" value="f" id="female" required>
-                        <label for="female">Female</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" name="agender" value="o" id="other" required>
-                        <label for="other">Other</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Username" name="auname" required>
-                    <div id="msg16"></div>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-input" placeholder="Password" name="apwd" required>
-                    <div id="msg18"></div>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-input" placeholder="Confirm Password" name="apwd1" required>
-                    <div id="msg19"></div>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" name="aterms" id="terms" required>
-                    <label for="terms">I agree to the terms and conditions</label>
-                </div>
-                <input type="submit" value="Create Account" name="post3" class="submit-btn">
-            </form>
-        </div>
-      
     <script defer src="../javascript/index.js"></script>
 </body>
 </html>
