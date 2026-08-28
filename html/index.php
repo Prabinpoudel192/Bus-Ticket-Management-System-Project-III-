@@ -173,10 +173,10 @@ setInterval(() => {
 
     <!-- FEATURES -->
     <div class="features">
-        <div class="feature">Features of this websites</div>
-        <div class="feature">Features of this websites</div>
-        <div class="feature">Features of this websites</div>
-        <div class="feature">Features of this websites</div>
+        <div class="feature">Individual and Group Ticket Booking</div>
+        <div class="feature">Cash and Online Booking</div>
+        <div class="feature">Ticket Reservation System</div>
+        <div class="feature">Tour and Packages</div>
     </div>
 
 </div>
