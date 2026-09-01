@@ -163,9 +163,6 @@ body {
     background:#1e3c72;
 }
 </style>
-<script>
-
-</script>
 </head>
 
 <body>

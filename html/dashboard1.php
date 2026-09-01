@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include 'db.php';
+include 'algorithms.php'; // Quick Sort algorithm used below
 
 class dashboardGraph extends dbcon
 {
@@ -32,10 +33,18 @@ class dashboardGraph extends dbcon
 
     function getRevenueByRoute(){
         $data = [];
-        $r = $this->conn->query("SELECT route, SUM(total) as revenue FROM tickets WHERE status='confirm' GROUP BY route ORDER BY revenue DESC LIMIT 8");
+        // Fetch ALL routes with their revenue, unsorted, from the database
+        $r = $this->conn->query("SELECT route, SUM(total) as revenue FROM tickets WHERE status='confirm' GROUP BY route");
         while($row = $r->fetch_assoc()){
             $data[] = $row;
         }
+
+        // Standard Algorithm: Quick Sort (O(n log n) average)
+        // Rank routes by revenue, highest first, then keep the Top 8
+        // for the "Revenue by Route" chart.
+        $data = quickSort($data, 'revenue', true);
+        $data = array_slice($data, 0, 8);
+
         return $data;
     }
 

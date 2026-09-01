@@ -2,6 +2,7 @@
 error_reporting(E_ALL); 
 ini_set('display_errors', 1);
 include 'db.php';
+include 'algorithms.php'; // Binary Search algorithm used below
 class fetchBus extends dbcon{
     public $route,$date,$id,$uname,$veh,$seat,$exp,$qt;
 function __construct($route,$date,$id,$uname,$veh,$seat,$exp,$qt){ 
@@ -21,6 +22,45 @@ function give(){
   if(!$login && !$bus){
     die("Error in fetching data");
   }else{
+    // Standard Algorithm: Binary Search (O(log n))
+    // Before confirming, make sure none of the seats the passenger
+    // selected have already been booked (confirmed) or reserved
+    // (pending) by someone else for this vehicle + travel date.
+    // This prevents double-booking the same seat.
+    $selectedSeats = is_array($this->seat) ? $this->seat : [$this->seat];
+
+    $existingSeats = [];
+    $chk = $this->conn->query(
+        "SELECT seat FROM tickets WHERE veh_no='$this->veh' AND travel_date='$this->date' AND status IN ('pending','confirm')"
+    );
+    if ($chk) {
+        while ($row = $chk->fetch_assoc()) {
+            if (!empty($row['seat'])) {
+                foreach (explode(',', $row['seat']) as $s) {
+                    $existingSeats[] = trim($s);
+                }
+            }
+        }
+    }
+    // Sort the existing seats so binary search can be used on them
+    $existingSeatsSorted = sortSeatList($existingSeats);
+
+    $conflict = null;
+    foreach ($selectedSeats as $s) {
+        if (binarySearch($existingSeatsSorted, trim($s))) {
+            $conflict = trim($s);
+            break;
+        }
+    }
+
+    if ($conflict !== null) {
+        echo "<div style='width:420px; margin:auto; padding:20px; border:2px solid red; font-family:Arial; background:#fff; text-align:center;'>
+                <h3>&#10060; Booking Failed</h3>
+                <p>Seat <b>$conflict</b> was just booked by someone else. Please go back and choose a different seat.</p>
+              </div>";
+        return;
+    }
+
     //These values is to be inserted in the database
     $tic_num = is_array($this->seat) ? count($this->seat) : 1;
     $total_fare = $bus['fare'] * $tic_num;
