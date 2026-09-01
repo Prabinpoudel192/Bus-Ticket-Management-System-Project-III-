@@ -15,6 +15,9 @@ function selectBus(name) {
     function logout() {
       window.location.href = "index.html";
     }
+    /*This is the single algorithm for display,reserve and booking of the ticket
+    it works by converting the total no of seat assigned during the bus registration 
+    by converting the number of seats into html table representing the button as the individual seat */
     function showPage(pageId,seats=0,vehicleno="null",date="null",qt=0) {
       pqt=qt;
       document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
@@ -131,6 +134,8 @@ bus.appendChild(table);
 tempBooked=[];
 bookedSeats=[];
       }}
+      /*below code will ensure the user is not 
+      proceeding without the single seat selected */
 function goToPassenger() {
   if (selectedSeats.length === 0) {
     alert("Select at least one seat!");

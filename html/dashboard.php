@@ -25,7 +25,6 @@ class fetchBus extends dbcon
         $sumTotalFare = 0;
         $sumTax = 0;
         $sumTotalAmount = 0;
-
         $data = "
         <div class='table-box' style='width:100%; overflow:auto;'>
 

@@ -12,7 +12,7 @@
   $c_res=$c1->conn->query($c_sql);
   $c_row=$c_res->fetch_assoc();
   $C=$c_row['site_avg'] ? $c_row['site_avg'] : 0;
-
+//This part is for the star rating of the advertisement displayed by using the highest average rating among the tour packages
  $stmt = $c1->conn->prepare("
 SELECT a.*,
        (SELECT AVG(rating)

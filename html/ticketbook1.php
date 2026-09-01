@@ -2,7 +2,7 @@
 error_reporting(E_ALL); 
 ini_set('display_errors', 1);
 include 'db.php';
-include 'algorithms.php'; // Merge Sort algorithm used below
+include 'algorithms.php'; 
 class fetchBus extends dbcon{
     public $route;
     public $date;
@@ -16,19 +16,14 @@ function __construct($route,$date,$qt){
 function give(){
   $sql="select company_name,vehicle_no,noofseat,bus_type,route,fare,dep_time from bus where route='$this->route'";
   $r=$this->conn->query($sql);
+  $buses=[];
   if(!$r){
     die("Error in fetching data");
   }else{
-    // Collect all matching buses first
-    $buses = [];
     while($row=$r->fetch_assoc()){
         $buses[] = $row;
     }
-
-    // Standard Algorithm: Merge Sort (O(n log n))
-    // Sort available buses by fare, cheapest first, so passengers
-    // see the most affordable options at the top of the list.
-    $buses = mergeSort($buses, 'fare', false);
+    $buses = mergeSort($buses, 'fare', false);//Merge sort algorithm implementation
 
 $data="
 <div class='table-box' style='width:100%'>

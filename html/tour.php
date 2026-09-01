@@ -30,8 +30,6 @@ while($row=$r->fetch_assoc()){
     }
     $grouped[$cat][]=$row;
 }
-
-// ---- Compute least-occupied buses for 20% OFF section ----
 $occ_sql="select b.vehicle_no, b.company_name, b.route, b.bus_type, b.fare, b.noofseat,
     coalesce(sum(
         case when t.status='confirm'
@@ -292,18 +290,12 @@ function bookAd(id){
             ad_id: id
         },
         success: function(data){
-
-            // Display the form below the buttons
             $("#form" + id).css({
              "height": "auto",
              "overflow": "visible"
               });
             $("#form" + id).html(data);
-
-            // Set the hidden ad_id
             $("#form" + id + " #ad_id").val(id);
-
-            // Remove any previous submit handlers
             $("#form" + id + " #bookingForm").off("submit").on("submit", function(e){
 
                 e.preventDefault();

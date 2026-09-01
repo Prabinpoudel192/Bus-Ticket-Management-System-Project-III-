@@ -125,7 +125,7 @@ $(document).ready(function(){
   let route=<?=json_encode($route)?>;
   let dis=<?=json_encode($dis)?>;
   if(route !== "-" && date !== ""){
-        bookfunc(route,date,dis);
+        bookfunc(route,date,dis);//This function is inside the style.js file
     }
   else{
     alert("Something went wrong");
